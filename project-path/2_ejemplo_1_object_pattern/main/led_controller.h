@@ -31,21 +31,23 @@ int led_controller_deinit(struct led_controller *self);
 /*
 turn on the led
 */
-int led_controller_turn_on(struct led_controller *self);
+void led_controller_turn_on(struct led_controller *self);
 
 /*
 turn off the led
 */
-int led_controller_turn_off(struct led_controller *self);
+void led_controller_turn_off(struct led_controller *self);
 
 /*
 toggle of the led
 */
-int led_controller_toggle(struct led_controller *self, uint32_t last_toggle);
+void led_controller_toggle(struct led_controller *self, uint32_t last_toggle);
 
 /*
 change the led period
 */
-int led_controller_toggle(struct led_controller *self, uint32_t blink_period_ms);
+void led_controller_set_blink_period(struct led_controller *self, uint32_t blink_period_ms);
+
+void led_controller_update_period(struct led_controller *self, uint32_t update_period_ms);
 
 #endif
