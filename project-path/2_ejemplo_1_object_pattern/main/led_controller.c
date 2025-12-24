@@ -1,7 +1,8 @@
 #include "led_controller.h"
 #include "driver/gpio.h"
 #include <string.h>
-
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 int led_controller_init(struct led_controller *self, uint8_t gpio_pin){
 // return 0 sucess, -1 fail
 /*
@@ -76,7 +77,7 @@ void led_controller_turn_off(struct led_controller *self){
 }
 
 
-void led_controller_toggle(struct led_controller *self, uint32_t last_toggle){
+void led_controller_toggle(struct led_controller *self){
     if(self->is_on == true){
         led_controller_turn_off(self);
         self->last_toggle = 1;
@@ -94,4 +95,12 @@ void led_controller_set_blink_period(struct led_controller *self, uint32_t blink
 
 void led_controller_update_period(struct led_controller *self, uint32_t update_period_ms){
     self->blink_period = update_period_ms;
+}
+
+void led_controller_blink(struct led_controller *self){
+    vTaskDelay(self->blink_period * 1000 / portTICK_PERIOD_MS);
+    led_controller_toggle(self);
+    vTaskDelay(self->blink_period * 1000 / portTICK_PERIOD_MS);
+    led_controller_toggle(self);
+
 }

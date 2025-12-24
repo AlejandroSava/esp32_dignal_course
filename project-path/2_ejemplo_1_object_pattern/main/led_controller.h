@@ -41,7 +41,7 @@ void led_controller_turn_off(struct led_controller *self);
 /*
 toggle of the led
 */
-void led_controller_toggle(struct led_controller *self, uint32_t last_toggle);
+void led_controller_toggle(struct led_controller *self);
 
 /*
 change the led period
@@ -49,5 +49,5 @@ change the led period
 void led_controller_set_blink_period(struct led_controller *self, uint32_t blink_period_ms);
 
 void led_controller_update_period(struct led_controller *self, uint32_t update_period_ms);
-
+void led_controller_blink(struct led_controller *self);
 #endif
