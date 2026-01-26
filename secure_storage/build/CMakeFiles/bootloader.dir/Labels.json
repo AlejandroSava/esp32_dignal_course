@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}

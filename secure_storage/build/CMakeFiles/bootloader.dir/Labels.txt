@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/alejandro/esp32_dignal_course/secure_storage/build/CMakeFiles/bootloader
+/home/alejandro/esp32_dignal_course/secure_storage/build/CMakeFiles/bootloader.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/CMakeFiles/bootloader-complete.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/alejandro/esp32_dignal_course/secure_storage/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

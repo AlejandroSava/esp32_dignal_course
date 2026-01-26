@@ -1,20 +1,12 @@
 {
-  "C_Cpp.intelliSenseEngine": "default",
-  "idf.espIdfPath": "/home/alejandro/esp/esp-idf",
-  "idf.pythonInstallPath": "/usr/bin/python3",
-  "idf.openOcdConfigs": [
-    "interface/ftdi/esp_ftdi.cfg",
-    "target/esp32.cfg"
-  ],
-  "idf.port": "/dev/ttyS0",
-  "idf.toolsPath": "/home/alejandro/.espressif",
-  "idf.customExtraVars": {
-    "IDF_TARGET": "esp32"
-  },
+  // Use clangd (recommended for ESP-IDF)
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "C_Cpp.errorSquiggles": "disabled",
+
   "clangd.path": "/home/alejandro/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd",
   "clangd.arguments": [
     "--background-index",
-    "--query-driver=/home/alejandro/.espressif/tools/xtensa-esp-elf/esp-15.1.0_20250607/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
-    "--compile-commands-dir=${workspaceFolder}/build"
+    "--compile-commands-dir=${workspaceFolder}/build",
+    "--query-driver=/home/alejandro/.espressif/tools/xtensa-esp-elf/esp-15.1.0_20250607/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc,/home/alejandro/.espressif/tools/xtensa-esp-elf/esp-15.1.0_20250607/xtensa-esp-elf/bin/xtensa-esp32-elf-g++"
   ]
 }

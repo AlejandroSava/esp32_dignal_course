@@ -1,0 +1,21 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/bootloader && /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/bootloader/bootloader.bin
+Bootloader binary size 0x6690 bytes. 0x970 bytes (8%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/10_example_encryp_decrypt.c.obj
+[4/9] Linking C static library esp-idf/main/libmain.a
+[5/9] Completed 'bootloader'
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable 10_example_encryp_decrypt.elf
+[8/9] Generating binary image from built executable
+Warning: Deprecated: Option '--flash_mode' is deprecated. Use '--flash-mode' instead.
+Warning: Deprecated: Option '--flash_freq' is deprecated. Use '--flash-freq' instead.
+Warning: Deprecated: Option '--flash_size' is deprecated. Use '--flash-size' instead.
+esptool v5.1.0
+Creating ESP32 image...
+Merged 2 ELF sections.
+Successfully created ESP32 image.
+Generated /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/10_example_encryp_decrypt.bin
+[9/9] cd /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build && /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/partition_table/partition-table.bin /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/10_example_encryp_decrypt.bin
+10_example_encryp_decrypt.bin binary size 0x28510 bytes. Smallest app partition is 0x100000 bytes. 0xd7af0 bytes (84%) free.

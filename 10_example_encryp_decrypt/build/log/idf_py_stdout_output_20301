@@ -1,0 +1,65 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/10_example_encryp_decrypt.elf /home/alejandro/esp32_dignal_course/10_example_encryp_decrypt/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+ected boya flash chip but using generic driver. For optimal�ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Jan 18 2026 11:00:40[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 2MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00006000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 0000f000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00010000 00100000[0m
+[0;32mI (79) boot: End of partition table[0m
+[0;32mI (82) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=09704h ( 38660) map[0m
+[0;32mI (103) esp_image: segment 1: paddr=0001972c vaddr=3ffb0000 size=025e4h (  9700) load[0m
+[0;32mI (107) esp_image: segment 2: paddr=0001bd18 vaddr=40080000 size=04300h ( 17152) load[0m
+[0;32mI (114) esp_image: segment 3: paddr=00020020 vaddr=400d0020 size=0f7a0h ( 63392) map[0m
+[0;32mI (137) esp_image: segment 4: paddr=0002f7c8 vaddr=40084300 size=08cdch ( 36060) load[0m
+[0;32mI (152) esp_image: segment 5: paddr=000384ac vaddr=50000000 size=00024h (    36) load[0m
+[0;32mI (159) boot: Loaded app from partition at offset 0x10000[0m
+[0;32mI (159) boot: Disabling RNG early entropy source...[0m
+[0;32mI (170) cpu_start: Multicore app[0m
+[0;32mI (178) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (179) cpu_start: Pro cpu start user code[0m
+[0;32mI (179) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (180) app_init: Application information:[0m
+[0;32mI (184) app_init: Project name:     10_example_encryp_decrypt[0m
+[0;32mI (190) app_init: App version:      ec42a2d-dirty[0m
+[0;32mI (194) app_init: Compile time:     Jan 18 2026 11:00:33[0m
+[0;32mI (199) app_init: ELF file SHA256:  e19349faa...[0m
+[0;32mI (203) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (209) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (213) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (217) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (221) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (227) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (232) heap_init: At 3FFB2EB0 len 0002D150 (180 KiB): DRAM[0m
+[0;32mI (237) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (243) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (248) heap_init: At 4008CFDC len 00013024 (76 KiB): IRAM[0m
+[0;33mW (255) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (266) spi_flash: detected chip: generic[0m
+[0;32mI (270) spi_flash: flash io: dio[0m
+[0;33mW (273) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.[0m
+[0;32mI (286) main_task: Started on CPU0[0m
+[0;32mI (296) main_task: Calling app_main()[0m
+[0;32mI (296) AES_CBC: Plaintext: Hello ESP32! AES-CBC with PKCS#7 padding.[0m
+IV (16 bytes): 43767FC6AE70ABC0B0594B622AAAEA32
+KEY (16 bytes): 603DEB1015CA71BE2B73AEF0857D7781
+CIPHERTEXT (48 bytes): 4593608A71B49FA63578A599E55BA757BC880853634A25DC1603704BBDF012914021A270228B196F40D2A0483A5E5AA3
+[0;32mI (316) AES_CBC: Decrypted (41 bytes): Hello ESP32! AES-CBC with PKCS#7 padding.[0m
+[0;32mI (316) main_task: Returned from app_main()[0m
