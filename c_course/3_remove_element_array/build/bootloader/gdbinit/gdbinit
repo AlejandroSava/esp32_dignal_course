@@ -1,0 +1,2 @@
+source /home/alejandro/esp32_dignal_course/c_course/3_remove_element_array/build/bootloader/gdbinit/symbols
+source /home/alejandro/esp32_dignal_course/c_course/3_remove_element_array/build/bootloader/gdbinit/connect
