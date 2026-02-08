@@ -8,7 +8,9 @@
 #include "esp_err.h"
 #include "nvs_flash.h"
 #include "esp_log_buffer.h" // dump data into hex to ascii
-
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "hmac_sha512.h"
 
 #define ALEX_SS_HEADER_LEN   16       // HEADER LEN
 #define ALEX_SS_IV_LEN      16        // AES-CBC IV length
@@ -138,10 +140,15 @@ esp_err_t sec_store_write_blob(const char *key_name, const void *buf, size_t len
     err = nvs_commit(h);
     nvs_close(h);
 
+
     if (err != ESP_OK) {
-        ESP_LOGE(Tag_SS, "nvs_commit failed: %s", esp_err_to_name(err));
+        ESP_LOGE(Tag_SS, "nvs_commit failed: %s\n", esp_err_to_name(err));
+        return err;
     }
-    return err;
+    
+    ESP_LOGI(Tag_SS, "THE DATA WAS WRITED TO NVS %s", Secure_Store_NameSpace);        
+    
+    return ESP_OK;
 }
 
 esp_err_t secstore_read_blob_alloc(const char *key, void **out_buf, size_t *out_len){
@@ -188,9 +195,36 @@ esp_err_t secstore_read_blob_alloc(const char *key, void **out_buf, size_t *out_
 
     *out_buf = buf;
     *out_len = required;
+    ESP_LOGI(Tag_SS, "Read OK (len=%u)", (unsigned)required);
     return ESP_OK;
 }
 
+
+esp_err_t verify_secstore_read(void **read_buf, size_t read_len, size_t expected){
+    if (read_buf == NULL || *read_buf == NULL) {
+        ESP_LOGE(Tag_SS, "Invalid buffer pointer");
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    // Minimum: must at least contain the fixed header (sizeof works for flexible-array structs)
+    if (read_len < sizeof(alex_secstore_record_t)) {
+        ESP_LOGE(Tag_SS, "Blob too small: got=%zu, need>=%zu",
+                 read_len, sizeof(alex_secstore_record_t));
+        free(*read_buf);
+        *read_buf = NULL;
+        return ESP_ERR_INVALID_SIZE;
+    }
+
+    if (expected != read_len) {
+        ESP_LOGE(Tag_SS, "Size mismatch: expected=%zu, got=%zu", expected, read_len);
+        free(*read_buf);
+        *read_buf = NULL;
+        return ESP_ERR_INVALID_SIZE;
+    }
+
+    ESP_LOGI(Tag_SS, "Verification success");
+    return ESP_OK;
+}
 
 void general_partition_info(const char *name_partition)
 {   
@@ -210,8 +244,14 @@ void general_partition_info(const char *name_partition)
              handler.namespace_count);
 }
 
-
-
+void error_handler(esp_err_t err){
+    if (err != ESP_OK) {
+        ESP_LOGE(Tag_SS, "FATAL ERROR: %s", esp_err_to_name(err));
+        while (true) {
+            vTaskDelay(pdMS_TO_TICKS(1000));
+        }
+    }
+}
 
 void app_main(void)
 {
@@ -227,14 +267,18 @@ void app_main(void)
     uint8_t iv[ALEX_SS_IV_LEN];
     esp_fill_random(iv, sizeof(iv));
 
-    // Dumping HMAC
-    uint8_t hmac[ALEX_SS_HMAC_LEN];
-    esp_fill_random(hmac, sizeof(hmac));
+
 
     //plain text
     char *msg = "Hello ESP32! AES-CBC with PKCS#7 padding Espero que esten bien y tenga el gusto de conocerme";
     uint8_t *plaintext = (uint8_t *)msg; // uint8_t pointer to message
     size_t plaintext_len = strlen(msg);
+
+    uint8_t hmac[ALEX_SS_HMAC_LEN];
+    
+    get_hmac(&key[0], sizeof(key), &plaintext[0],plaintext_len, &hmac[0]);
+    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", hmac, HMAC_LEN, ESP_LOG_INFO);
+
 
     size_t total_size = sizeof(alex_secstore_record_t) + plaintext_len;
     printf("the structure size: %zu\n", sizeof(alex_secstore_record_t));
@@ -259,15 +303,9 @@ void app_main(void)
 
     // total_len = sizeof(record header) + ciphertext_size
     ESP_ERROR_CHECK(sec_store_nvs_init());
-    esp_err_t err = sec_store_write_blob("Password", secure_store, total_size);
+    esp_err_t err;
+    err= sec_store_write_blob("Password", secure_store, total_size);
     
-    if (err != ESP_OK) {
-        ESP_LOGE(Tag_SS, "Write failed: %s\n", esp_err_to_name(err));
-        return;
-    }
-    else{
-        ESP_LOGI(Tag_SS, "THE DATA WAS WRITED TO NVS %s", Secure_Store_NameSpace);        
-    }
 
     //read from the custom partition
 
@@ -276,32 +314,17 @@ void app_main(void)
     size_t read_len = 0;
 
     err = secstore_read_blob_alloc("Password", &read_buf, &read_len);
-    if (err != ESP_OK) {
-        ESP_LOGE(Tag_SS, "Read failed: %s", esp_err_to_name(err));
-        return;
-    }
-
-    ESP_LOGI(Tag_SS, "Read OK (len=%u)", (unsigned)read_len);
-
-    /* Parse the demo blob */
-    if (read_len < sizeof(alex_secstore_record_t)) {
-        ESP_LOGE(Tag_SS, "Blob too small");
-        free(read_buf);
-        return;
-    }
-
     alex_secstore_record_t *got = (alex_secstore_record_t *)read_buf;
-
     size_t expected = sizeof(alex_secstore_record_t) + (size_t)got->data_size;
-    if (expected != read_len) {
-        ESP_LOGE(Tag_SS, "Size mismatch: expected=%u, got=%u", (unsigned)expected, (unsigned)read_len);
-        free(read_buf);
-        return;
-    }
+    err = verify_secstore_read(&read_buf, read_len, expected);
+    error_handler(err);
 
     print_secure_storage_structure(got);
+    verify_hmac(secure_store->hmac, got->hmac, ALEX_SS_HMAC_LEN);
 
     // get general information of the partition
     general_partition_info(Secure_Store_Partition);
+
+    
 
 }
