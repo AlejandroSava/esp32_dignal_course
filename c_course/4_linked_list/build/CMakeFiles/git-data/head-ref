@@ -1,0 +1,9 @@
+0000000000000000000000000000000000000000 80e429934335c2c05e5dc3007f79eeef7b2d0bff AlejandroSava <alexandu.choric@gmail.com> 1766257055 -0600	clone: from https://github.com/AlejandroSava/esp32_dignal_course.git
+80e429934335c2c05e5dc3007f79eeef7b2d0bff 59f57cc365443e7b84589f124080780b787e6f17 AlejandroSava <alexandu.choric@gmail.com> 1766296058 -0600	commit: adding configuration to start esp32 project
+59f57cc365443e7b84589f124080780b787e6f17 3ad02ad04b4379fe08e188dc7cb8e8ae498bada9 AlejandroSava <alexandu.choric@gmail.com> 1766407153 -0600	commit: adding changes to patterns
+3ad02ad04b4379fe08e188dc7cb8e8ae498bada9 51f7ed3e1381ac4ed53f725b2a74d9090272e3b4 AlejandroSava <alexandu.choric@gmail.com> 1766493838 -0600	commit: adding part of the object patterns
+51f7ed3e1381ac4ed53f725b2a74d9090272e3b4 0dbdaa89562482e481dfa33b8398d016ff1d7947 AlejandroSava <alexandu.choric@gmail.com> 1766555155 -0600	commit: adding the object pattern in esp32
+0dbdaa89562482e481dfa33b8398d016ff1d7947 ec42a2db33a904a7489228ebaab1b7b4b4c340ba AlejandroSava <alexandu.choric@gmail.com> 1767461064 -0600	commit: adding Opaquete structure and hashes example
+ec42a2db33a904a7489228ebaab1b7b4b4c340ba 56a5bf6ae87f5d2ae73dae2e33270974fa620844 AlejandroSava <alexandu.choric@gmail.com> 1769396253 -0600	commit: working in some examples
+56a5bf6ae87f5d2ae73dae2e33270974fa620844 3635d2fad3e4e3260cc56c46a4600c792d07fbcc AlejandroSava <alexandu.choric@gmail.com> 1769429450 -0600	commit: adding the hkdf example
+3635d2fad3e4e3260cc56c46a4600c792d07fbcc d8afe70f954ff6d22cbeee370fb40d81a596fe6f AlejandroSava <alexandu.choric@gmail.com> 1769660282 -0600	commit: adding C practices
