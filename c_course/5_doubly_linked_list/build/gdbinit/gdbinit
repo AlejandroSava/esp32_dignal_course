@@ -1,0 +1,2 @@
+source /home/alejandro/esp32_dignal_course/c_course/5_doubly_linked_list/build/gdbinit/symbols
+source /home/alejandro/esp32_dignal_course/c_course/5_doubly_linked_list/build/gdbinit/connect

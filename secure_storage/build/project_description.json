@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "secure_storage",
-    "project_version":    "ec42a2d-dirty",
+    "project_version":    "53550a1-dirty",
     "project_path":       "/home/alejandro/esp32_dignal_course/secure_storage",
     "idf_path":           "/home/alejandro/esp/esp-idf",
     "build_dir":          "/home/alejandro/esp32_dignal_course/secure_storage/build",
