@@ -11,6 +11,12 @@
 #include "esp_random.h"
 #include "esp_err.h"
 
+#include <puflib.h>
+#include <esp_sleep.h>
+
+#include "mbedtls/sha512.h"
+
+
 #define AES_COUNTER 1 // PENDING TO DEFINE THE USAGE OF IT
 #define TAG_SSR "[SECURE STORAGE REGION]"
 
@@ -23,6 +29,18 @@ static void print_hex(const char *label, const uint8_t *buf, size_t len)
     for (size_t i = 0; i < len; i++) printf("%02X", buf[i]);
     printf("\n");
 }
+
+void sha512_stream(const uint8_t *data, size_t len, uint8_t out[64])
+{
+    mbedtls_sha512_context ctx;
+
+    mbedtls_sha512_init(&ctx);
+    mbedtls_sha512_starts(&ctx, 0);   // 0 = SHA-512
+    mbedtls_sha512_update(&ctx, data, len);
+    mbedtls_sha512_finish(&ctx, out);
+    mbedtls_sha512_free(&ctx);
+}
+
 
 esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext_len,
     const char *key_name_nvs, struct aes_256_obj *self_aes){
@@ -73,57 +91,6 @@ esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext
     return err;
 }
 
-// esp_err_t read_secure_storage_region( uint8_t *retrieve_text, size_t *retrieve_text_len,
-//     const char *key_name_nvs, struct aes_256_obj *self_aes){
-    
-//     void *read_buf = NULL;
-//     size_t read_len = 0;
-
-//     err = secstore_read_blob_alloc(key_name_nvs, &read_buf, &read_len);
-//     if (err != ESP_OK)
-//         return err;
-//     alex_secstore_record_t *got = (alex_secstore_record_t *)read_buf;
-//     size_t expected = sizeof(alex_secstore_record_t) + (size_t)got->data_size;
-//     err = verify_secstore_read(&read_buf, read_len, expected);
-//     if (err != ESP_OK)
-//         return err;
-    
-//     // TODO: recompute expected HMAC from (header||iv||data) and compare with got->hmac
-//     bool hmac_verification = verify_hmac(secure_store->hmac, got->hmac, ALEX_SS_HMAC_LEN);
-//     if (hmac_verification == false){
-//         free(read_buf);
-//         return ESP_FAIL;
-//     }
-
-//     // get general information of the partition
-//     print_secure_storage_structure(got);
-//     general_partition_info(Secure_Store_Partition);
-
-//     //decryt the text:
-//     uint8_t *decrypted = NULL;
-//     size_t decrypted_len = 0;
-
-//     int ret = aes_cbc_decrypt_pkcs7(aes->key, aes->keybits, aes->iv,  ciphertext, ciphertext_len, &decrypted, &decrypted_len);
-
-//     if (ret != 0) {
-//         ESP_LOGE(TAG, "Decrypt failed: -0x%04X", (unsigned)(-ret));
-//         free(read_buf);
-//         read_buf = NULL;
-//         got = NULL;
-//         return ESP_FAIL;
-//     }
-
-//     ESP_LOGI(TAG, "Decrypted (%zu bytes): %s", decrypted_len, (char *)decrypted);
-
-//     // copy to the buffer:
-//     memcpy(retrieve_text, decrypted, decrypted_len);
-//     *retrieve_text_len = read_len;   
-//     //return the parameters: 
-//     free(decrypted); //after the returned
-//     free(read_buf);
-//     read_buf = NULL;
-//     got = NULL;
-//     }
 
 esp_err_t read_secure_storage_region_alloc(
     const char *key_name_nvs,
@@ -148,6 +115,7 @@ esp_err_t read_secure_storage_region_alloc(
     *out_plain_len = 0;
 
     // 1) Read record (malloc inside secstore_read_blob_alloc)
+    ESP_ERROR_CHECK(sec_store_nvs_init()); //start the nvs
     err = secstore_read_blob_alloc(key_name_nvs, &read_buf, &read_len);
     if (err != ESP_OK) goto cleanup;
 
@@ -186,6 +154,7 @@ esp_err_t read_secure_storage_region_alloc(
         goto cleanup;
     }
 
+
     print_secure_storage_structure(got);
     // 6) Return ownership of decrypted buffer to caller
     *out_plain = decrypted;
@@ -198,34 +167,87 @@ cleanup:
     return err;
 }
 
+bool derive_key_from_puf(uint8_t *key_output){
+    puflib_init(); // needs to be called first in app_main
+
+    // condition will be true, if a PUF response is ready (useful after a restart)
+    if(PUF_STATE != RESPONSE_READY) {
+        bool puf_ok = get_puf_response();
+        if(!puf_ok) {
+            printf("CANNOT RETRIEVE THE PUFF!!!!\n");
+            get_puf_response_reset(); // the device resets now and the app starts again from app_main
+            return false;
+        }
+    }
+
+    // PUF_RESPONSE_LEN is a PUF response length in bytes
+    for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
+        printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
+    }
+
+    printf("\n");
+    uint8_t h512[64];
+
+    sha512_stream(PUF_RESPONSE, PUF_RESPONSE_LEN, h512);
+    print_hex("SHA512", h512, sizeof(h512));
+    clean_puf_response();
+    memcpy(key_output, h512, AES_256);
+    return true;
+}
+
+void reset(int miliseconds){
+    printf("RESET ... ... ... \n");
+    vTaskDelay(miliseconds / portTICK_PERIOD_MS);
+    esp_restart();
+}
+
+
 void app_main(void)
 {
     printf("***** THIS IS MY TEST FOR SECURE STORAGE REGION *****\n");
      // CREATE AES OBJECT 
-    uint8_t key[AES_256] = {
-        0x60,0x3d,0xeb,0x10,0x15,0xca,0x71,0xbe,
-        0x2b,0x73,0xae,0xf0,0x85,0x7d,0x77,0x81,
-        0x60,0x3d,0xeb,0x10,0x15,0xca,0x71,0xbe,
-        0x2b,0x73,0xae,0xf0,0x85,0x7d,0x77,0x81, 
-    };
+    uint8_t key[AES_256];
+    derive_key_from_puf(&key[0]);
+    print_hex("AES KEY", key, AES_256);
 
+    //************ PROCESS */
     // CBC needs a fresh unpredictable IV per encryption; store/transmit IV alongside ciphertext.
     uint8_t iv[IV_AES];
     esp_fill_random(iv, sizeof(IV_AES));
     struct aes_256_obj *aes = malloc(sizeof(struct aes_256_obj));
     create_aes_256_obj(aes, &key[0],&iv[0]);
 
-    char *msg = "THIS IS AN EXAMPLE OF SECURE STORAGE REGION";
-    const uint8_t *plaintext = (uint8_t *)msg;
-    size_t plaintext_len = strlen(msg);
 
-    write_secure_storage_region(plaintext, plaintext_len, "TEST", aes);
+    // // WRITE TO SECURE STORAGE
+    // char *msg = "THIS IS AN EXAMPLE OF SECURE STORAGE REGION";
+    // const uint8_t *plaintext = (uint8_t *)msg;
+    // size_t plaintext_len = strlen(msg);
+    // write_secure_storage_region(plaintext, plaintext_len, "TEST", aes);
 
-    //retrieve text
+    // WRITE TO SECURE STORAGE
+    // char *msg = "THIS IS MY SECURE STORAGE";
+    // const uint8_t *plaintext = (uint8_t *)msg;
+    // size_t plaintext_len = strlen(msg);
+    // write_secure_storage_region(plaintext, plaintext_len, "TEST2", aes);
+
+    //READ FROM SECURE STORAGE
     uint8_t *plain = NULL;
     size_t plain_len = 0;
 
     esp_err_t err = read_secure_storage_region_alloc("TEST", aes, &plain, &plain_len);
-    
     ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
+    err = read_secure_storage_region_alloc("TEST2", aes, &plain, &plain_len);
+
+    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
+     // get general information of the partition
+    general_partition_info(Secure_Store_Partition);
+    reset(3000);
+
+}
+
+
+
+void RTC_IRAM_ATTR esp_wake_deep_sleep(void) {
+    esp_default_wake_deep_sleep();
+    puflib_wake_up_stub(); // needs to be called somewhere in wake up stub
 }

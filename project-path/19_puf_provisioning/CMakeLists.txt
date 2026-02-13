@@ -3,4 +3,4 @@
 cmake_minimum_required(VERSION 3.16)
 set(EXTRA_COMPONENT_DIRS /home/alejandro/puf_copy/esp32_puflib)
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
-project(18_secure_storage_region)
+project(19_puf_provisioning)

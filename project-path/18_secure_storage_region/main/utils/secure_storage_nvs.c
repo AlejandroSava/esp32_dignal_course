@@ -128,6 +128,7 @@ void print_secure_storage_structure(alex_secstore_record_t *self)
 
     /* ESP-IDF hexdump helper (logs buffer in hex). */
     ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", self->data, self->data_size, ESP_LOG_INFO);
+    printf("\n");
 }
 
 /**
