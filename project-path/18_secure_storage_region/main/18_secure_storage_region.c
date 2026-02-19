@@ -210,7 +210,7 @@ void app_main(void)
     derive_key_from_puf(&key[0]);
     print_hex("AES KEY", key, AES_256);
 
-    //************ PROCESS */
+    // **** PROCESS */
     // CBC needs a fresh unpredictable IV per encryption; store/transmit IV alongside ciphertext.
     uint8_t iv[IV_AES];
     esp_fill_random(iv, sizeof(IV_AES));
