@@ -6,7 +6,14 @@
 #include "nvs_flash.h"
 #include "wifi.h"
 #include "esp_http_client.h"
+#include "mbedtls/base64.h"
+#include "indcpa.h"
+#include "kem.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
 #define TAG "HTTP_ESP32"
+
 void http_get_and_read(void)
 {
     esp_http_client_config_t config = {
@@ -43,6 +50,15 @@ void http_get_and_read(void)
     }
 
     esp_http_client_cleanup(client);
+}
+
+void print_hex(const char *label, const uint8_t *data, size_t len) {
+    printf("%s (%zu bytes):\n", label, len);
+    for (size_t i = 0; i < len; i++) {
+        printf("0x%02X, ", data[i]);      // two hex digits
+        if ((i + 1) % 16 == 0) printf("\n");  // newline every 16 bytes
+    }
+    printf("\n");
 }
 
 void http_get_read_body()
@@ -111,14 +127,73 @@ void http_get_read_body()
     ESP_LOGI(TAG, "Response (first 200 chars): %.*s", (total > 200 ? 200 : total), buf);
     printf("HTTP_Response: %s\n", buf);
 
-    free(buf);
     esp_http_client_close(client);
     esp_http_client_cleanup(client);
+
+    // decode the base 64 
+    // allocate memory for the base64 decode
+    
+    uint8_t *pk_decode_b64_output = NULL; 
+    size_t pk_decode_len = 0;
+    size_t olen;
+
+    /* First get required size */
+    mbedtls_base64_decode(NULL, 0, &olen, (const unsigned char *)buf , strlen(buf));
+
+    /* Allocate */
+    pk_decode_len = olen;
+    pk_decode_b64_output = malloc(pk_decode_len + 1);
+    
+    /* Encode */
+    mbedtls_base64_decode(pk_decode_b64_output, pk_decode_len, &olen, (const unsigned char *)buf, strlen(buf));
+
+    // Print decoded IV (hex)
+    printf("Decoded pk: ");
+    for (int i = 0; i < pk_decode_len; i++) printf("%02X", pk_decode_b64_output[i]);
+        printf("\n");
+    printf("\n");
+    printf("The size is: %d\n", pk_decode_len);
+    /*Remember to deallocate the memory */
+
+    uint8_t *ct = malloc(CRYPTO_CIPHERTEXTBYTES);
+    uint8_t *key_b = malloc(CRYPTO_BYTES);
+    printf("2 -------- CRYPTO_KEM_ENC ENCRYPTION ----------- \n");
+    crypto_kem_enc(ct, key_b, pk_decode_b64_output);
+
+   // print_hex("Ciphertext (ct)", ct, CRYPTO_CIPHERTEXTBYTES);
+    print_hex("Shared Key B", key_b, CRYPTO_BYTES);
+
+    free(ct);
+    free(key_b);
+    free(buf);
+    free(pk_decode_b64_output);    
+
+
+}
+
+// void app_main(void)
+// {
+//     // NVS is required by Wi-Fi
+//     esp_err_t ret = nvs_flash_init();
+//     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+//         ESP_ERROR_CHECK(nvs_flash_erase());
+//         ESP_ERROR_CHECK(nvs_flash_init());
+//     }
+
+//     wifi_init_sta();
+//     //http_get_and_read();
+//     http_get_read_body();
+// }
+
+
+static void kyber_http_task(void *arg)
+{
+    http_get_read_body();
+    vTaskDelete(NULL);
 }
 
 void app_main(void)
 {
-    // NVS is required by Wi-Fi
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
         ESP_ERROR_CHECK(nvs_flash_erase());
@@ -126,6 +201,7 @@ void app_main(void)
     }
 
     wifi_init_sta();
-    http_get_and_read();
-    http_get_read_body();
+
+    // Give crypto room: 16KB or even 24KB if needed
+    xTaskCreate(kyber_http_task, "kyber_http", 16384, NULL, 5, NULL);
 }
