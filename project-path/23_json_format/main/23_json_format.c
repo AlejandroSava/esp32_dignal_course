@@ -29,7 +29,7 @@ void create_json_example(){
 
 void app_main(void){   
     uint8_t iv[IV_AES];
-    esp_fill_random(iv, sizeof(IV_AES));
+    esp_fill_random(iv, IV_AES);
     print_hex("IV SIZE", iv, IV_AES);
 
     char *iv_b64 = NULL; 

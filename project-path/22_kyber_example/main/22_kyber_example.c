@@ -160,26 +160,65 @@ void test_kyber_kem(void *pvParameters) {
     }
 }
 
+// void app_main(void)
+// {
+//     BaseType_t xReturned;
+//     TaskHandle_t xHandle = NULL;
+
+//     /* Create the task, storing the handle. */
+//     xReturned = xTaskCreatePinnedToCore(
+//                     test_kyber_kem,       /* Function that implements the task. */
+//                     "NAME",          /* Text name for the task. */
+//                     20000,      /* Stack size in words, not bytes. */
+//                     ( void * ) 1,    /* Parameter passed into the task. */
+//                     MAIN_TASK_PRIORITY, /* Priority at which the task is created. */
+//                     &xHandle, /* Used to pass out the created task's handle. */
+//                     (BaseType_t) 0); /* Core ID */     
+
+//     if( xReturned == pdPASS )
+//     {
+//         /* The task was created.  Use the task's handle to delete the task. */
+//         //vTaskDelete( xHandle );
+//     }
+
+//     return;
+// }
+
 void app_main(void)
 {
-    BaseType_t xReturned;
-    TaskHandle_t xHandle = NULL;
+    uint8_t *pk = malloc(CRYPTO_PUBLICKEYBYTES);
+    uint8_t *sk = malloc(CRYPTO_SECRETKEYBYTES);
+    uint8_t *ct = malloc(CRYPTO_CIPHERTEXTBYTES);
+    uint8_t *key_a = malloc(CRYPTO_BYTES);
+    uint8_t *key_b = malloc(CRYPTO_BYTES);
 
-    /* Create the task, storing the handle. */
-    xReturned = xTaskCreatePinnedToCore(
-                    test_kyber_kem,       /* Function that implements the task. */
-                    "NAME",          /* Text name for the task. */
-                    20000,      /* Stack size in words, not bytes. */
-                    ( void * ) 1,    /* Parameter passed into the task. */
-                    MAIN_TASK_PRIORITY, /* Priority at which the task is created. */
-                    &xHandle, /* Used to pass out the created task's handle. */
-                    (BaseType_t) 0); /* Core ID */     
+    
+    clear_parameters("Public Key (pk)", pk, CRYPTO_PUBLICKEYBYTES);
+    clear_parameters("Secret Key (sk)", sk, CRYPTO_SECRETKEYBYTES);
+    clear_parameters("Ciphertext (ct)", ct, CRYPTO_CIPHERTEXTBYTES);
+    clear_parameters("Shared Key A", key_a, CRYPTO_BYTES);
+    clear_parameters("Shared Key B", key_b, CRYPTO_BYTES);
 
-    if( xReturned == pdPASS )
-    {
-        /* The task was created.  Use the task's handle to delete the task. */
-        //vTaskDelete( xHandle );
-    }
+    //Alice generates a public key
+    crypto_kem_keypair(pk, sk);
 
-    return;
+
+    //Bob derives a secret key and creates a response
+
+    printf("2 -------- CRYPTO_KEM_ENC ENCRYPTION ----------- \n");
+    crypto_kem_enc(ct, key_b, pk);
+    
+
+    //Alice uses Bobs response to get her shared key
+    crypto_kem_dec(key_a, ct, sk);
+
+    // PRINT CURRENT STATUS
+    print_hex("Public Key (pk)", pk, CRYPTO_PUBLICKEYBYTES);
+    print_hex("Secret Key (sk)", sk, CRYPTO_SECRETKEYBYTES);
+    print_hex("Ciphertext (ct)", ct, CRYPTO_CIPHERTEXTBYTES);
+    print_hex("Shared Key A", key_a, CRYPTO_BYTES);
+    print_hex("Shared Key B", key_b, CRYPTO_BYTES);
+
+    // print parameters: 
+    
 }
