@@ -70,7 +70,7 @@ int base64_encode_alloc(const uint8_t *in, size_t in_len, char **out_b64)
 int base64_decode_alloc(const char *in_b64, uint8_t **out, size_t *out_len)
 {
     if (!in_b64 || !out || !out_len){
-        ESP_LOGE(BASE64_TAG, "There is not a valiad in or in_len"); 
+        ESP_LOGE(BASE64_TAG, "There is not a valid in or in_len"); 
         return -1;
     }
 
