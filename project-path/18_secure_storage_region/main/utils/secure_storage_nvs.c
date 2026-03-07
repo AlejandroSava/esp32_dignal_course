@@ -15,6 +15,14 @@
 
 #include "secure_storage_nvs.h"
 
+
+
+void update_hmac_secure_storage_structure(alex_secstore_record_t *self, uint8_t *hmac){
+    /* Store HMAC size and copy HMAC tag bytes. */
+    self->hmac_size = ALEX_SS_HMAC_LEN;
+    memcpy(self->hmac, hmac, self->hmac_size);
+}
+
 /**
  * @brief Populate a secure storage record structure.
  *
@@ -36,6 +44,8 @@
  *
  * @return None.
  */
+
+
 void create_secure_storage_structure(alex_secstore_record_t *self,
                                     uint32_t counter,
                                     uint8_t *iv,

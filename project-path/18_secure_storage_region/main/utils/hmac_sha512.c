@@ -3,6 +3,7 @@
 #include "hmac_sha512.h"
 #include "esp_log.h"
 #include "mbedtls/md.h"
+#include "secure_storage_nvs.h"
 
 /**
  * @brief Compute an HMAC using SHA-512.
@@ -127,4 +128,139 @@ bool verify_hmac(const uint8_t *hmac_1, const uint8_t *hmac_2, size_t len)
 
     ESP_LOGI(TAG_HMAC, "HMAC Verification Success");
     return true;
+}
+
+//  create the get hmac function for a specific alex_secure_store
+
+int get_hmac_secure_storage(const uint8_t *key, size_t key_size,
+                            const alex_secstore_record_t *self,
+                            uint8_t *hmac)
+{
+    int ret = 0;
+
+    /* Validate input parameters */
+    if (key == NULL || self == NULL || hmac == NULL) {
+        return -1;
+    }
+
+    if (key_size == 0) {
+        return -2;
+    }
+
+    /* Validate fixed-size fields before using them */
+    if (self->iv_size != ALEX_SS_IV_LEN) {
+        ESP_LOGE(TAG_HMAC, "Invalid IV size: %lu", (unsigned long)self->iv_size);
+        return -3;
+    }
+
+    /* Retrieve SHA-512 message-digest information */
+    const mbedtls_md_info_t *md = mbedtls_md_info_from_type(MBEDTLS_MD_SHA512);
+    if (md == NULL) {
+        ESP_LOGE(TAG_HMAC, "SHA-512 not available");
+        return -4;
+    }
+
+    /* Initialize the mbedTLS message-digest context */
+    mbedtls_md_context_t ctx;
+    mbedtls_md_init(&ctx);
+
+    /* Configure the context for HMAC operation */
+    ret = mbedtls_md_setup(&ctx, md, 1);
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "md_setup failed: %d", ret);
+        goto cleanup;
+    }
+
+    /* Start the HMAC computation using the secret key */
+    ret = mbedtls_md_hmac_starts(&ctx, key, key_size);
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_starts failed: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add header */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 self->header,
+                                 sizeof(self->header));
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in header: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add version */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 (const unsigned char *)&self->version,
+                                 sizeof(self->version));
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in version: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add reserved */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 (const unsigned char *)&self->reserved,
+                                 sizeof(self->reserved));
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in reserved: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add counter */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 (const unsigned char *)&self->counter,
+                                 sizeof(self->counter));
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in counter: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add IV size */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 (const unsigned char *)&self->iv_size,
+                                 sizeof(self->iv_size));
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in iv_size: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add IV */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 self->iv,
+                                 self->iv_size);
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in iv: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add data size */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 (const unsigned char *)&self->data_size,
+                                 sizeof(self->data_size));
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in data_size: %d", ret);
+        goto cleanup;
+    }
+
+    /* Add encrypted data */
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 self->data,
+                                 self->data_size);
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_update failed in data: %d", ret);
+        goto cleanup;
+    }
+
+    /* Finalize the HMAC computation */
+    ret = mbedtls_md_hmac_finish(&ctx, hmac);
+    if (ret != 0) {
+        ESP_LOGE(TAG_HMAC, "hmac_finish failed: %d", ret);
+        goto cleanup;
+    }
+
+    ESP_LOGI(TAG_HMAC, "HMAC success");
+    ret = 0;
+
+cleanup:
+    mbedtls_md_free(&ctx);
+    return ret;
 }

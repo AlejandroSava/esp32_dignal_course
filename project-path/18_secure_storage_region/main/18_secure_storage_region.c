@@ -71,14 +71,20 @@ esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext
     }
     // get the hmac
     uint8_t hmac[ALEX_SS_HMAC_LEN];    
-    get_hmac(self_aes->key, AES_256, ciphertext, ciphertext_len, hmac);
+    //get_hmac(self_aes->key, AES_256, ciphertext, ciphertext_len, hmac);
+    memset(hmac, 0xff, ALEX_SS_HMAC_LEN);
 
     ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", hmac, HMAC_LEN, ESP_LOG_INFO);
     uint32_t counter = AES_COUNTER;
     // Create structure
     create_secure_storage_structure(secure_store, counter, self_aes->iv, hmac,
          (uint32_t)ciphertext_len, ciphertext);
-    
+
+    print_secure_storage_structure(secure_store);
+
+    //update the hmac
+    get_hmac_secure_storage(self_aes->key, AES_256, secure_store, hmac);
+    update_hmac_secure_storage_structure(secure_store, hmac);
     print_secure_storage_structure(secure_store);
 
 
@@ -133,7 +139,12 @@ esp_err_t read_secure_storage_region_alloc(
     //    bool ok = verify_hmac(computed_hmac, got->hmac, ALEX_SS_HMAC_LEN);
     //
     // For now, I'll keep your style but mark it clearly:
-    bool ok = verify_hmac(/*expected*/ got->hmac, /*stored*/ got->hmac, ALEX_SS_HMAC_LEN);
+    uint8_t hmac_recovered[ALEX_SS_HMAC_LEN];
+    get_hmac_secure_storage(self_aes->key, AES_256, got, hmac_recovered);
+    print_secure_storage_structure(got);
+    ESP_LOG_BUFFER_HEXDUMP("HEX HMAC", hmac_recovered, HMAC_LEN, ESP_LOG_INFO);
+
+    bool ok = verify_hmac(/*expected*/ hmac_recovered, /*stored*/ got->hmac, ALEX_SS_HMAC_LEN);
     if (!ok) { err = ESP_FAIL; goto cleanup; }
 
     // 5) Decrypt ciphertext stored in the record
@@ -167,32 +178,51 @@ cleanup:
     return err;
 }
 
-bool derive_key_from_puf(uint8_t *key_output){
-    puflib_init(); // needs to be called first in app_main
-
-    // condition will be true, if a PUF response is ready (useful after a restart)
-    if(PUF_STATE != RESPONSE_READY) {
-        bool puf_ok = get_puf_response();
-        if(!puf_ok) {
-            printf("CANNOT RETRIEVE THE PUFF!!!!\n");
-            get_puf_response_reset(); // the device resets now and the app starts again from app_main
-            return false;
-        }
-    }
-
-    // PUF_RESPONSE_LEN is a PUF response length in bytes
-    for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
-        printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
-    }
-
-    printf("\n");
+bool derive_key_from_puf(uint8_t *key_output, bool source_puf){
     uint8_t h512[64];
 
-    sha512_stream(PUF_RESPONSE, PUF_RESPONSE_LEN, h512);
-    print_hex("SHA512", h512, sizeof(h512));
-    clean_puf_response();
-    memcpy(key_output, h512, AES_256);
-    return true;
+    if (source_puf){
+        puflib_init(); // needs to be called first in app_main
+
+        // condition will be true, if a PUF response is ready (useful after a restart)
+        if(PUF_STATE != RESPONSE_READY) {
+            bool puf_ok = get_puf_response();
+            if(!puf_ok) {
+                printf("CANNOT RETRIEVE THE PUFF!!!!\n");
+                get_puf_response_reset(); // the device resets now and the app starts again from app_main
+                return false;
+            }
+        }
+
+        // PUF_RESPONSE_LEN is a PUF response length in bytes
+        for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
+            printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
+        }
+
+        printf("\n");
+        
+
+        sha512_stream(PUF_RESPONSE, PUF_RESPONSE_LEN, h512);
+        print_hex("SHA512", h512, sizeof(h512));
+        clean_puf_response();
+        memcpy(key_output, h512, AES_256);
+        return true;
+    }
+
+    else{
+
+        printf("TESTING SECURE STORAGE... HARDCODING KEY\n");
+        uint8_t key[16] = {
+        0x10,0x22,0x33,0x44,0x55,0x66,0x77,0x88,
+        0x99,0xaa,0xbb,0xcc,0xdd,0xee,0xff,0x01
+        }; 
+
+        sha512_stream(key, 16, h512);
+        print_hex("SHA512", h512, sizeof(h512));
+        memcpy(key_output, h512, AES_256);
+        return false;
+    }
+
 }
 
 void reset(int miliseconds){
@@ -207,7 +237,7 @@ void app_main(void)
     printf("***** THIS IS MY TEST FOR SECURE STORAGE REGION *****\n");
      // CREATE AES OBJECT 
     uint8_t key[AES_256];
-    derive_key_from_puf(&key[0]);
+    derive_key_from_puf(&key[0], false); // change to true after provisioning
     print_hex("AES KEY", key, AES_256);
 
     // **** PROCESS */
@@ -219,16 +249,16 @@ void app_main(void)
 
 
     // // WRITE TO SECURE STORAGE
-    // char *msg = "THIS IS AN EXAMPLE OF SECURE STORAGE REGION";
-    // const uint8_t *plaintext = (uint8_t *)msg;
-    // size_t plaintext_len = strlen(msg);
-    // write_secure_storage_region(plaintext, plaintext_len, "TEST", aes);
+    char *msg = "THIS IS AN EXAMPLE OF SECURE STORAGE REGION";
+    const uint8_t *plaintext = (uint8_t *)msg;
+    size_t plaintext_len = strlen(msg);
+    write_secure_storage_region(plaintext, plaintext_len, "TEST", aes);
 
     // WRITE TO SECURE STORAGE
-    // char *msg = "THIS IS MY SECURE STORAGE";
-    // const uint8_t *plaintext = (uint8_t *)msg;
-    // size_t plaintext_len = strlen(msg);
-    // write_secure_storage_region(plaintext, plaintext_len, "TEST2", aes);
+    // char *msg_2 = "THIS IS MY SECURE STORAGE";
+    // const uint8_t *plaintext_2 = (uint8_t *)msg_2;
+    // size_t plaintext_len_2 = strlen(msg_2);
+    // write_secure_storage_region(plaintext_2, plaintext_len_2, "TEST2", aes);
 
     //READ FROM SECURE STORAGE
     uint8_t *plain = NULL;
@@ -236,12 +266,11 @@ void app_main(void)
 
     esp_err_t err = read_secure_storage_region_alloc("TEST", aes, &plain, &plain_len);
     ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
-    err = read_secure_storage_region_alloc("TEST2", aes, &plain, &plain_len);
-
-    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
+    // err = read_secure_storage_region_alloc("TEST2", aes, &plain, &plain_len);
+    // ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
      // get general information of the partition
     general_partition_info(Secure_Store_Partition);
-    reset(3000);
+    //reset(3000);
 
 }
 

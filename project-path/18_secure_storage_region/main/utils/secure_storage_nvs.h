@@ -232,4 +232,6 @@ void general_partition_info(const char *name_partition);
  */
 void error_handler(esp_err_t err);
 
+void update_hmac_secure_storage_structure(alex_secstore_record_t *self, uint8_t *hmac);
+
 #endif /* SECURE_STORAGE_NVS_H */
