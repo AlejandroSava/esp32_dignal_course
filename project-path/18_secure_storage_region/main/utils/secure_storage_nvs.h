@@ -48,7 +48,7 @@
 #define Secure_Store_NameSpace    "SecureStore"
 
 /** @brief Logging tag for secure storage */
-#define Tag_SS                    "[SECURE_STORE]:"
+#define Tag_SS                    "[SECURE_STORE]"
 
 
 /* ======================= Secure Storage Record ======================= */

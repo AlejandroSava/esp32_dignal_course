@@ -20,8 +20,6 @@
 #define AES_COUNTER 1 // PENDING TO DEFINE THE USAGE OF IT
 #define TAG_SSR "[SECURE STORAGE REGION]"
 
-//TODO: CORRECT THE CONST IN THE ENCRYPT DATA FORMAT FOR PLAINTEXT TO AVOID THE CASTING
-
 // ----- helpers -----
 static void print_hex(const char *label, const uint8_t *buf, size_t len)
 {
@@ -41,114 +39,267 @@ void sha512_stream(const uint8_t *data, size_t len, uint8_t out[64])
     mbedtls_sha512_free(&ctx);
 }
 
-
 esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext_len,
-    const char *key_name_nvs, struct aes_256_obj *self_aes){
-
-
-    // 1. ***** encrypt the plaint text to set in the nvs structure
-    uint8_t *ciphertext = NULL; //remember to free this space of memmory
-    size_t ciphertext_len = 0;
-
-    int ret = aes_cbc_encrypt_pkcs7(self_aes->key, self_aes->keybits, self_aes->iv,
-                plaintext, plaintext_len, &ciphertext, &ciphertext_len);
-    if (ret != 0) {
-        ESP_LOGE(TAG_SSR, "Encrypt failed: -0x%04X", (unsigned)(-ret));
-        free(ciphertext);
-        return ESP_FAIL;
-    }
-
-    print_hex("CIPHERTEXT", ciphertext, ciphertext_len);
-    
-    
-    // 2 ***** create secure storage structure for the encrypted text
-    size_t total_size = sizeof(alex_secstore_record_t) + ciphertext_len; //total size
-    alex_secstore_record_t *secure_store = malloc(total_size); 
-    if (secure_store == NULL) {
-        ESP_LOGE(TAG_SSR, "malloc failed");
-        free(ciphertext);
-        return ESP_FAIL;       
-    }
-    // get the hmac
-    uint8_t hmac[ALEX_SS_HMAC_LEN];    
-    //get_hmac(self_aes->key, AES_256, ciphertext, ciphertext_len, hmac);
-    memset(hmac, 0xff, ALEX_SS_HMAC_LEN);
-
-    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", hmac, HMAC_LEN, ESP_LOG_INFO);
-    uint32_t counter = AES_COUNTER;
-    // Create structure
-    create_secure_storage_structure(secure_store, counter, self_aes->iv, hmac,
-         (uint32_t)ciphertext_len, ciphertext);
-
-    print_secure_storage_structure(secure_store);
-
-    //update the hmac
-    get_hmac_secure_storage(self_aes->key, AES_256, secure_store, hmac);
-    update_hmac_secure_storage_structure(secure_store, hmac);
-    print_secure_storage_structure(secure_store);
-
-
-    //3 ****** writing the secure storage
-
-    ESP_ERROR_CHECK(sec_store_nvs_init());
-    esp_err_t err = sec_store_write_blob(key_name_nvs, secure_store, total_size);
-    free(ciphertext); // free the memory allocation
-    ESP_LOGI(TAG_SSR, "WRITE TO SECURE STORAGE REGION SUCESS!!!!");
-    return err;
-}
-
-
-esp_err_t read_secure_storage_region_alloc(
-    const char *key_name_nvs,
-    struct aes_256_obj *self_aes,
-    uint8_t **out_plain,
-    size_t *out_plain_len)
+                                      const char *key_name_nvs,
+                                      struct aes_256_obj *self_aes)
 {
+    esp_err_t status = ESP_OK;
     esp_err_t err = ESP_OK;
+    int ret = 0;
 
-    void *read_buf = NULL;
-    size_t read_len = 0;
+    uint8_t *ciphertext = NULL;
+    size_t ciphertext_len = 0;
+    alex_secstore_record_t *secure_store = NULL;
 
-    uint8_t *decrypted = NULL;
-    size_t decrypted_len = 0;
-
-    if (!key_name_nvs || !self_aes || !out_plain || !out_plain_len) {
+    // 0. Verify the entries
+    if (plaintext == NULL || key_name_nvs == NULL || self_aes == NULL) {
         return ESP_ERR_INVALID_ARG;
     }
 
-    // Always initialize outputs (caller can safely free/check)
+    /* 1. Encrypt plaintext to save in the secure storage structure */
+    ret = aes_cbc_encrypt_pkcs7(self_aes->key,
+                                self_aes->keybits,
+                                self_aes->iv,
+                                plaintext,
+                                plaintext_len,
+                                &ciphertext,
+                                &ciphertext_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_SSR, "Encrypt failed: -0x%04X", (unsigned)(-ret));
+        status = ESP_FAIL;
+        goto cleanup;
+    }
+
+    /* 2. Create the secure storage structure for the encrypted text */
+    size_t total_size = sizeof(alex_secstore_record_t) + ciphertext_len;
+
+    secure_store = malloc(total_size);
+    if (secure_store == NULL) {
+        ESP_LOGE(TAG_SSR, "Malloc failed");
+        status = ESP_ERR_NO_MEM;
+        goto cleanup;
+    }
+
+    /* 2.1 Temporary HMAC value */
+    uint8_t hmac[ALEX_SS_HMAC_LEN];
+    memset(hmac, 0xff, sizeof(hmac));
+
+    uint32_t counter = AES_COUNTER;
+
+    /* 2.2 Create the structure */
+    create_secure_storage_structure(secure_store,
+                                    counter,
+                                    self_aes->iv,
+                                    hmac,
+                                    (uint32_t)ciphertext_len,
+                                    ciphertext);
+
+    /* 2.3 Compute and update the real HMAC */
+    ret = get_hmac_secure_storage(self_aes->key,
+                                  AES_256,
+                                  secure_store,
+                                  hmac);
+    if (ret != 0) {
+        ESP_LOGE(TAG_SSR, "HMAC generation failed: %d", ret);
+        status = ESP_FAIL;
+        goto cleanup;
+    }
+
+    update_hmac_secure_storage_structure(secure_store, hmac);
+    
+    /* 3. Write the secure storage blob into NVS */
+    err = sec_store_nvs_init();
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_SSR, "sec_store_nvs_init failed: %s", esp_err_to_name(err));
+        status = err;
+        goto cleanup;
+    }
+
+    err = sec_store_write_blob(key_name_nvs, secure_store, total_size);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_SSR, "Error writing blob to NVS: %s", esp_err_to_name(err));
+        status = err;
+        goto cleanup;
+    }
+
+    ESP_LOGI(TAG_SSR, "Write to secure storage region success");
+    print_secure_storage_structure(secure_store);
+    
+cleanup:
+    free(ciphertext);
+    free(secure_store);
+    return status;
+}
+
+/**
+ * @brief Read, verify, and decrypt a Secure Storage record from NVS.
+ *
+ * This function retrieves a secure storage blob from NVS, validates its
+ * structure, verifies its HMAC for integrity/authenticity,
+ * decrypts the stored ciphertext, and returns the plaintext in a newly
+ * allocated buffer.
+ *
+ * The function uses a callee-allocates style:
+ * - The plaintext buffer is allocated inside this function.
+ * - On success, ownership of the plaintext buffer is transferred to the caller.
+ * - The caller is responsible for freeing the returned buffer.
+ *
+ * Processing flow:
+ *  1. Validate input arguments.
+ *  2. Initialize output parameters.
+ *  3. Initialize NVS for secure storage access.
+ *  4. Read the stored blob from NVS.
+ *  5. Validate that the blob is large enough for the fixed record header.
+ *  6. Validate the full expected size of the record.
+ *  7. Recompute and verify the stored HMAC.
+ *  8. Decrypt the ciphertext using AES-CBC with PKCS7 unpadding.
+ *  9. Return the plaintext buffer to the caller.
+ *  10. Cleanup temporary resources
+ * @param[in]  key_name_nvs   NVS key name where the secure record is stored.
+ * @param[in]  self_aes       AES context object containing key material.
+ * @param[out] out_plain      Pointer to the output plaintext buffer.
+ *                            On success, this receives an allocated buffer
+ *                            that must be freed by the caller.
+ * @param[out] out_plain_len  Pointer to the output plaintext length.
+ *
+ * @return
+ *      - ESP_OK on success
+ *      - ESP_ERR_INVALID_ARG if any input parameter is invalid
+ *      - ESP_ERR_INVALID_SIZE if the stored record size/metadata is invalid
+ *      - ESP_FAIL if HMAC verification or decryption fails
+ *      - Other ESP-IDF error codes propagated from NVS/helper functions
+ *
+ * @note On failure, *out_plain is set to NULL and *out_plain_len to 0.
+ * @note The caller must free(*out_plain) after successful use.
+ */
+esp_err_t read_secure_storage_region_alloc(const char *key_name_nvs,
+                                           struct aes_256_obj *self_aes,
+                                           uint8_t **out_plain,
+                                           size_t *out_plain_len)
+{
+    /* Generic function return status */
+    esp_err_t err = ESP_OK;
+
+    /* Raw buffer that will hold the complete record read from NVS */
+    void *read_buf = NULL;
+    size_t read_len = 0;
+
+    /* Buffer that will hold the decrypted plaintext */
+    uint8_t *decrypted = NULL;
+    size_t decrypted_len = 0;
+
+    /* ---------------------------------------------------------
+     * 1. Validate function arguments
+     * ---------------------------------------------------------
+     * All pointers required by the function must be valid.
+     * This prevents null pointer dereferences later.
+     */
+    if (!key_name_nvs || !self_aes || !out_plain || !out_plain_len) {
+        ESP_LOGE(TAG_SSR, "Invalid Arguments");
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    /* ---------------------------------------------------------
+     * 2. Initialize outputs to safe defaults
+     * ---------------------------------------------------------
+     * This guarantees that, even on failure, the caller receives:
+     *   - a NULL plaintext pointer
+     *   - a plaintext length of 0
+     */
     *out_plain = NULL;
     *out_plain_len = 0;
 
-    // 1) Read record (malloc inside secstore_read_blob_alloc)
-    ESP_ERROR_CHECK(sec_store_nvs_init()); //start the nvs
-    err = secstore_read_blob_alloc(key_name_nvs, &read_buf, &read_len);
-    if (err != ESP_OK) goto cleanup;
+    /* ---------------------------------------------------------
+     * 3. Initialize NVS access for secure storage
+     * ---------------------------------------------------------
+     * This prepares the NVS partition/namespace before attempting
+     * to read the secure storage blob.
+     */
+    err = sec_store_nvs_init();
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_SSR, "sec_store_nvs_init failed: %s", esp_err_to_name(err));
+        goto cleanup;
+    }
 
-    // 2) Interpret bytes as your record struct
+    /* ---------------------------------------------------------
+     * 4. Read the raw secure storage blob from NVS
+     * ---------------------------------------------------------
+     * secstore_read_blob_alloc() allocates memory for read_buf,
+     * so this function becomes responsible for freeing it.
+     */
+    err = secstore_read_blob_alloc(key_name_nvs, &read_buf, &read_len);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_SSR, "Error reading blob: %s", esp_err_to_name(err));
+        goto cleanup;
+    }
+
+    /* ---------------------------------------------------------
+     * 5. Validate minimum blob size
+     * ---------------------------------------------------------
+     * Before interpreting the raw bytes as alex_secstore_record_t,
+     * ensure that the buffer is at least large enough to contain
+     * the fixed part of the structure.
+     *
+     * This prevents reading fields like got->data_size from a
+     * truncated/corrupted buffer.
+     */
+    if (read_len < sizeof(alex_secstore_record_t)) {
+        err = ESP_ERR_INVALID_SIZE;
+        ESP_LOGE(TAG_SSR, "Blob too small");
+        goto cleanup;
+    }
+
+    /* Now it is safe to interpret the buffer as a record */
     alex_secstore_record_t *got = (alex_secstore_record_t *)read_buf;
 
-    // 3) Validate size (avoid OOB / corrupted records)
+    /* Expected total size of the stored record:
+     *   fixed metadata + encrypted payload
+     */
     size_t expected = sizeof(alex_secstore_record_t) + (size_t)got->data_size;
+
+    /* ---------------------------------------------------------
+     * 6. Verify the record length against the expected size
+     * ---------------------------------------------------------
+     * This confirms that the blob length matches the record
+     * definition and helps detect corruption or truncation.
+     */
     err = verify_secstore_read(&read_buf, read_len, expected);
-    if (err != ESP_OK) goto cleanup;
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_SSR, "Verify blob structure failed: %s", esp_err_to_name(err));
+        goto cleanup;
+    }
 
-    // 4) Verify HMAC (IMPORTANT: you must compute expected HMAC, then compare)
-    //    Example assumes you already have a function:
-    //    err = compute_hmac_for_record(got, computed_hmac);
-    //    bool ok = verify_hmac(computed_hmac, got->hmac, ALEX_SS_HMAC_LEN);
-    //
-    // For now, I'll keep your style but mark it clearly:
+
+    /* ---------------------------------------------------------
+     * 7. Recompute the HMAC over the secure storage record
+     * ---------------------------------------------------------
+     * The recomputed HMAC is compared against the stored HMAC to
+     * validate integrity and authenticity of the record contents.
+     */
     uint8_t hmac_recovered[ALEX_SS_HMAC_LEN];
-    get_hmac_secure_storage(self_aes->key, AES_256, got, hmac_recovered);
-    print_secure_storage_structure(got);
-    ESP_LOG_BUFFER_HEXDUMP("HEX HMAC", hmac_recovered, HMAC_LEN, ESP_LOG_INFO);
 
-    bool ok = verify_hmac(/*expected*/ hmac_recovered, /*stored*/ got->hmac, ALEX_SS_HMAC_LEN);
-    if (!ok) { err = ESP_FAIL; goto cleanup; }
+    if (get_hmac_secure_storage(self_aes->key, AES_256, got, hmac_recovered) != 0) {
+        ESP_LOGE(TAG_SSR, "Failed to compute HMAC");
+        err = ESP_FAIL;
+        goto cleanup;
+    }
 
-    // 5) Decrypt ciphertext stored in the record
-    //    Assuming ciphertext = got->data and len = got->data_size, IV = got->iv
+    /* Compare calculated HMAC with the HMAC stored in the record */
+    if (!verify_hmac(hmac_recovered, got->hmac, ALEX_SS_HMAC_LEN)) {
+        ESP_LOGE(TAG_SSR, "HMAC mismatch");
+        err = ESP_FAIL;
+        goto cleanup;
+    }
+
+    /* ---------------------------------------------------------
+     * 8. Decrypt the ciphertext
+     * ---------------------------------------------------------
+     * The ciphertext is stored in got->data with length got->data_size.
+     * The IV is stored in got->iv.
+     *
+     * Output plaintext is dynamically allocated by
+     * aes_cbc_decrypt_pkcs7().
+     */
     int ret = aes_cbc_decrypt_pkcs7(
         self_aes->key,
         self_aes->keybits,
@@ -164,17 +315,38 @@ esp_err_t read_secure_storage_region_alloc(
         err = ESP_FAIL;
         goto cleanup;
     }
-
-
     print_secure_storage_structure(got);
-    // 6) Return ownership of decrypted buffer to caller
+
+    /* ---------------------------------------------------------
+     * 9. Transfer ownership of plaintext to caller
+     * ---------------------------------------------------------
+     * At this point, decryption succeeded. The caller becomes
+     * responsible for freeing the plaintext buffer.
+     */
     *out_plain = decrypted;
     *out_plain_len = decrypted_len;
-    decrypted = NULL; // prevent freeing it in cleanup
+
+    /* Prevent cleanup from freeing memory now owned by caller */
+    decrypted = NULL;
 
 cleanup:
-    if (decrypted) free(decrypted);
-    if (read_buf) free(read_buf);
+    /* ---------------------------------------------------------
+     * 10. Cleanup temporary resources
+     * ---------------------------------------------------------
+     * Free any allocated buffers that are still owned here.
+     */
+
+    /* If decryption buffer still belongs to this function, free it */
+    if (decrypted) {
+        memset(decrypted, 0, decrypted_len);
+        free(decrypted);
+    }
+
+    /* Free the raw NVS blob buffer */
+    if (read_buf) {
+        free(read_buf);
+    }
+
     return err;
 }
 
@@ -210,7 +382,6 @@ bool derive_key_from_puf(uint8_t *key_output, bool source_puf){
     }
 
     else{
-
         printf("TESTING SECURE STORAGE... HARDCODING KEY\n");
         uint8_t key[16] = {
         0x10,0x22,0x33,0x44,0x55,0x66,0x77,0x88,
@@ -231,28 +402,23 @@ void reset(int miliseconds){
     esp_restart();
 }
 
-
 void app_main(void)
 {
     printf("***** THIS IS MY TEST FOR SECURE STORAGE REGION *****\n");
      // CREATE AES OBJECT 
     uint8_t key[AES_256];
-    derive_key_from_puf(&key[0], false); // change to true after provisioning
-    print_hex("AES KEY", key, AES_256);
-
-    // **** PROCESS */
-    // CBC needs a fresh unpredictable IV per encryption; store/transmit IV alongside ciphertext.
+    derive_key_from_puf(&key[0], true); // change to true after provisioning
     uint8_t iv[IV_AES];
     esp_fill_random(iv, sizeof(IV_AES));
+
     struct aes_256_obj *aes = malloc(sizeof(struct aes_256_obj));
     create_aes_256_obj(aes, &key[0],&iv[0]);
 
-
     // // WRITE TO SECURE STORAGE
-    char *msg = "THIS IS AN EXAMPLE OF SECURE STORAGE REGION";
-    const uint8_t *plaintext = (uint8_t *)msg;
-    size_t plaintext_len = strlen(msg);
-    write_secure_storage_region(plaintext, plaintext_len, "TEST", aes);
+    // char *msg = "THIS IS AN EXAMPLE OF SECURE STORAGE REGION USING FOR TESTING";
+    // const uint8_t *plaintext = (uint8_t *)msg;
+    // size_t plaintext_len = strlen(msg);
+    // write_secure_storage_region(plaintext, plaintext_len, "TEST", aes);
 
     // WRITE TO SECURE STORAGE
     // char *msg_2 = "THIS IS MY SECURE STORAGE";
@@ -265,18 +431,17 @@ void app_main(void)
     size_t plain_len = 0;
 
     esp_err_t err = read_secure_storage_region_alloc("TEST", aes, &plain, &plain_len);
-    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Decrypt Data", plain, plain_len, ESP_LOG_INFO);
     // err = read_secure_storage_region_alloc("TEST2", aes, &plain, &plain_len);
     // ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain, plain_len, ESP_LOG_INFO);
      // get general information of the partition
     general_partition_info(Secure_Store_Partition);
+    free(plain);
     //reset(3000);
 
 }
 
-
-
-void RTC_IRAM_ATTR esp_wake_deep_sleep(void) {
+void RTC_IRAM_ATTR esp_wake_deep_sleep(void) { // this function is needed
     esp_default_wake_deep_sleep();
     puflib_wake_up_stub(); // needs to be called somewhere in wake up stub
 }

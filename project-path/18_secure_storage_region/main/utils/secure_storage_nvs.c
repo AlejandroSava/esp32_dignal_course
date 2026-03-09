@@ -16,7 +16,6 @@
 #include "secure_storage_nvs.h"
 
 
-
 void update_hmac_secure_storage_structure(alex_secstore_record_t *self, uint8_t *hmac){
     /* Store HMAC size and copy HMAC tag bytes. */
     self->hmac_size = ALEX_SS_HMAC_LEN;
@@ -137,8 +136,8 @@ void print_secure_storage_structure(alex_secstore_record_t *self)
     printf("\n");
 
     /* ESP-IDF hexdump helper (logs buffer in hex). */
-    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", self->data, self->data_size, ESP_LOG_INFO);
-    printf("\n");
+    ESP_LOG_BUFFER_HEXDUMP("DATA HEX FORMAT", self->data, self->data_size, ESP_LOG_INFO);
+    printf("--------------------------------------------\n");
 }
 
 /**
