@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "5_doubly_linked_list",
-    "project_version":    "53550a1-dirty",
+    "project_version":    "63b8877-dirty",
     "project_path":       "/home/alejandro/esp32_dignal_course/c_course/5_doubly_linked_list",
     "idf_path":           "/home/alejandro/esp/esp-idf",
     "build_dir":          "/home/alejandro/esp32_dignal_course/c_course/5_doubly_linked_list/build",

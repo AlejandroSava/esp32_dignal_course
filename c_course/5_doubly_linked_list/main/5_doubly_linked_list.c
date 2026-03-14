@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 struct node {
     int data;
@@ -45,7 +46,7 @@ void add_first(struct node **head, int value) {
     new_node->prev = NULL;
     new_node->next = *head;
 
-    if (*head != NULL) { // if there is more elements
+    if (*head != NULL) { // if there is more elements in the list
         (*head)->prev = new_node;
     }
 
@@ -68,6 +69,65 @@ void free_list(struct node *head) {
     }
 }
 
+bool find_node_value(struct node *head, int value){   
+    struct node *temp = head;
+    while(temp->next != NULL){
+        if (temp->data == value)
+            return true;
+        temp = temp->next;
+    }
+
+    return false; 
+    
+}
+
+void erase_node_value(struct node **head, int value){
+    // the next function tries to delete the value node
+
+    if (*head == NULL ){
+        printf("The List is empty, nothing to delete\n");
+        return;
+    }
+    
+    struct node *temp = *head;
+    //0 . Find the value 
+    while(temp != NULL && temp->data != value){
+        temp = temp->next;
+    }
+    // 1. The value is not found
+    if(temp == NULL){
+        printf("Value not found ");
+        return;
+    }
+
+    // 2. The value is in the head
+    else if (temp == *head){
+        *head = (*head)->next;
+        (*head)->prev = NULL;
+        free(temp);
+        return;
+    }
+
+    // 3. The value is the latest
+
+    else if(temp->next == NULL){
+        temp->prev->next = NULL;
+        free(temp);
+        return;
+    }
+
+    // 4. The node is in the middle
+
+    else {
+
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        free(temp);
+        return;
+    }
+
+}
+
 void app_main(void) {
     struct node *head = NULL;
     printf("---- CREATING LIST ELEMENTS TO last -----\n");
@@ -80,6 +140,12 @@ void app_main(void) {
         add_first(&head, i);
     }
 
+    print_list(head);
+    printf("find the value of %d: %s \n", 5, find_node_value(head, 5) ? "true" : "false");
+    printf("find the value of %d: %s \n", 30, find_node_value(head, 30) ? "true" : "false");
+    erase_node_value(&head, 10);
+    erase_node_value(&head, 20);
+    printf("\n");
     print_list(head);
     free_list(head);
 }
