@@ -12,7 +12,8 @@ idf_component_register(
         #"example_transaction.c"
         #"secure_storage.c"
         #"write_secure_storage.c"
-        "read_secure_storage.c"
+        #"read_secure_storage.c"
+        "protocol_transaction.c"
     INCLUDE_DIRS
         "./components/include"
         "./components/src"

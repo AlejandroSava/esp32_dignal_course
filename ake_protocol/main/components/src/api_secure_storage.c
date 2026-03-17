@@ -439,6 +439,7 @@ bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool sour
         memcpy(key_output, h512, AES_256);
         memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
         self->init = true;
+        self->puf_hash_len = PUF_HASH_LEN;
         ESP_LOGI(TAG_SSR, "PUF Object Updated");
         return true;
     }
@@ -456,6 +457,7 @@ bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool sour
         if(self != NULL){
             memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
             self->init = false;
+            self->puf_hash_len = PUF_HASH_LEN;
             ESP_LOGI(TAG_SSR, "PUF Object Updated --> hardcoding object, PUF FEAK!");
         }
         else

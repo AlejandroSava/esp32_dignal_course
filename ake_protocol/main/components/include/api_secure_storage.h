@@ -9,7 +9,8 @@
 #define PUF_HASH_LEN 64
 
 struct puf_object{
-    bool init; 
+    bool init;
+    size_t puf_hash_len;
     uint8_t hash[PUF_HASH_LEN];
 };
 
