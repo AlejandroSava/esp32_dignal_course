@@ -1,0 +1,146 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.elf /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+[0;32mI (210) cpu_start: Multicore app[0m
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 16 2026 13:12:44[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=0b808h ( 47112) map[0m
+[0;32mI (113) esp_image: segment 1: paddr=0009b830 vaddr=3ffb0000 size=02930h ( 10544) load[0m
+[0;32mI (117) esp_image: segment 2: paddr=0009e168 vaddr=40080000 size=01eb0h (  7856) load[0m
+[0;32mI (121) esp_image: segment 3: paddr=000a0020 vaddr=400d0020 size=1a710h (108304) map[0m
+[0;32mI (163) esp_image: segment 4: paddr=000ba738 vaddr=40081eb0 size=0cfcch ( 53196) load[0m
+[0;32mI (184) esp_image: segment 5: paddr=000c770c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (184) esp_image: segment 6: paddr=000c774c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (196) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (196) boot: Disabling RNG early entropy source...[0m
+[0;32mI (210) cpu_start: Multicore app[0m
+[0;32mI (218) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (218) cpu_start: Pro cpu start user code[0m
+[0;32mI (218) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (220) app_init: Application information:[0m
+[0;32mI (224) app_init: Project name:     ake_protocol[0m
+[0;32mI (228) app_init: App version:      a95ead0-dirty[0m
+[0;32mI (233) app_init: Compile time:     Mar 16 2026 13:12:36[0m
+[0;32mI (238) app_init: ELF file SHA256:  0314ed240...[0m
+[0;32mI (242) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (248) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (251) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (255) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (259) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (266) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (271) heap_init: At 3FFB4268 len 0002BD98 (175 KiB): DRAM[0m
+[0;32mI (276) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (281) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (287) heap_init: At 4008EE7C len 00011184 (68 KiB): IRAM[0m
+[0;33mW (293) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (305) spi_flash: detected chip: generic[0m
+[0;32mI (309) spi_flash: flash io: dio[0m
+[0;32mI (312) main_task: Started on CPU0[0m
+[0;32mI (322) main_task: Calling app_main()[0m
+***** THIS IS MY TEST FOR SECURE STORAGE REGION *****
+TESTING SECURE STORAGE... HARDCODING KEY
+[0;32mI (322) [SECURE STORAGE REGION]: There isn't PUF object[0m
+[0;32mI (332) [HMAC]: HMAC success[0m
+[0;32mI (432) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (432) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 74F164E71BC140F392FDE8C3E5CA2E27
+[+]HMAC Size: 64
+[+]HMAC: 9138AF6AA2704811EC61E7FFF2D93DA60DC3E4481D9E3B53A6AC0532535524DE60D9E5DAC33A8E796095A31E12C8A54214328DAFA1BC0B3AC406B3CB4C9085A7
+[+]Data Size: 64
+[+]Data: 8B1D068F4089D2B17372A439AF19994962B18B482BA5ABEEB6750DCBCEA6CE6E77DD9094B14FE960CBAECBF459F51FC9FD5416705C7C6A6ECACD2E5F2F721940
+[0;32mI (472) DATA HEX FORMAT: 0x3ffbc698   8b 1d 06 8f 40 89 d2 b1  73 72 a4 39 af 19 99 49  |....@...sr.9...I|[0m
+[0;32mI (482) DATA HEX FORMAT: 0x3ffbc6a8   62 b1 8b 48 2b a5 ab ee  b6 75 0d cb ce a6 ce 6e  |b..H+....u.....n|[0m
+[0;32mI (492) DATA HEX FORMAT: 0x3ffbc6b8   77 dd 90 94 b1 4f e9 60  cb ae cb f4 59 f5 1f c9  |w....O.`....Y...|[0m
+[0;32mI (502) DATA HEX FORMAT: 0x3ffbc6c8   fd 54 16 70 5c 7c 6a 6e  ca cd 2e 5f 2f 72 19 40  |.T.p\|jn..._/r.@|[0m
+--------------------------------------------
+[0;32mI (512) [HMAC]: HMAC success[0m
+[0;32mI (532) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (532) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 55104CC140B5D6B499E3286FBF84C0C7
+[+]HMAC Size: 64
+[+]HMAC: FE534480305F69EA785213E0DC01FD938B26FB27DCC332A75AFEBE3219F9DE97C9C325182741AF69EDCFEAFAC89871F99503A74F946EA374296A39F26CC77C94
+[+]Data Size: 32
+[+]Data: 442CFFE28C2A8039649049CEDE8E9B53ED99B609FCD585DCFE6C42E85CFEC9E8
+[0;32mI (572) DATA HEX FORMAT: 0x3ffbc698   44 2c ff e2 8c 2a 80 39  64 90 49 ce de 8e 9b 53  |D,...*.9d.I....S|[0m
+[0;32mI (582) DATA HEX FORMAT: 0x3ffbc6a8   ed 99 b6 09 fc d5 85 dc  fe 6c 42 e8 5c fe c9 e8  |.........lB.\...|[0m
+--------------------------------------------
+[0;32mI (592) [SECURE_STORE]: Read OK (len=180)[0m
+[0;32mI (592) [SECURE_STORE]: Verification success[0m
+[0;32mI (602) [HMAC]: HMAC success[0m
+[0;32mI (602) [HMAC]: HMAC Verification Success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 74F164E71BC140F392FDE8C3E5CA2E27
+[+]HMAC Size: 64
+[+]HMAC: 9138AF6AA2704811EC61E7FFF2D93DA60DC3E4481D9E3B53A6AC0532535524DE60D9E5DAC33A8E796095A31E12C8A54214328DAFA1BC0B3AC406B3CB4C9085A7
+[+]Data Size: 64
+[+]Data: 8B1D068F4089D2B17372A439AF19994962B18B482BA5ABEEB6750DCBCEA6CE6E77DD9094B14FE960CBAECBF459F51FC9FD5416705C7C6A6ECACD2E5F2F721940
+[0;32mI (642) DATA HEX FORMAT: 0x3ffbc698   8b 1d 06 8f 40 89 d2 b1  73 72 a4 39 af 19 99 49  |....@...sr.9...I|[0m
+[0;32mI (652) DATA HEX FORMAT: 0x3ffbc6a8   62 b1 8b 48 2b a5 ab ee  b6 75 0d cb ce a6 ce 6e  |b..H+....u.....n|[0m
+[0;32mI (662) DATA HEX FORMAT: 0x3ffbc6b8   77 dd 90 94 b1 4f e9 60  cb ae cb f4 59 f5 1f c9  |w....O.`....Y...|[0m
+[0;32mI (672) DATA HEX FORMAT: 0x3ffbc6c8   fd 54 16 70 5c 7c 6a 6e  ca cd 2e 5f 2f 72 19 40  |.T.p\|jn..._/r.@|[0m
+--------------------------------------------
+[0;32mI (692) Decrypt Data: 0x3ffc22a0   54 48 49 53 20 49 53 20  41 4e 20 45 58 41 4d 50  |THIS IS AN EXAMP|[0m
+[0;32mI (702) Decrypt Data: 0x3ffc22b0   4c 45 20 4f 46 20 53 45  43 55 52 45 20 53 54 4f  |LE OF SECURE STO|[0m
+[0;32mI (702) Decrypt Data: 0x3ffc22c0   52 41 47 45 20 52 45 47  49 4f 4e 20 55 53 49 4e  |RAGE REGION USIN|[0m
+[0;32mI (712) Decrypt Data: 0x3ffc22d0   47 20 46 4f 52 20 54 45  53 54 49 4e 47           |G FOR TESTING|[0m
+[0;32mI (722) [SECURE_STORE]: Read OK (len=148)[0m
+[0;32mI (732) [SECURE_STORE]: Verification success[0m
+[0;32mI (732) [HMAC]: HMAC success[0m
+[0;32mI (732) [HMAC]: HMAC Verification Success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 55104CC140B5D6B499E3286FBF84C0C7
+[+]HMAC Size: 64
+[+]HMAC: FE534480305F69EA785213E0DC01FD938B26FB27DCC332A75AFEBE3219F9DE97C9C325182741AF69EDCFEAFAC89871F99503A74F946EA374296A39F26CC77C94
+[+]Data Size: 32
+[+]Data: 442CFFE28C2A8039649049CEDE8E9B53ED99B609FCD585DCFE6C42E85CFEC9E8
+[0;32mI (772) DATA HEX FORMAT: 0x3ffbc698   44 2c ff e2 8c 2a 80 39  64 90 49 ce de 8e 9b 53  |D,...*.9d.I....S|[0m
+[0;32mI (782) DATA HEX FORMAT: 0x3ffbc6a8   ed 99 b6 09 fc d5 85 dc  fe 6c 42 e8 5c fe c9 e8  |.........lB.\...|[0m
+--------------------------------------------
+[0;32mI (802) HEX FORMAT: 0x3ffaff88   54 48 49 53 20 49 53 20  4d 59 20 53 45 43 55 52  |THIS IS MY SECUR|[0m
+[0;32mI (802) HEX FORMAT: 0x3ffaff98   45 20 53 54 4f 52 41 47  45                       |E STORAGE|[0m
+[0;32mI (812) [SECURE_STORE]: used: 60, free: 32196, total: 32256, namespace count: 1[0m
+[0;32mI (822) main_task: Returned from app_main()[0m

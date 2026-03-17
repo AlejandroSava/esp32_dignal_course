@@ -1,0 +1,2 @@
+source /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/gdbinit/symbols
+source /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/gdbinit/connect

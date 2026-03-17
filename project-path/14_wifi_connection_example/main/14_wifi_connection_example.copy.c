@@ -13,6 +13,7 @@
 #define WIFI_PASS "8765171390"
 // ============================
 
+static const char *TAG = "wifi_example";
 
 static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0

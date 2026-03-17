@@ -1,0 +1,20 @@
+idf_component_register(
+    SRCS
+        "./components/src/aes_cbc.c"
+        "./components/src/api_secure_storage.c"
+        "./components/src/hmac_sha512.c"
+        "./components/src/pkcs_7.c"
+        "./components/src/secure_storage_nvs.c"
+        "./components/src/wake_stub.c"
+        "./components/src/base64.c"
+        "./components/src/http_transactions.c"
+        "./components/src/wifi.c"
+        #"example_transaction.c"
+        #"secure_storage.c"
+        #"write_secure_storage.c"
+        "read_secure_storage.c"
+    INCLUDE_DIRS
+        "./components/include"
+        "./components/src"
+        "."
+)

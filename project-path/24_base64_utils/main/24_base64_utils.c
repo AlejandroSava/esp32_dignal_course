@@ -8,6 +8,8 @@
 #include "http_transactions.h"
 #include "esp_system.h"
 #include "esp_mac.h"
+#include "indcpa.h"
+#include "kem.h"
 
 struct request_step_0{
     int step;
@@ -79,7 +81,7 @@ void app_main(void)
     if (err == ESP_OK){
         printf("The server is returning data\n");
         printf("Data Response: %s\n", response_output);
-        free(response_output);
+        
     }
 
     /*----- HOW TO PARSE THE DATA -----*/
@@ -102,11 +104,50 @@ void app_main(void)
 
     ESP_LOG_BUFFER_HEXDUMP("PK Kyber FORMAT RECOVERED", kypber_pk_b64_output, kypber_pk_b64_len, ESP_LOG_INFO);
 
+    uint8_t *ct = malloc(CRYPTO_CIPHERTEXTBYTES);
+    uint8_t *key_b = malloc(CRYPTO_BYTES);
+
+    printf("2 -------- CRYPTO_KEM_ENC ENCRYPTION ----------- \n");
+    crypto_kem_enc(ct, key_b, kypber_pk_b64_output);
+
+    ESP_LOG_BUFFER_HEXDUMP("Cipher Text: ", ct, CRYPTO_CIPHERTEXTBYTES, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Key B: ", key_b, CRYPTO_BYTES, ESP_LOG_INFO);
+
+
+
     // // Free Memory
     cJSON_Delete(root);
+    free(response_output);
     free(json_string);
-    
+    free(receive_json_data);
 
+    // ********** second transaction step 1
+
+    // convert the ct to base64
+    
+    char *ct_b64;
+    if (base64_encode_alloc(ct, CRYPTO_CIPHERTEXTBYTES, &ct_b64) == 0) {
+        ESP_LOGI("Kyber", "Cipher Text(b64): %s", ct_b64);        
+    }
+
+    cJSON *root_2 = cJSON_CreateObject();
+    cJSON_AddNumberToObject(root_2, "Step", 1);
+    cJSON_AddStringToObject(root_2, "Cipher_Text", ct_b64);   
+
+    char *json_string_2 = cJSON_Print(root_2);
+    printf("%s\n", json_string_2);
+
+    char *response_output_2;
+    size_t response_length_2;
+    err = http_post_and_get_response(http_post,
+                                     json_string_2,
+                                     &response_output_2,
+                                     &response_length_2);
+    if (err == ESP_OK){
+        printf("The server is returning data\n");
+        printf("Data Response: %s\n", response_output_2);
+        
+    }
 
     // char *device_name = "Alex_ESP32";
     // size_t iv_lenght = 16;
