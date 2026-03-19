@@ -30,6 +30,7 @@ struct request_step_0{
     /* base 64 params*/
     char *mac_address_b64;
     char *puf_hash_b64;
+    char *http_address;
 };
 
 struct response_step_0{
@@ -52,7 +53,7 @@ void init_nvs(){
         ESP_LOGI("NVS_INIT", "Starting NVS INIT");  
 }
 
-bool build_request_0(struct request_step_0 *self, struct puf_object *puf)
+bool build_request_0(struct request_step_0 *self, struct puf_object *puf, char *http_post)
 {
     if (self == NULL || puf == NULL) {
         ESP_LOGE(TAG_PROT, "Invalid input parameter");
@@ -77,6 +78,7 @@ bool build_request_0(struct request_step_0 *self, struct puf_object *puf)
 
     self->step = 0;
     self->device_name = DEVICE_NAME;
+    self->http_address = http_post;
 
     self->mac_address_size = 6;
     self->mac_address = malloc(self->mac_address_size);
@@ -129,6 +131,52 @@ bool build_request_0(struct request_step_0 *self, struct puf_object *puf)
     return true;
 }
 
+bool send_http_request_0(struct request_step_0 *self, char **response_output, size_t *response_length)
+{
+    if (self == NULL || response_output == NULL || response_length == NULL) {
+        return false;
+    }
+
+    cJSON *root = cJSON_CreateObject();
+    if (root == NULL) {
+        return false;
+    }
+
+    cJSON_AddNumberToObject(root, "Step", self->step);
+    cJSON_AddStringToObject(root, "Device_Name", self->device_name);
+    cJSON_AddStringToObject(root, "Mac_Address", self->mac_address_b64);
+    cJSON_AddStringToObject(root, "PUF_Hash", self->puf_hash_b64);
+
+    char *json_string = cJSON_Print(root);
+    if (json_string == NULL) {
+        cJSON_Delete(root);
+        return false;
+    }
+
+    printf("%s\n", json_string);
+
+    esp_err_t err = http_post_and_get_response(
+        "http://192.168.1.236:5000/example",
+        json_string,
+        response_output,
+        response_length
+    );
+
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_PROT, "HTTP Error transaction in step 0");
+        cJSON_Delete(root);
+        free(json_string);
+        return false;
+    }
+
+    printf("The server is returning data\n");
+    printf("Data Response: %s\n", *response_output);
+
+    cJSON_Delete(root);
+    free(json_string);
+    return true;
+}
+
 void free_request_0(struct request_step_0 *self)
 {
     if (self == NULL) {
@@ -147,6 +195,7 @@ void free_request_0(struct request_step_0 *self)
 
     self->mac_address_size = 0;
     self->puf_hash_size = 0;
+    free(self);
 }
 
 void app_main(void)
@@ -170,10 +219,14 @@ void app_main(void)
 
     ESP_LOGI(TAG_PROT, "****** PROTOCOL TRANSACTIONS ******");
     struct request_step_0 *req_step_0 = malloc(sizeof(struct request_step_0 ));
-    if (build_request_0(req_step_0, puf_obj) == false){
+    char *http_post = "http://192.168.1.236:5000/example"; 
+    if (build_request_0(req_step_0, puf_obj, http_post) == false){
         ESP_LOGE(TAG_PROT, "Build request 0 Failure");
         return;
     }
+    char *response_output = NULL;
+    size_t response_length = 0;
+    bool resp_0 = send_http_request_0(req_step_0, &response_output, &response_length);
     free_request_0(req_step_0);
-    free(req_step_0);
+    free(response_output);
 }
