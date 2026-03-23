@@ -799,7 +799,7 @@
     "MBEDTLS_HARDWARE_SHA": true,
     "MBEDTLS_HAVE_TIME": true,
     "MBEDTLS_HAVE_TIME_DATE": false,
-    "MBEDTLS_HKDF_C": false,
+    "MBEDTLS_HKDF_C": true,
     "MBEDTLS_HMAC_DRBG_C": true,
     "MBEDTLS_INTERNAL_MEM_ALLOC": true,
     "MBEDTLS_KEY_EXCHANGE_DHE_RSA": true,

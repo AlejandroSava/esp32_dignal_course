@@ -2883,8 +2883,7 @@ CONFIG_MBEDTLS_ECDSA_DETERMINISTIC=y
 #
 # Hash functions
 #
-# default:
-# CONFIG_MBEDTLS_HKDF_C is not set
+CONFIG_MBEDTLS_HKDF_C=y
 # default:
 # CONFIG_MBEDTLS_POLY1305_C is not set
 # default:

@@ -445,7 +445,7 @@ bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool sour
     }
 
     else{
-        printf("TESTING SECURE STORAGE... HARDCODING KEY\n");
+        ESP_LOGW(TAG_SSR, "TESTING SECURE STORAGE... HARDCODING KEY");
         uint8_t key[16] = {
         0x10,0x22,0x33,0x44,0x55,0x66,0x77,0x88,
         0x99,0xaa,0xbb,0xcc,0xdd,0xee,0xff,0x01
@@ -458,10 +458,10 @@ bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool sour
             memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
             self->init = false;
             self->puf_hash_len = PUF_HASH_LEN;
-            ESP_LOGI(TAG_SSR, "PUF Object Updated --> hardcoding object, PUF FEAK!");
+            ESP_LOGW(TAG_SSR, "PUF Object Updated --> hardcoding object, PUF FEAK!");
         }
         else
-            ESP_LOGI(TAG_SSR, "There isn't PUF object");
+            ESP_LOGW(TAG_SSR, "There isn't PUF object");
         return true;
     }
 

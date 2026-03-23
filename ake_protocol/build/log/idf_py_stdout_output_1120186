@@ -1,0 +1,1374 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.elf /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (385) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (499) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (522) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (560) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (624) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca724, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (824) wifi:enable tsf[0m
+[0;32mI (824) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (824) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (924) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (924) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (924) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (934) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (944) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (954) wifi:connected with INFINITUM2.0_2.4, aid = 5, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (954) wifi:security: WPA2-PSK, phy: bgn, rssi: -47[0m
+[0;32mI (964) wifi:pm start, type: 1[0m
+
+[0;32mI (964) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (1014) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (2024) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (2024) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (2024) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (2024) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (2034) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (2034) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (2044) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (2054) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (2054) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2064) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2064) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (2074) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (10114) esp-tls: [sock=54] select() timeout[0m
+[1;31mE (10114) transport_base: Failed to open a new connection: 32774[0m
+[1;31mE (10114) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (10114) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (10114) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060630  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc6038  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x00002782  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x0000001c  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (624) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca724, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (824) wifi:enable tsf[0m
+[0;32mI (824) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (824) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (844) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (844) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (864) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (884) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (894) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (914) wifi:connected with INFINITUM2.0_2.4, aid = 5, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (914) wifi:security: WPA2-PSK, phy: bgn, rssi: -46[0m
+[0;32mI (924) wifi:pm start, type: 1[0m
+
+[0;32mI (924) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (944) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1974) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1974) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1974) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (1974) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (1984) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (1994) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1994) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (2004) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (2004) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2014) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2014) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (2024) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (10064) esp-tls: [sock=54] select() timeout[0m
+[1;31mE (10064) transport_base: Failed to open a new connection: 32774[0m
+[1;31mE (10064) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (10064) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (10074) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060230  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc6038  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x0000275a  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x0000001c  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (624) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca724, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (824) wifi:enable tsf[0m
+[0;32mI (824) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (824) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (834) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (844) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (844) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (854) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (864) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (874) wifi:connected with INFINITUM2.0_2.4, aid = 5, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (874) wifi:security: WPA2-PSK, phy: bgn, rssi: -45[0m
+[0;32mI (884) wifi:pm start, type: 1[0m
+
+[0;32mI (884) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (924) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1934) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1934) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1934) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (1934) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (1944) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (1954) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1954) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (1964) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (1964) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (1974) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (1974) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (1984) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (10024) esp-tls: [sock=54] select() timeout[0m
+[1;31mE (10024) transport_base: Failed to open a new connection: 32774[0m
+[1;31mE (10024) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (10024) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (10024) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060630  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc6038  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x00002728  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x0000001c  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (624) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca724, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (844) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (844) wifi:enable tsf[0m
+[0;32mI (844) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (854) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (864) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (864) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (874) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (874) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (884) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (904) wifi:connected with INFINITUM2.0_2.4, aid = 5, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (904) wifi:security: WPA2-PSK, phy: bgn, rssi: -44[0m
+[0;32mI (904) wifi:pm start, type: 1[0m
+
+[0;32mI (904) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (944) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1964) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1964) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1964) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (1964) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (1974) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (1984) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1984) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (1994) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (1994) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2004) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2004) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (2014) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (10054) esp-tls: [sock=54] select() timeout[0m
+[1;31mE (10054) transport_base: Failed to open a new connection: 32774[0m
+[1;31mE (10054) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (10054) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (10064) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060030  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc6038  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x00002750  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x0000001c  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (614) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca6a0, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (824) wifi:enable tsf[0m
+[0;32mI (824) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (824) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (844) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (844) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (844) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (854) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (864) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (874) wifi:connected with INFINITUM2.0_2.4, aid = 5, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (874) wifi:security: WPA2-PSK, phy: bgn, rssi: -45[0m
+[0;32mI (884) wifi:pm start, type: 1[0m
+
+[0;32mI (884) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (924) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1934) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1934) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1934) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (1934) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (1944) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (1944) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1954) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (1964) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (1964) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (1974) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (1974) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (1984) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (10024) esp-tls: [sock=54] select() timeout[0m
+[1;31mE (10024) transport_base: Failed to open a new connection: 32774[0m
+[1;31mE (10024) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (10024) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (10024) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060230  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc5fb4  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x00002728  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x0000001c  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (614) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca6a0, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (824) wifi:enable tsf[0m
+[0;32mI (824) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (824) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (844) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (844) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (854) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (854) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (864) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (874) wifi:connected with INFINITUM2.0_2.4, aid = 5, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (874) wifi:security: WPA2-PSK, phy: bgn, rssi: -47[0m
+[0;32mI (884) wifi:pm start, type: 1[0m
+
+[0;32mI (884) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (944) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1944) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1944) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1944) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (1944) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (1954) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (1954) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1964) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (1974) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (1974) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (1984) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (1984) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (1994) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (6484) esp-tls: [sock=54] delayed connect error: Connection reset by peer[0m
+[1;31mE (6484) transport_base: Failed to open a new connection: 32772[0m
+[1;31mE (6484) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (6494) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (6494) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060430  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc5fb4  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x0000195e  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x0000001c  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (614) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca6a0, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (824) wifi:enable tsf[0m
+[0;32mI (824) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (824) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (844) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (844) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (844) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (854) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (864) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (874) wifi:connected with INFINITUM2.0_2.4, aid = 3, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (874) wifi:security: WPA2-PSK, phy: bgn, rssi: -46[0m
+[0;32mI (884) wifi:pm start, type: 1[0m
+
+[0;32mI (884) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (914) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1954) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1954) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1954) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (1954) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (1964) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (1964) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1974) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (1984) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (1984) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (1994) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (1994) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (2004) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (2044) esp-tls: [sock=54] delayed connect error: Connection reset by peer[0m
+[1;31mE (2054) transport_base: Failed to open a new connection: 32772[0m
+[1;31mE (2054) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (2054) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (2064) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060c30  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc5fb4  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x00000810  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x00000020  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (614) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca6a0, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (724) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (884) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (884) wifi:enable tsf[0m
+[0;32mI (894) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (894) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (904) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (904) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (914) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (914) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (924) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (944) wifi:connected with INFINITUM2.0_2.4, aid = 3, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (944) wifi:security: WPA2-PSK, phy: bgn, rssi: -47[0m
+[0;32mI (954) wifi:pm start, type: 1[0m
+
+[0;32mI (954) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (1014) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (2004) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (2004) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (2004) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (2004) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (2014) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (2014) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (2024) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (2034) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (2034) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2044) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2044) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (2054) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[1;31mE (2094) esp-tls: [sock=54] delayed connect error: Connection reset by peer[0m
+[1;31mE (2094) transport_base: Failed to open a new connection: 32772[0m
+[1;31mE (2094) HTTP_CLIENT: Connection failed, sock < 0[0m
+[1;31mE (2104) HTTP_POST: HTTP POST failed: ESP_ERR_HTTP_CONNECT[0m
+[1;31mE (2104) [AKE PROTOCOL]: HTTP Error transaction in step 0[0m
+Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  0 register dump:
+PC      : 0x400d8366  PS      : 0x00060c30  A0      : 0x800d84bf  A1      : 0x3ffc1ec0  
+A2      : 0x3ffc5fb4  A3      : 0x00000000  A4      : 0x3ffc1f14  A5      : 0x00000000  
+A6      : 0x00000000  A7      : 0x00000000  A8      : 0x800d8366  A9      : 0x3ffc1ea0  
+A10     : 0x00000000  A11     : 0x3f4043e0  A12     : 0x3f404394  A13     : 0x00000838  
+A14     : 0x3f40414c  A15     : 0x00000010  SAR     : 0x00000020  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x00000014  LBEG    : 0x400014fd  LEND    : 0x4000150d  LCOUNT  : 0xfffffffc  
+
+
+Backtrace: 0x400d8363:0x3ffc1ec0 0x400d84bc:0x3ffc1ef0 0x40172bec:0x3ffc1f40 0x4008acfd:0x3ffc1f70
+
+
+
+
+ELF file SHA256: f25b97715
+
+Rebooting...
+ets Jul 29 2019 12:21:46
+
+rst:0xc (SW_CPU_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Mar 17 2026 00:50:48[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1fd04h (130308) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000afd2c vaddr=3ffb0000 size=002ech (   748) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a499ch (674204) map[0m
+[0;32mI (384) esp_image: segment 3: paddr=001549c4 vaddr=3ffb02ec size=0403ch ( 16444) load[0m
+[0;32mI (391) esp_image: segment 4: paddr=00158a08 vaddr=40080000 size=1941ch (103452) load[0m
+[0;32mI (433) esp_image: segment 5: paddr=00171e2c vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (433) esp_image: segment 6: paddr=00171e6c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (450) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (450) boot: Disabling RNG early entropy source...[0m
+[0;32mI (461) cpu_start: Multicore app[0m
+[0;32mI (469) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (469) cpu_start: Pro cpu start user code[0m
+[0;32mI (469) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (471) app_init: Application information:[0m
+[0;32mI (475) app_init: Project name:     ake_protocol[0m
+[0;32mI (479) app_init: App version:      a887702-dirty[0m
+[0;32mI (484) app_init: Compile time:     Mar 21 2026 20:45:38[0m
+[0;32mI (489) app_init: ELF file SHA256:  f25b97715...[0m
+[0;32mI (493) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (498) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (502) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (506) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (510) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (517) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (521) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (527) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (532) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (538) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;33mW (544) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (556) spi_flash: detected chip: generic[0m
+[0;32mI (559) spi_flash: flash io: dio[0m
+[0;32mI (564) main_task: Started on CPU0[0m
+[0;32mI (574) main_task: Calling app_main()[0m
+[0;32mI (574) [AKE PROTOCOL]: Initialize the NVS[0m
+[0;32mI (624) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (624) [AKE PROTOCOL]: Starting WiFi Driver[0m
+[0;32mI (634) wifi:wifi driver task: 3ffca724, prio:23, stack:6656, core=0[0m
+[0;32mI (664) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (664) wifi:wifi certification version: v7.0[0m
+[0;32mI (664) wifi:config NVS flash: enabled[0m
+[0;32mI (664) wifi:config nano formatting: disabled[0m
+[0;32mI (674) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (674) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (684) wifi:Init management short buffer num: 32[0m
+[0;32mI (684) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (694) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (694) wifi:Init static rx buffer num: 10[0m
+[0;32mI (694) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (704) wifi_init: rx ba win: 6[0m
+[0;32mI (704) wifi_init: accept mbox: 6[0m
+[0;32mI (704) wifi_init: tcpip mbox: 32[0m
+[0;32mI (714) wifi_init: udp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp mbox: 6[0m
+[0;32mI (714) wifi_init: tcp tx win: 5760[0m
+[0;32mI (724) wifi_init: tcp rx win: 5760[0m
+[0;32mI (724) wifi_init: tcp mss: 1440[0m
+[0;32mI (724) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (734) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (734) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (824) phy_init: Saving new calibration data due to checksum failure or outdated calibration data, mode(0)[0m
+[0;32mI (844) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (844) wifi:enable tsf[0m
+[0;32mI (844) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (854) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (864) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (864) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (864) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (874) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (884) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (894) wifi:connected with INFINITUM2.0_2.4, aid = 3, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (894) wifi:security: WPA2-PSK, phy: bgn, rssi: -44[0m
+[0;32mI (904) wifi:pm start, type: 1[0m
+
+[0;32mI (904) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (964) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (2174) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (2174) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (2174) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;32mI (2174) [AKE PROTOCOL]: Setting Parameter for PUF and Secure Storage Region[0m
+[0;33mW (2184) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;32mI (2184) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (2194) [AKE PROTOCOL]: ****** PROTOCOL TRANSACTIONS ******[0m
+[0;32mI (2204) [AKE PROTOCOL]: -------- [STEP 0] --------[0m
+[0;32mI (2204) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2214) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2214) [AKE PROTOCOL]: PUF_HASH(b64): g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A==[0m
+[0;32mI (2224) [AKE PROTOCOL]: MAC_ADDRESS(b64): 7OM0GjJI[0m
+{
+	"Step":	0,
+	"Device_Name":	"Alex_ESP32",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+The server is returning data
+Data Response: {
+  "Kyber_Pk": "gMKU7ZQwfglz5sq1d3KCk1QigfoVA3xYKoISXpG3g0W8gkBu7pWVoHQaolYJx1mjDClDhdys3THD7LJRWuBPHlWyFQSe3Sp+LvHKVwITTzwcCpkln6FmLFS0OZFPoTyX88iefLBPPAC3mHZZ1qhF0HCIBaw4iWwDR6RiMCHLXqsbNWiAr4oGJ1ZKZVAqhBFc5EWncDTB21eLmrTKD9BTD7DAOEXJwdWjGykPGvdsvDAAuxqs+5Ua9ySFUvwPtuy44StfVYF2zGLBOemec6GRYBSShbskyCxyAeG7tYGD8CaUiuVzxtAOVdeMoyUu5eECk3w8gqxCymBOlWIrG5NqsYllywkJqgEa8EtNJCu0JLPML1Z4gttb14KQtwHDIGS463SbrhUZhRJ3V1nDHwZHG/k0AqEs1tekQWaXd6ixUClFtwgF9dAQbYONUbpocyABGQSl6WMI4tR9qEdpSal/UuNSWuifyUOtMqcvdtsJLXNVQgyXzedUL4CRoSUKCwktXOOgBzoKdINRLNTH18Cf0NOAVFXCpbyxy/sWrfAPbxe55rZyixaA4jqnKfZTI8hsO9q24ZkoAauq4sJvlidjX2mCkDMOLSZe8oC2opqqg6RGsrxlhqrDZ0W0DIG3VDo+ACmUtieoWDhZ3/O0sYi9UjxU5zGEq1wq9WmTuXd2bvZP6rgcVipKwqZXRaVuAN1ugVONtmyh2PN1yTF+6kYJ1ymNqzsbAKbIXpq1CflB3sq1CTJF83w6qESwoHXIJ1edCOEuCdigCcRn25G4bWIHBuCm7HxfeDdX4SW2BtE9bnV6rUIm8/RnWBAR8iE9dYIveFpBnUsRPvwgFTIHuqaIoETKMwyzSmpPmyqfXlwzp9mMd5y/FkuryqpQ65dmOYZe/pe6RzdeoaC0E3qqsWkISBJjhhgzHkg3PPI+rnxpleJJ3aCAc7xJZRYCB1OfralAhdy32AcJxxnLH6NPnmy/YGCmWXUJqUkl/hhFMQNxHhpVwndJB8peCtqwsDsqx/S65wwFe8OiygtMjwErKmN3C9Ee2oxusPamLVibdJVfGnqbWJOCmKyDc1UjY5Yi3DXAedR+futOzJCoXXiWm9N1s8V8gOqxgAo3k8l89FJC1LcqLQOhybKH/5uiB9ap0ZunAkczSWYlvtuTmCINxARNatQVkAlExZqDkPVG1HzL4LkSG5wS5qJsp5iL68tjxfQaixVi+8oMdPMOBbrLHMTI5cqHClpmGTO8otImTcZheSdMBSwFW6aYy7tc+6KOZ+lcdUAEnsqqAOcE7nmuQeZelXxAWzh5opZff6QePXJg7jh4xZJM93g37KpQl1fLVdCUE1i7+jDLZxw28jNzRudolUkQCpyWLvmR93oUB8G5oBOQasorj8MOV8GCEfYqbAlq7+TLh6ky67IikjdlY/l74VCFvaIMFEiVPWB9MwNLxWYAccNoBFkariImCLId6Cw7K+RCdvtO9ODOKuBa75cpXQxsWvR8GvQk3/yR9CIflgG+iMBUmlnG3+rHLLW8GGpEoo/mdrO6Qb7oDyUqgZmLfotckDoXJ5QzIhjqc1a++yQ=",
+  "Kyber_Pk_Len": 1184,
+  "Server_Name": "IoT_Server",
+  "Step": 0
+}
+
+[0;32mI (2604) [AKE PROTOCOL]: Decoded bytes: 1184[0m
+[0;32mI (2614) [HMAC]: HMAC success[0m
+[0;32mI (2724) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2724) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 57332EAEBC248AF6B4473554F39B291E
+[+]HMAC Size: 64
+[+]HMAC: 8079130097B53E8699539F0138956315A91A4449D1429586922F980F5821D1001E4BB789CABC56CC4F6E911A21E8D613F2B469EA8D819CB827CA948F58A4BED4
+[+]Data Size: 1200
+[+]Data: 1276C8267606B63A53B6D132EB1125A2C58792EDC58DE20ADB56F0A7550D4123262D16BD74A951819D002F08B2A1B081BF7E4ED1B85E05F1EACD49E2280675D044E8DCCA944A54AB45FFADEFD95C485AB8A988D97AEBCE412E43C716725C87E8952303AAD28861EBA94E0B111442EFEED056E7E04A45CB1D4B9972C3D15A16224F585BD966A23B4DFF09669E6DCD6ED9447D7D11CE46E5096582B7E37CDAE3219A6A651C481F8E3D63BF9F9DD8E4A93D2F83EF950C220DA383E60FFB468E9598167C334E03DE844FD034010A560020AEFCC46598A512D4D1EA07EAE69EB2508BA00D1AA3384E6B78ECF0FBC0A9EEA3EAD51BEE0EA5B547CCEC82AF2EB476DF8D9723982A2E2560C28D1AB19419CD08E528FEECE33DC329BB8BFAF7B2F24B984EDED386946899D85B20372FCCC0AAA4D32BB664CB8E366096BC404664DD2A57E96CF3FBB5EB0542CAF3B6E8E2F5EA0DB8B2C47DC5F8A78EFEA6711A9A9819448C4732CD39D9B01C0619F192F78FA3B0F0C9FCF4EA654AD67AA0968AEFE8958561D51C5579746704CC28C04EC75E33BAB7E3D210AE64E52FD7BCAA374147EE123BB6D10C498DC0AB209BFB16884122036B27FB66CDB27FC43B256A5A0D7B5F9E0B7978176404F270D75B2DE0279F989B962CDAA17B7976D642A974E702BECD50E718A886A9BBB7D2A964C05F11BCF4B9E6230E0941A213B5B0CDA1127EFB91D5E38CFDC376A8C35A51B1BBAAFC6632B58503E9D089F66B75290586C15833B4F86476292A7F84B6DAB966602C87C961C780544DF9C1D614F66733E484EEBBAA5F4ADF781AE52A27287684FB75C5FAD9C70C415B9A0B9347C249F61D6C9644B937191A1AF03A21C900342EE65B9320E91C65796C1134DAE9D278AD521BD077A3334F949A9C376EC6E0D3C037D0EE66A9A60954993DAD6259C51EDFD041A26CC326D041D447EF3135AD46252EDAEFCD5D41E2DD86F220C6D07C2AC2395759BA0B5C2B2B1334D199F162DCB08980DECF92742E7C5DBF191EEB197E223102C52787EBC3AC6695B6C62DEA7621CBB490EA3E4C6CA0A291212891F2A80F09D08AA64022C30AF8C0E86A769A411E593461EA593F7C4684A3F103FAC0F8F3242138A9297CFE8F0147B33B69CB80DD5BEB6E0C52B5C7AAE3B2C33683A8B0C2B75F333BDE37E0E8ADBF1618841D48EAC46329592D3E354731B53F94B3F151A2752D4E94F72C997D1A66C62CD76CFC7E5C1AF80FEF314557850C89FB761E7F277ACCF2F9D6CB36CB9A42971543BD95AB487F93BCF9F7A1D7612202AD896BAA93294430EF02AB1844FBC7B1E6B791A1E9ABEC2A72C90D296137CD67FD4051B929789BB9D6DC0062F33553A847817092BAFA882314015AB22C72EEE846D8D86B2D02AA415B1AFAB3A2E1C12867D1F12DF437012DFCECD3636970CCF63D2EB4B382F7EBBEE8E2C600109DAA50C2973622B359982ED48858A19F5F8383A0CA56DC2C03CD8DCE5539119F625C0A91DF343490665C6DBEBA405804BF7119D5468B3E4941C7D695D5A52D2290667713390DD4DFFBD0B34000C7A5F7D8B8F1ABE8FAEFDD8AFA27428BD584D711626CA9995D65FF0DD1F76E7D4A42506784AE76C3B32BB259E72371B886FF50AB7D895A9D35A4AFA6C4606EABB5105C26FEF2A6EF0D8D8B71783B97E75F93E44BA8D43BE86A58370D1746F1495789
+[0;32mI (2964) DATA HEX FORMAT: 0x3ffd1ef0   12 76 c8 26 76 06 b6 3a  53 b6 d1 32 eb 11 25 a2  |.v.&v..:S..2..%.|[0m
+[0;32mI (2974) DATA HEX FORMAT: 0x3ffd1f00   c5 87 92 ed c5 8d e2 0a  db 56 f0 a7 55 0d 41 23  |.........V..U.A#|[0m
+[0;32mI (2984) DATA HEX FORMAT: 0x3ffd1f10   26 2d 16 bd 74 a9 51 81  9d 00 2f 08 b2 a1 b0 81  |&-..t.Q.../.....|[0m
+[0;32mI (2994) DATA HEX FORMAT: 0x3ffd1f20   bf 7e 4e d1 b8 5e 05 f1  ea cd 49 e2 28 06 75 d0  |.~N..^....I.(.u.|[0m
+[0;32mI (3004) DATA HEX FORMAT: 0x3ffd1f30   44 e8 dc ca 94 4a 54 ab  45 ff ad ef d9 5c 48 5a  |D....JT.E....\HZ|[0m
+[0;32mI (3014) DATA HEX FORMAT: 0x3ffd1f40   b8 a9 88 d9 7a eb ce 41  2e 43 c7 16 72 5c 87 e8  |....z..A.C..r\..|[0m
+[0;32mI (3024) DATA HEX FORMAT: 0x3ffd1f50   95 23 03 aa d2 88 61 eb  a9 4e 0b 11 14 42 ef ee  |.#....a..N...B..|[0m
+[0;32mI (3034) DATA HEX FORMAT: 0x3ffd1f60   d0 56 e7 e0 4a 45 cb 1d  4b 99 72 c3 d1 5a 16 22  |.V..JE..K.r..Z."|[0m
+[0;32mI (3044) DATA HEX FORMAT: 0x3ffd1f70   4f 58 5b d9 66 a2 3b 4d  ff 09 66 9e 6d cd 6e d9  |OX[.f.;M..f.m.n.|[0m
+[0;32mI (3054) DATA HEX FORMAT: 0x3ffd1f80   44 7d 7d 11 ce 46 e5 09  65 82 b7 e3 7c da e3 21  |D}}..F..e...|..!|[0m
+[0;32mI (3064) DATA HEX FORMAT: 0x3ffd1f90   9a 6a 65 1c 48 1f 8e 3d  63 bf 9f 9d d8 e4 a9 3d  |.je.H..=c......=|[0m
+[0;32mI (3074) DATA HEX FORMAT: 0x3ffd1fa0   2f 83 ef 95 0c 22 0d a3  83 e6 0f fb 46 8e 95 98  |/...."......F...|[0m
+[0;32mI (3084) DATA HEX FORMAT: 0x3ffd1fb0   16 7c 33 4e 03 de 84 4f  d0 34 01 0a 56 00 20 ae  |.|3N...O.4..V. .|[0m
+[0;32mI (3094) DATA HEX FORMAT: 0x3ffd1fc0   fc c4 65 98 a5 12 d4 d1  ea 07 ea e6 9e b2 50 8b  |..e...........P.|[0m
+[0;32mI (3104) DATA HEX FORMAT: 0x3ffd1fd0   a0 0d 1a a3 38 4e 6b 78  ec f0 fb c0 a9 ee a3 ea  |....8Nkx........|[0m
+[0;32mI (3114) DATA HEX FORMAT: 0x3ffd1fe0   d5 1b ee 0e a5 b5 47 cc  ec 82 af 2e b4 76 df 8d  |......G......v..|[0m
+[0;32mI (3124) DATA HEX FORMAT: 0x3ffd1ff0   97 23 98 2a 2e 25 60 c2  8d 1a b1 94 19 cd 08 e5  |.#.*.%`.........|[0m
+[0;32mI (3124) DATA HEX FORMAT: 0x3ffd2000   28 fe ec e3 3d c3 29 bb  8b fa f7 b2 f2 4b 98 4e  |(...=.)......K.N|[0m
+[0;32mI (3134) DATA HEX FORMAT: 0x3ffd2010   de d3 86 94 68 99 d8 5b  20 37 2f cc c0 aa a4 d3  |....h..[ 7/.....|[0m
+[0;32mI (3144) DATA HEX FORMAT: 0x3ffd2020   2b b6 64 cb 8e 36 60 96  bc 40 46 64 dd 2a 57 e9  |+.d..6`..@Fd.*W.|[0m
+[0;32mI (3154) DATA HEX FORMAT: 0x3ffd2030   6c f3 fb b5 eb 05 42 ca  f3 b6 e8 e2 f5 ea 0d b8  |l.....B.........|[0m
+[0;32mI (3164) DATA HEX FORMAT: 0x3ffd2040   b2 c4 7d c5 f8 a7 8e fe  a6 71 1a 9a 98 19 44 8c  |..}......q....D.|[0m
+[0;32mI (3174) DATA HEX FORMAT: 0x3ffd2050   47 32 cd 39 d9 b0 1c 06  19 f1 92 f7 8f a3 b0 f0  |G2.9............|[0m
+[0;32mI (3184) DATA HEX FORMAT: 0x3ffd2060   c9 fc f4 ea 65 4a d6 7a  a0 96 8a ef e8 95 85 61  |....eJ.z.......a|[0m
+[0;32mI (3194) DATA HEX FORMAT: 0x3ffd2070   d5 1c 55 79 74 67 04 cc  28 c0 4e c7 5e 33 ba b7  |..Uytg..(.N.^3..|[0m
+[0;32mI (3204) DATA HEX FORMAT: 0x3ffd2080   e3 d2 10 ae 64 e5 2f d7  bc aa 37 41 47 ee 12 3b  |....d./...7AG..;|[0m
+[0;32mI (3214) DATA HEX FORMAT: 0x3ffd2090   b6 d1 0c 49 8d c0 ab 20  9b fb 16 88 41 22 03 6b  |...I... ....A".k|[0m
+[0;32mI (3224) DATA HEX FORMAT: 0x3ffd20a0   27 fb 66 cd b2 7f c4 3b  25 6a 5a 0d 7b 5f 9e 0b  |'.f....;%jZ.{_..|[0m
+[0;32mI (3234) DATA HEX FORMAT: 0x3ffd20b0   79 78 17 64 04 f2 70 d7  5b 2d e0 27 9f 98 9b 96  |yx.d..p.[-.'....|[0m
+[0;32mI (3244) DATA HEX FORMAT: 0x3ffd20c0   2c da a1 7b 79 76 d6 42  a9 74 e7 02 be cd 50 e7  |,..{yv.B.t....P.|[0m
+[0;32mI (3254) DATA HEX FORMAT: 0x3ffd20d0   18 a8 86 a9 bb b7 d2 a9  64 c0 5f 11 bc f4 b9 e6  |........d._.....|[0m
+[0;32mI (3264) DATA HEX FORMAT: 0x3ffd20e0   23 0e 09 41 a2 13 b5 b0  cd a1 12 7e fb 91 d5 e3  |#..A.......~....|[0m
+[0;32mI (3274) DATA HEX FORMAT: 0x3ffd20f0   8c fd c3 76 a8 c3 5a 51  b1 bb aa fc 66 32 b5 85  |...v..ZQ....f2..|[0m
+[0;32mI (3284) DATA HEX FORMAT: 0x3ffd2100   03 e9 d0 89 f6 6b 75 29  05 86 c1 58 33 b4 f8 64  |.....ku)...X3..d|[0m
+[0;32mI (3294) DATA HEX FORMAT: 0x3ffd2110   76 29 2a 7f 84 b6 da b9  66 60 2c 87 c9 61 c7 80  |v)*.....f`,..a..|[0m
+[0;32mI (3304) DATA HEX FORMAT: 0x3ffd2120   54 4d f9 c1 d6 14 f6 67  33 e4 84 ee bb aa 5f 4a  |TM.....g3....._J|[0m
+[0;32mI (3304) DATA HEX FORMAT: 0x3ffd2130   df 78 1a e5 2a 27 28 76  84 fb 75 c5 fa d9 c7 0c  |.x..*'(v..u.....|[0m
+[0;32mI (3314) DATA HEX FORMAT: 0x3ffd2140   41 5b 9a 0b 93 47 c2 49  f6 1d 6c 96 44 b9 37 19  |A[...G.I..l.D.7.|[0m
+[0;32mI (3324) DATA HEX FORMAT: 0x3ffd2150   1a 1a f0 3a 21 c9 00 34  2e e6 5b 93 20 e9 1c 65  |...:!..4..[. ..e|[0m
+[0;32mI (3334) DATA HEX FORMAT: 0x3ffd2160   79 6c 11 34 da e9 d2 78  ad 52 1b d0 77 a3 33 4f  |yl.4...x.R..w.3O|[0m
+[0;32mI (3344) DATA HEX FORMAT: 0x3ffd2170   94 9a 9c 37 6e c6 e0 d3  c0 37 d0 ee 66 a9 a6 09  |...7n....7..f...|[0m
+[0;32mI (3354) DATA HEX FORMAT: 0x3ffd2180   54 99 3d ad 62 59 c5 1e  df d0 41 a2 6c c3 26 d0  |T.=.bY....A.l.&.|[0m
+[0;32mI (3364) DATA HEX FORMAT: 0x3ffd2190   41 d4 47 ef 31 35 ad 46  25 2e da ef cd 5d 41 e2  |A.G.15.F%....]A.|[0m
+[0;32mI (3374) DATA HEX FORMAT: 0x3ffd21a0   dd 86 f2 20 c6 d0 7c 2a  c2 39 57 59 ba 0b 5c 2b  |... ..|*.9WY..\+|[0m
+[0;32mI (3384) DATA HEX FORMAT: 0x3ffd21b0   2b 13 34 d1 99 f1 62 dc  b0 89 80 de cf 92 74 2e  |+.4...b.......t.|[0m
+[0;32mI (3394) DATA HEX FORMAT: 0x3ffd21c0   7c 5d bf 19 1e eb 19 7e  22 31 02 c5 27 87 eb c3  ||].....~"1..'...|[0m
+[0;32mI (3404) DATA HEX FORMAT: 0x3ffd21d0   ac 66 95 b6 c6 2d ea 76  21 cb b4 90 ea 3e 4c 6c  |.f...-.v!....>Ll|[0m
+[0;32mI (3414) DATA HEX FORMAT: 0x3ffd21e0   a0 a2 91 21 28 91 f2 a8  0f 09 d0 8a a6 40 22 c3  |...!(........@".|[0m
+[0;32mI (3424) DATA HEX FORMAT: 0x3ffd21f0   0a f8 c0 e8 6a 76 9a 41  1e 59 34 61 ea 59 3f 7c  |....jv.A.Y4a.Y?||[0m
+[0;32mI (3434) DATA HEX FORMAT: 0x3ffd2200   46 84 a3 f1 03 fa c0 f8  f3 24 21 38 a9 29 7c fe  |F........$!8.)|.|[0m
+[0;32mI (3444) DATA HEX FORMAT: 0x3ffd2210   8f 01 47 b3 3b 69 cb 80  dd 5b eb 6e 0c 52 b5 c7  |..G.;i...[.n.R..|[0m
+[0;32mI (3454) DATA HEX FORMAT: 0x3ffd2220   aa e3 b2 c3 36 83 a8 b0  c2 b7 5f 33 3b de 37 e0  |....6....._3;.7.|[0m
+[0;32mI (3464) DATA HEX FORMAT: 0x3ffd2230   e8 ad bf 16 18 84 1d 48  ea c4 63 29 59 2d 3e 35  |.......H..c)Y->5|[0m
+[0;32mI (3474) DATA HEX FORMAT: 0x3ffd2240   47 31 b5 3f 94 b3 f1 51  a2 75 2d 4e 94 f7 2c 99  |G1.?...Q.u-N..,.|[0m
+[0;32mI (3484) DATA HEX FORMAT: 0x3ffd2250   7d 1a 66 c6 2c d7 6c fc  7e 5c 1a f8 0f ef 31 45  |}.f.,.l.~\....1E|[0m
+[0;32mI (3484) DATA HEX FORMAT: 0x3ffd2260   57 85 0c 89 fb 76 1e 7f  27 7a cc f2 f9 d6 cb 36  |W....v..'z.....6|[0m
+[0;32mI (3494) DATA HEX FORMAT: 0x3ffd2270   cb 9a 42 97 15 43 bd 95  ab 48 7f 93 bc f9 f7 a1  |..B..C...H......|[0m
+[0;32mI (3504) DATA HEX FORMAT: 0x3ffd2280   d7 61 22 02 ad 89 6b aa  93 29 44 30 ef 02 ab 18  |.a"...k..)D0....|[0m
+[0;32mI (3514) DATA HEX FORMAT: 0x3ffd2290   44 fb c7 b1 e6 b7 91 a1  e9 ab ec 2a 72 c9 0d 29  |D..........*r..)|[0m
+[0;32mI (3524) DATA HEX FORMAT: 0x3ffd22a0   61 37 cd 67 fd 40 51 b9  29 78 9b b9 d6 dc 00 62  |a7.g.@Q.)x.....b|[0m
+[0;32mI (3534) DATA HEX FORMAT: 0x3ffd22b0   f3 35 53 a8 47 81 70 92  ba fa 88 23 14 01 5a b2  |.5S.G.p....#..Z.|[0m
+[0;32mI (3544) DATA HEX FORMAT: 0x3ffd22c0   2c 72 ee e8 46 d8 d8 6b  2d 02 aa 41 5b 1a fa b3  |,r..F..k-..A[...|[0m
+[0;32mI (3554) DATA HEX FORMAT: 0x3ffd22d0   a2 e1 c1 28 67 d1 f1 2d  f4 37 01 2d fc ec d3 63  |...(g..-.7.-...c|[0m
+[0;32mI (3564) DATA HEX FORMAT: 0x3ffd22e0   69 70 cc f6 3d 2e b4 b3  82 f7 eb be e8 e2 c6 00  |ip..=...........|[0m
+[0;32mI (3574) DATA HEX FORMAT: 0x3ffd22f0   10 9d aa 50 c2 97 36 22  b3 59 98 2e d4 88 58 a1  |...P..6".Y....X.|[0m
+[0;32mI (3584) DATA HEX FORMAT: 0x3ffd2300   9f 5f 83 83 a0 ca 56 dc  2c 03 cd 8d ce 55 39 11  |._....V.,....U9.|[0m
+[0;32mI (3594) DATA HEX FORMAT: 0x3ffd2310   9f 62 5c 0a 91 df 34 34  90 66 5c 6d be ba 40 58  |.b\...44.f\m..@X|[0m
+[0;32mI (3604) DATA HEX FORMAT: 0x3ffd2320   04 bf 71 19 d5 46 8b 3e  49 41 c7 d6 95 d5 a5 2d  |..q..F.>IA.....-|[0m
+[0;32mI (3614) DATA HEX FORMAT: 0x3ffd2330   22 90 66 77 13 39 0d d4  df fb d0 b3 40 00 c7 a5  |".fw.9......@...|[0m
+[0;32mI (3624) DATA HEX FORMAT: 0x3ffd2340   f7 d8 b8 f1 ab e8 fa ef  dd 8a fa 27 42 8b d5 84  |...........'B...|[0m
+[0;32mI (3634) DATA HEX FORMAT: 0x3ffd2350   d7 11 62 6c a9 99 5d 65  ff 0d d1 f7 6e 7d 4a 42  |..bl..]e....n}JB|[0m
+[0;32mI (3644) DATA HEX FORMAT: 0x3ffd2360   50 67 84 ae 76 c3 b3 2b  b2 59 e7 23 71 b8 86 ff  |Pg..v..+.Y.#q...|[0m
+[0;32mI (3654) DATA HEX FORMAT: 0x3ffd2370   50 ab 7d 89 5a 9d 35 a4  af a6 c4 60 6e ab b5 10  |P.}.Z.5....`n...|[0m
+[0;32mI (3654) DATA HEX FORMAT: 0x3ffd2380   5c 26 fe f2 a6 ef 0d 8d  8b 71 78 3b 97 e7 5f 93  |\&.......qx;.._.|[0m
+[0;32mI (3664) DATA HEX FORMAT: 0x3ffd2390   e4 4b a8 d4 3b e8 6a 58  37 0d 17 46 f1 49 57 89  |.K..;.jX7..F.IW.|[0m
+--------------------------------------------
+[0;32mI (3684) [AKE PROTOCOL]: Free elements[0m
+[0;32mI (3684) [AKE PROTOCOL]: -------- [STEP 1] --------[0m
+{
+	"Step":	1,
+	"Device_Name":	"Alex_ESP32"
+}
+The server is returning data
+Data Response: {
+  "Nonce": "fviNg72tsMnwsamwJfGnVOkhxXJLCtZubyCE1//nSek=",
+  "Nonce_Len": 32,
+  "SID": "E1AyVIBMXPJNoXfX60PVJg==",
+  "SID_Len": 16,
+  "Server_Name": "IoT_Server",
+  "Step": 1
+}
+
+[0;32mI (4014) main_task: Returned from app_main()[0m
