@@ -80,26 +80,35 @@ struct request_step_2{
 };
 
 
+
 /**
- * @brief Derive a session key using HKDF-SHA512.
+ * @brief Derive a key using HKDF-SHA512.
  *
- * Formula:
- *   Ksess = HKDF-SHA512(salt=nonceS, ikm=ss, info="Ksess", L=32)
+ * Generic formula:
+ *   OKM = HKDF-SHA512(salt, IKM, info, L)
  *
- * @param[in]  ss          Shared secret input keying material
- * @param[in]  ss_len      Length of shared secret
- * @param[in]  nonceS      Salt
- * @param[in]  nonceS_len  Length of salt
- * @param[out] ksess       Output buffer for derived key (32 bytes)
+ * This function can be used to derive different protocol keys such as:
+ * - Ksess : info = "Ksess"
+ * - Kauth : info = "Kauth"
  *
- * @return true on success, false on error
+ * @param[in]  ikm       Input keying material.
+ * @param[in]  ikm_len   Length of input keying material.
+ * @param[in]  salt      Optional salt buffer.
+ * @param[in]  salt_len  Length of salt buffer.
+ * @param[in]  info      Optional context/application-specific info.
+ * @param[in]  info_len  Length of info buffer.
+ * @param[out] okm       Output buffer for derived key.
+ * @param[in]  okm_len   Desired output key length in bytes.
+ *
+ * @return true if the key was successfully derived, false otherwise.
  */
-bool derive_ksess_hkdf_sha512(const uint8_t *ss, size_t ss_len,
-                              const uint8_t *nonceS, size_t nonceS_len,
-                              uint8_t ksess[KSESS_LEN])
+bool derive_hkdf_sha512(const uint8_t *ikm, size_t ikm_len,
+                        const uint8_t *salt, size_t salt_len,
+                        const uint8_t *info, size_t info_len,
+                        uint8_t *okm, size_t okm_len)
 {
-    if (ss == NULL || ss_len == 0 || ksess == NULL) {
-        ESP_LOGE(TAG_PROT, "Invalid input parameters");
+    if (ikm == NULL || ikm_len == 0 || okm == NULL || okm_len == 0) {
+        ESP_LOGE(TAG_PROT, "Invalid HKDF input parameters");
         return false;
     }
 
@@ -109,13 +118,11 @@ bool derive_ksess_hkdf_sha512(const uint8_t *ss, size_t ss_len,
         return false;
     }
 
-    const uint8_t info[] = "Ksess";
-
     int ret = mbedtls_hkdf(md,
-                           nonceS, nonceS_len,      // salt
-                           ss, ss_len,              // ikm
-                           info, sizeof(info) - 1, // info
-                           ksess, KSESS_LEN);       // output
+                           salt, salt_len,
+                           ikm, ikm_len,
+                           info, info_len,
+                           okm, okm_len);
 
     if (ret != 0) {
         ESP_LOGE(TAG_PROT, "mbedtls_hkdf failed: -0x%04X", (unsigned)(-ret));
@@ -496,6 +503,20 @@ void app_main(void)
 
     ESP_LOG_BUFFER_HEXDUMP("Cipher Text: ", ct, CRYPTO_CIPHERTEXTBYTES, ESP_LOG_INFO);
     ESP_LOG_BUFFER_HEXDUMP("Key B: ", key_b, CRYPTO_BYTES, ESP_LOG_INFO);
+
+    size_t ksess_len = 32;
+    uint8_t ksess[ksess_len];
+    const uint8_t info_ksess []= "Ksess";
+    size_t info_ksess_len = sizeof(info_ksess);
+    // derive_ksess_hkdf_sha512(key_b, CRYPTO_BYTES, response_step_1->nonce, response_step_1->nonce_len,
+    // ksess, ksess_len);
+
+    bool derivate_ksess = derive_hkdf_sha512(key_b, CRYPTO_BYTES, response_step_1->nonce, response_step_1->nonce_len,
+                                            info_ksess, info_ksess_len, ksess, ksess_len);
+    
+    ESP_LOG_BUFFER_HEXDUMP("NONCE: ", response_step_1->nonce, response_step_1->nonce_len, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("SID", response_step_1->sid,response_step_1->sid_len, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Key Session: ", ksess, ksess_len, ESP_LOG_INFO);
 
     free(plain_pk_kyber);
 

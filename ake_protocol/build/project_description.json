@@ -1,7 +1,7 @@
 {
     "version":            "1.2",
     "project_name":       "ake_protocol",
-    "project_version":    "a887702-dirty",
+    "project_version":    "6fc1f5f-dirty",
     "project_path":       "/home/alejandro/esp32_dignal_course/ake_protocol",
     "idf_path":           "/home/alejandro/esp/esp-idf",
     "build_dir":          "/home/alejandro/esp32_dignal_course/ake_protocol/build",
