@@ -70,7 +70,8 @@ struct request_step_2{
     uint8_t *ct_kyber;
     size_t tad_d_len;
     uint8_t *tag_d;
-
+    
+    char *http_address;
 
     // base 64
     char *sid_b64;
@@ -79,6 +80,47 @@ struct request_step_2{
     char *tad_d_b64;
 };
 
+bool build_request_2(struct request_step_2 *self, char *http_post)
+{
+    if (self == NULL) {
+        ESP_LOGE(TAG_PROT, "Invalid input parameter");
+        return false;
+    }
+
+    self->sid = NULL;
+    self->nonce_d = NULL;
+    self->ct_kyber = NULL;
+    self->tag_d = NULL;
+
+    self->step = 0;
+    self->http_address = http_post;
+
+    self->mac_address = malloc(self->mac_address_size);
+    if (self->mac_address == NULL) {
+        ESP_LOGE(TAG_PROT, "malloc failed for mac_address");
+        return false;
+    }
+
+    esp_efuse_mac_get_default(self->mac_address);
+
+    self->puf_hash_size = puf->puf_hash_len;
+    self->puf_hash = malloc(self->puf_hash_size);
+
+    memcpy(self->puf_hash, puf->hash, self->puf_hash_size);
+
+    if (base64_encode_alloc(self->puf_hash,
+                            self->puf_hash_size,
+                            &self->puf_hash_b64) != 0) {
+        ESP_LOGE(TAG_PROT, "BASE64 ENCODE FAILURE (PUF)");
+        free(self->puf_hash);
+        free(self->mac_address);
+        self->puf_hash = NULL;
+        self->mac_address = NULL;
+        return false;
+    }
+
+    return true;
+}
 
 
 /**
@@ -506,7 +548,7 @@ void app_main(void)
 
     size_t ksess_len = 32;
     uint8_t ksess[ksess_len];
-    const uint8_t info_ksess []= "Ksess";
+    const uint8_t info_ksess[] = "Ksess";
     size_t info_ksess_len = sizeof(info_ksess);
     // derive_ksess_hkdf_sha512(key_b, CRYPTO_BYTES, response_step_1->nonce, response_step_1->nonce_len,
     // ksess, ksess_len);
