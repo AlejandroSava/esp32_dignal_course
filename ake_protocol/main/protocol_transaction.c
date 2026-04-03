@@ -68,7 +68,7 @@ struct request_step_2{
     uint8_t *nonce_d;
     size_t ct_kyber_len;
     uint8_t *ct_kyber;
-    size_t tad_d_len;
+    size_t tag_d_len;
     uint8_t *tag_d;
     
     char *http_address;
@@ -77,51 +77,42 @@ struct request_step_2{
     char *sid_b64;
     char *nonce_d_b64;
     char *ct_kyber_b64;
-    char *tad_d_b64;
+    char *tag_d_b64;
 };
 
-bool build_request_2(struct request_step_2 *self, char *http_post)
-{
-    if (self == NULL) {
-        ESP_LOGE(TAG_PROT, "Invalid input parameter");
-        return false;
-    }
+struct response_step_2{
+    int step;
+    size_t sid_len;
+    uint8_t *sid;
+    size_t tad_s_len;
+    uint8_t *tag_s;
+    
+    char *http_address;
 
-    self->sid = NULL;
-    self->nonce_d = NULL;
-    self->ct_kyber = NULL;
-    self->tag_d = NULL;
+    // base 64
+    char *sid_b64;
+    char *tad_s_b64;
+};
 
-    self->step = 0;
-    self->http_address = http_post;
+struct ake_key{
+    uint8_t *key;
+    size_t key_size;
+    bool ready; 
+    char *key_info;
+    size_t key_info_len;
 
-    self->mac_address = malloc(self->mac_address_size);
-    if (self->mac_address == NULL) {
-        ESP_LOGE(TAG_PROT, "malloc failed for mac_address");
-        return false;
-    }
+};
 
-    esp_efuse_mac_get_default(self->mac_address);
+// pending to add a kyber structure
 
-    self->puf_hash_size = puf->puf_hash_len;
-    self->puf_hash = malloc(self->puf_hash_size);
-
-    memcpy(self->puf_hash, puf->hash, self->puf_hash_size);
-
-    if (base64_encode_alloc(self->puf_hash,
-                            self->puf_hash_size,
-                            &self->puf_hash_b64) != 0) {
-        ESP_LOGE(TAG_PROT, "BASE64 ENCODE FAILURE (PUF)");
-        free(self->puf_hash);
-        free(self->mac_address);
-        self->puf_hash = NULL;
-        self->mac_address = NULL;
-        return false;
-    }
-
-    return true;
-}
-
+struct kyber_object_node {
+    uint8_t *pk;
+    size_t pk_len;
+    uint8_t *ct;
+    size_t ct_len;
+    uint8_t *ss;
+    size_t ss_len;
+};
 
 /**
  * @brief Derive a key using HKDF-SHA512.
@@ -173,6 +164,512 @@ bool derive_hkdf_sha512(const uint8_t *ikm, size_t ikm_len,
 
     return true;
 }
+
+/**
+ * @brief Free all dynamic fields from request_step_2.
+ *
+ * @param[in,out] self Pointer to request_step_2 object.
+ */
+void free_request_2(struct request_step_2 *self)
+{
+    if (self == NULL) {
+        return;
+    }
+
+    if (self->sid != NULL)
+        free(self->sid);
+    self->sid = NULL;
+    self->sid_len = 0;
+
+    if (self->nonce_d != NULL)
+        free(self->nonce_d);
+    self->nonce_d = NULL;
+    self->nonce_d_len = 0;
+
+    // if (self->ct_kyber != NULL)
+    //     free(self->ct_kyber); //this structure doesn't have the ct
+    self->ct_kyber = NULL;
+    self->ct_kyber_len = 0;
+
+    if (self->tag_d != NULL)
+        free(self->tag_d );
+    self->tag_d = NULL;
+    self->tag_d_len = 0;
+
+    if (self->sid_b64 != NULL)
+        free(self->sid_b64);
+    self->sid_b64 = NULL;
+
+    if (self->nonce_d_b64 != NULL)
+        free(self->nonce_d_b64);
+    self->nonce_d_b64 = NULL;
+
+    if (self->ct_kyber_b64 != NULL)
+        free(self->ct_kyber_b64);
+    self->ct_kyber_b64 = NULL;
+
+    if (self->tag_d_b64 != NULL)
+        free(self->tag_d_b64);
+    self->tag_d_b64 = NULL;
+
+    self->http_address = NULL;
+    self->step = 0;
+}
+
+/**
+ * @brief Reset ake_key object to a safe empty state.
+ *
+ * @param[in,out] key Pointer to key object.
+ */
+void reset_ake_key(struct ake_key *key)
+{
+    if (key == NULL) {
+        return;
+    }
+
+    if (key->key != NULL)
+        free(key->key);
+    key->key = NULL;
+    key->key_size = 0;
+    key->ready = false;
+    key->key_info = NULL;
+    key->key_info_len = 0;
+}
+
+/**
+ * @brief Build request step 2.
+ *
+ * The function performs:
+ *   - copy SID
+ *   - generate nonceD
+ *   - copy Kyber ciphertext
+ *   - derive Ksess from shared secret
+ *   - derive Kauth from PUF hash
+ *   - compute HMAC-SHA512 tagD
+ *   - base64-encode transport fields
+ *
+ * tagD = HMAC-SHA512(Kauth, sid || nonceS || nonceD || pk || ct || DEVICE_NAME)
+ *
+ * @param[out] self         Request object to fill.
+ * @param[in]  rsp_step_1   Response from step 1.
+ * @param[in]  kyber_obj    Kyber object with pk, ct, ss.
+ * @param[out] key_sess     Output session key.
+ * @param[out] key_auth     Output authentication key.
+ * @param[in]  puf_obj      PUF object containing hash.
+ * @param[in]  http_post    HTTP endpoint string.
+ *
+ * @return true on success, false on failure.
+ */
+bool build_request_2(struct request_step_2 *self,
+                     const struct response_step_1 *rsp_step_1,
+                     const struct kyber_object_node *kyber_obj,
+                     struct ake_key *key_sess,
+                     struct ake_key *key_auth,
+                     const struct puf_object *puf_obj,
+                     const char *http_post)
+{
+    int ret;
+    mbedtls_md_context_t ctx;
+    const mbedtls_md_info_t *md;
+
+    if (self == NULL || rsp_step_1 == NULL || kyber_obj == NULL ||
+        key_sess == NULL || key_auth == NULL || puf_obj == NULL ||
+        http_post == NULL) {
+        ESP_LOGE(TAG_PROT, "Invalid input parameter");
+        return false;
+    }
+
+    if (rsp_step_1->sid == NULL || rsp_step_1->sid_len == 0 ||
+        rsp_step_1->nonce == NULL || rsp_step_1->nonce_len == 0) {
+        ESP_LOGE(TAG_PROT, "Invalid response_step_1 content");
+        return false;
+    }
+
+    if (kyber_obj->pk == NULL || kyber_obj->pk_len == 0 ||
+        kyber_obj->ct == NULL || kyber_obj->ct_len == 0 ||
+        kyber_obj->ss == NULL || kyber_obj->ss_len == 0) {
+        ESP_LOGE(TAG_PROT, "Invalid kyber object content");
+        return false;
+    }
+
+    if (puf_obj->puf_hash_len == 0) {
+        ESP_LOGE(TAG_PROT, "Invalid PUF hash length");
+        return false;
+    }
+
+    memset(self, 0, sizeof(*self));
+    //reset_ake_key(key_sess);
+    //reset_ake_key(key_auth);
+
+    self->step = 2;
+    self->http_address = http_post;
+
+    /* Copy SID */
+    self->sid_len = rsp_step_1->sid_len;
+    self->sid = malloc(self->sid_len);
+    if (self->sid == NULL) {
+        ESP_LOGE(TAG_PROT, "Malloc failed for SID");
+        goto cleanup;
+    }
+    memcpy(self->sid, rsp_step_1->sid, self->sid_len);
+
+    /* Generate nonceD */
+    self->nonce_d_len = 32;
+    self->nonce_d = malloc(self->nonce_d_len);
+    if (self->nonce_d == NULL) {
+        ESP_LOGE(TAG_PROT, "Malloc failed for nonce_d");
+        goto cleanup;
+    }
+    esp_fill_random(self->nonce_d, self->nonce_d_len);
+
+    /* Copy Kyber ciphertext */
+     // TODO: REVIEW THIS PART OF CODE
+    self->ct_kyber_len = kyber_obj->ct_len;
+    // self->ct_kyber = malloc(self->ct_kyber_len);
+    // if (self->ct_kyber == NULL) {
+    //     ESP_LOGE(TAG_PROT, "Malloc failed for ct_kyber");
+    //     goto cleanup;
+    // }
+    // memcpy(self->ct_kyber, kyber_obj->ct, self->ct_kyber_len);
+    self->ct_kyber = kyber_obj->ct;
+
+    /* Allocate tag buffer */
+    self->tag_d_len = 64;
+    self->tag_d = malloc(self->tag_d_len);
+    if (self->tag_d == NULL) {
+        ESP_LOGE(TAG_PROT, "Malloc failed for tag_d");
+        goto cleanup;
+    }
+
+    /* Derive Ksess */
+    key_sess->key_size = 32;
+    key_sess->key = malloc(key_sess->key_size);
+    if (key_sess->key == NULL) {
+        ESP_LOGE(TAG_PROT, "Malloc failed for key_sess");
+        goto cleanup;
+    }
+
+    key_sess->key_info = "Ksess";
+    key_sess->key_info_len = strlen(key_sess->key_info);
+
+    if (!derive_hkdf_sha512(kyber_obj->ss,
+                            kyber_obj->ss_len,
+                            rsp_step_1->nonce,
+                            rsp_step_1->nonce_len,
+                            (const uint8_t *)key_sess->key_info,
+                            key_sess->key_info_len,
+                            key_sess->key,
+                            key_sess->key_size)) {
+        ESP_LOGE(TAG_PROT, "Failed to derive Ksess");
+        goto cleanup;
+    }
+    key_sess->ready = true;
+
+    /* Derive Kauth */
+    key_auth->key_size = 32;
+    key_auth->key = malloc(key_auth->key_size);
+    if (key_auth->key == NULL) {
+        ESP_LOGE(TAG_PROT, "Malloc failed for key_auth");
+        goto cleanup;
+    }
+
+    key_auth->key_info = "Kauth";
+    key_auth->key_info_len = strlen(key_auth->key_info);
+
+    if (!derive_hkdf_sha512(puf_obj->hash,
+                            puf_obj->puf_hash_len,
+                            rsp_step_1->nonce,
+                            rsp_step_1->nonce_len,
+                            (const uint8_t *)key_auth->key_info,
+                            key_auth->key_info_len,
+                            key_auth->key,
+                            key_auth->key_size)) {
+        ESP_LOGE(TAG_PROT, "Failed to derive Kauth");
+        goto cleanup;
+    }
+    key_auth->ready = true;
+
+    /* HMAC-SHA512 */
+    md = mbedtls_md_info_from_type(MBEDTLS_MD_SHA512);
+    if (md == NULL) {
+        ESP_LOGE(TAG_PROT, "SHA-512 not available");
+        goto cleanup;
+    }
+
+    mbedtls_md_init(&ctx);
+
+    ret = mbedtls_md_setup(&ctx, md, 1);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "mbedtls_md_setup failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_starts(&ctx, key_auth->key, key_auth->key_size);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "mbedtls_md_hmac_starts failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_update(&ctx, self->sid, self->sid_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "HMAC update SID failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_update(&ctx, rsp_step_1->nonce, rsp_step_1->nonce_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "HMAC update nonceS failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_update(&ctx, self->nonce_d, self->nonce_d_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "HMAC update nonceD failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_update(&ctx, kyber_obj->pk, kyber_obj->pk_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "HMAC update PK failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_update(&ctx, self->ct_kyber, self->ct_kyber_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "HMAC update CT failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_update(&ctx,
+                                 (const unsigned char *)DEVICE_NAME,
+                                 strlen(DEVICE_NAME));
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "HMAC update DEVICE_NAME failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    ret = mbedtls_md_hmac_finish(&ctx, self->tag_d);
+    if (ret != 0) {
+        ESP_LOGE(TAG_PROT, "mbedtls_md_hmac_finish failed: %d", ret);
+        goto cleanup_md;
+    }
+
+    mbedtls_md_free(&ctx);
+
+    /* Base64 */
+    if (base64_encode_alloc(self->sid, self->sid_len, &self->sid_b64) != 0) {
+        ESP_LOGE(TAG_PROT, "Base64 encode failed for SID");
+        goto cleanup;
+    }
+
+    if (base64_encode_alloc(self->nonce_d, self->nonce_d_len, &self->nonce_d_b64) != 0) {
+        ESP_LOGE(TAG_PROT, "Base64 encode failed for nonce_d");
+        goto cleanup;
+    }
+
+    if (base64_encode_alloc(self->ct_kyber, self->ct_kyber_len, &self->ct_kyber_b64) != 0) {
+        ESP_LOGE(TAG_PROT, "Base64 encode failed for ct_kyber");
+        goto cleanup;
+    }
+
+    if (base64_encode_alloc(self->tag_d, self->tag_d_len, &self->tag_d_b64) != 0) {
+        ESP_LOGE(TAG_PROT, "Base64 encode failed for tag_d");
+        goto cleanup;
+    }
+
+    ESP_LOGI(TAG_PROT, "Request step 2 built successfully");
+    return true;
+
+cleanup_md:
+    mbedtls_md_free(&ctx);
+
+cleanup:
+    free_request_2(self);
+    reset_ake_key(key_sess);
+    reset_ake_key(key_auth);
+    return false;
+}
+
+/**
+ * @brief Free all dynamic memory inside a kyber_object_node.
+ *
+ * @param[in,out] self Pointer to kyber object node
+ */
+void free_kyber_object_node(struct kyber_object_node *self)
+{
+    if (self == NULL) {
+        return;
+    }
+
+    if (self->pk != NULL) {
+        free(self->pk);
+        self->pk = NULL;
+    }
+
+    if (self->ct != NULL) {
+        free(self->ct);
+        self->ct = NULL;
+    }
+
+    if (self->ss != NULL) {
+        free(self->ss);
+        self->ss = NULL;
+    }
+
+    self->pk_len = 0;
+    self->ct_len = 0;
+    self->ss_len = 0;
+}
+
+/**
+ * @brief Read Kyber public key from secure storage and generate ciphertext
+ *        and shared secret using crypto_kem_enc().
+ *
+ * This function:
+ * 1. Initializes the kyber object node
+ * 2. Reads the Kyber public key from secure storage
+ * 3. Verifies the public key length
+ * 4. Allocates memory for ciphertext and shared secret
+ * 5. Executes Kyber encapsulation
+ *
+ * @param[in,out] self Pointer to kyber object node
+ * @param[in]     aes  Pointer to AES object used to decrypt secure storage
+ *
+ * @return true on success, false on failure
+ */
+bool get_kyber_object_node(struct kyber_object_node *self, struct aes_256_obj *aes)
+{
+    esp_err_t err;
+
+    if (self == NULL || aes == NULL) {
+        ESP_LOGE(TAG_PROT, "Invalid input parameter");
+        return false;
+    }
+
+    /* Initialize object fields */
+    self->pk = NULL;
+    self->ct = NULL;
+    self->ss = NULL;
+    self->pk_len = 0;
+    self->ct_len = 0;
+    self->ss_len = 0;
+
+    /* Read public key from secure storage */
+    ESP_LOGI(TAG_PROT, "Getting Kyber public key from secure storage");
+
+    err = read_secure_storage_region_alloc("PK_KYBER",
+                                           aes,
+                                           &self->pk,
+                                           &self->pk_len);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_PROT, "Failed to read PK_KYBER from secure storage");
+        goto cleanup;
+    }
+
+    if (self->pk == NULL) {
+        ESP_LOGE(TAG_PROT, "Public key is NULL");
+        goto cleanup;
+    }
+
+    if (self->pk_len != CRYPTO_PUBLICKEYBYTES) {
+        ESP_LOGE(TAG_PROT,
+                 "Invalid public key length. Got: %u Expected: %u",
+                 (unsigned)self->pk_len,
+                 (unsigned)CRYPTO_PUBLICKEYBYTES);
+        goto cleanup;
+    }
+
+    ESP_LOG_BUFFER_HEXDUMP("Kyber PK", self->pk, self->pk_len, ESP_LOG_INFO);
+
+    /* Set output lengths */
+    self->ct_len = CRYPTO_CIPHERTEXTBYTES;
+    self->ss_len = CRYPTO_BYTES;
+
+    /* Allocate ciphertext buffer */
+   
+    ESP_LOGW(TAG_PROT, "Failed to allocate memory for ciphertext");
+    self->ct = malloc(self->ct_len);
+    if (self->ct == NULL) {
+        ESP_LOGE(TAG_PROT, "Failed to allocate memory for ciphertext");
+        goto cleanup;
+    }
+
+    /* Allocate shared secret buffer */
+    self->ss = malloc(self->ss_len);
+    if (self->ss == NULL) {
+        ESP_LOGE(TAG_PROT, "Failed to allocate memory for shared secret");
+        goto cleanup;
+    }
+
+    printf("2 -------- CRYPTO_KEM_ENC ENCRYPTION -----------\n");
+
+    if (crypto_kem_enc(self->ct, self->ss, self->pk) != 0) {
+        ESP_LOGE(TAG_PROT, "crypto_kem_enc failed");
+        goto cleanup;
+    }
+
+    ESP_LOG_BUFFER_HEXDUMP("Cipher Text", self->ct, self->ct_len, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Shared Secret", self->ss, self->ss_len, ESP_LOG_INFO);
+
+    return true;
+
+cleanup:
+    free_kyber_object_node(self);
+    return false;
+}
+
+bool send_http_request_2(struct request_step_2 *self, char **response_output, size_t *response_length)
+{
+    if (self == NULL || response_output == NULL || response_length == NULL) {
+        return false;
+    }
+
+    cJSON *root = cJSON_CreateObject();
+    if (root == NULL) {
+        return false;
+    }
+
+    cJSON_AddNumberToObject(root, "Step", self->step);
+    cJSON_AddStringToObject(root, "SID", self->sid_b64);
+    cJSON_AddNumberToObject(root, "SID_Len", self->sid_len);
+    cJSON_AddStringToObject(root, "NonceD", self->nonce_d_b64);
+    cJSON_AddNumberToObject(root, "NonceD_Len", self->nonce_d_len);
+    cJSON_AddStringToObject(root, "CT", self->ct_kyber_b64);
+    cJSON_AddNumberToObject(root, "CT_Len", self->ct_kyber_len);
+    cJSON_AddStringToObject(root, "TagD", self->tag_d_b64);
+    cJSON_AddNumberToObject(root, "TagD_Len", self->tag_d_len);
+    
+
+    char *json_string = cJSON_Print(root);
+    if (json_string == NULL) {
+        cJSON_Delete(root);
+        return false;
+    }
+
+    printf("%s\n", json_string);
+
+    esp_err_t err = http_post_and_get_response(
+        self->http_address,
+        json_string,
+        response_output,
+        response_length
+    );
+
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG_PROT, "HTTP Error transaction in step 1");
+        cJSON_Delete(root);
+        free(json_string);
+        return false;
+    }
+
+    printf("The server is returning data\n");
+    printf("Data Response: %s\n", *response_output);
+
+    cJSON_Delete(root);
+    free(json_string);
+    return true;
+}
+
 
 void init_nvs(){
     esp_err_t ret = nvs_flash_init();
@@ -474,7 +971,7 @@ bool get_response_1(struct response_step_1 *self, char *response_output ){
 }
 
 void app_main(void)
-{   
+{   ESP_LOGW(TAG_PROT, "Free heap: %u", (unsigned)esp_get_free_heap_size());
     ESP_LOGI(TAG_PROT, "Initialize the NVS");
     init_nvs();
     ESP_LOGI(TAG_PROT, "Starting WiFi Driver");
@@ -529,37 +1026,55 @@ void app_main(void)
     ESP_LOG_BUFFER_HEXDUMP("DATA HEX FORMAT", response_step_1->nonce, response_step_1->nonce_len, ESP_LOG_INFO);
     ESP_LOG_BUFFER_HEXDUMP("DATA HEX FORMAT", response_step_1->sid, response_step_1->sid_len, ESP_LOG_INFO);
     ESP_LOGW(TAG_PROT, "PENDING TO FREE MEMORY FROM STEP 1");
+    
+    free(response_output);
 
     ESP_LOGI(TAG_PROT, "-------- [STEP 2] --------");
     //READ FROM SECURE STORAGE
-    uint8_t *plain_pk_kyber= NULL;
-    size_t plain_pk_kyber_len = 0;
-    esp_err_t err = read_secure_storage_region_alloc("PK_KYBER", aes, &plain_pk_kyber, &plain_pk_kyber_len);
-    ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain_pk_kyber, plain_pk_kyber_len, ESP_LOG_INFO);
+    // uint8_t *plain_pk_kyber= NULL;
+    // size_t plain_pk_kyber_len = 0;
+    // esp_err_t err = read_secure_storage_region_alloc("PK_KYBER", aes, &plain_pk_kyber, &plain_pk_kyber_len);
+    // ESP_LOG_BUFFER_HEXDUMP("HEX FORMAT", plain_pk_kyber, plain_pk_kyber_len, ESP_LOG_INFO);
 
-    uint8_t *ct = malloc(CRYPTO_CIPHERTEXTBYTES);
-    uint8_t *key_b = malloc(CRYPTO_BYTES);
+    // uint8_t *ct = malloc(CRYPTO_CIPHERTEXTBYTES);
+    // uint8_t *key_b = malloc(CRYPTO_BYTES);
 
-    printf("2 -------- CRYPTO_KEM_ENC ENCRYPTION ----------- \n");
-    crypto_kem_enc(ct, key_b, plain_pk_kyber);
+    // printf("2 -------- CRYPTO_KEM_ENC ENCRYPTION ----------- \n");
+    // crypto_kem_enc(ct, key_b, plain_pk_kyber);
 
-    ESP_LOG_BUFFER_HEXDUMP("Cipher Text: ", ct, CRYPTO_CIPHERTEXTBYTES, ESP_LOG_INFO);
-    ESP_LOG_BUFFER_HEXDUMP("Key B: ", key_b, CRYPTO_BYTES, ESP_LOG_INFO);
+    // ESP_LOG_BUFFER_HEXDUMP("Cipher Text: ", ct, CRYPTO_CIPHERTEXTBYTES, ESP_LOG_INFO);
+    // ESP_LOG_BUFFER_HEXDUMP("Key B: ", key_b, CRYPTO_BYTES, ESP_LOG_INFO);
+    struct request_step_2 *req_step_2 = malloc(sizeof(struct request_step_2));
+    struct kyber_object_node *kyber_obj = malloc(sizeof(struct kyber_object_node));
+    if (get_kyber_object_node(kyber_obj, aes) != true){
+        ESP_LOGE(TAG_PROT, "Error creating Kyber Object");
+        return;
+    }
+    ESP_LOGW(TAG_PROT, "kyber OBJECT DONE!!!!!");
 
-    size_t ksess_len = 32;
-    uint8_t ksess[ksess_len];
-    const uint8_t info_ksess[] = "Ksess";
-    size_t info_ksess_len = sizeof(info_ksess);
+    struct ake_key *key_sess = malloc(sizeof(struct ake_key));  
+    struct ake_key *key_auth = malloc(sizeof(struct ake_key));    
+
+    build_request_2(req_step_2, response_step_1, kyber_obj,
+         key_sess, key_auth, puf_obj, http_post);
+
     // derive_ksess_hkdf_sha512(key_b, CRYPTO_BYTES, response_step_1->nonce, response_step_1->nonce_len,
     // ksess, ksess_len);
 
-    bool derivate_ksess = derive_hkdf_sha512(key_b, CRYPTO_BYTES, response_step_1->nonce, response_step_1->nonce_len,
-                                            info_ksess, info_ksess_len, ksess, ksess_len);
+    // bool derivate_ksess = derive_hkdf_sha512(kyber_obj->ss, kyber_obj->ss_len, response_step_1->nonce, response_step_1->nonce_len,
+    //                                         info_ksess, info_ksess_len, ksess, ksess_len);
     
     ESP_LOG_BUFFER_HEXDUMP("NONCE: ", response_step_1->nonce, response_step_1->nonce_len, ESP_LOG_INFO);
     ESP_LOG_BUFFER_HEXDUMP("SID", response_step_1->sid,response_step_1->sid_len, ESP_LOG_INFO);
-    ESP_LOG_BUFFER_HEXDUMP("Key Session: ", ksess, ksess_len, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Key Session: ", key_sess->key, key_sess->key_size, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Key Authentication: ", key_auth->key, key_auth->key_size, ESP_LOG_INFO);
 
-    free(plain_pk_kyber);
-
+    bool resp_2 = send_http_request_2(req_step_2, &response_output, &response_length);
+    
+    ESP_LOGW(TAG_PROT, "PENDING TO FREE MEMORY KYBER OBJECT");
+    free(response_output);
+    free_kyber_object_node(kyber_obj);
+    free_request_2(req_step_2);
+    ESP_LOGW(TAG_PROT, "Free heap: %u", (unsigned)esp_get_free_heap_size());
+    //free(plain_pk_kyber);
 }
