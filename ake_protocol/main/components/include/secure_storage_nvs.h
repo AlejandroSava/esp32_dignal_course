@@ -51,6 +51,11 @@
 #define Tag_SS                    "[SECURE_STORE]"
 
 
+
+
+void init_nvs();
+
+
 /* ======================= Secure Storage Record ======================= */
 
 /**

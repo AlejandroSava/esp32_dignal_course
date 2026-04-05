@@ -1,0 +1,122 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.elf /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+ets Jul 29 2019 12:21:46
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time Apr  3 2026 19:13:55[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v3.1[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=1f8f4h (129268) map[0m
+[0;32mI (142) esp_image: segment 1: paddr=000af91c vaddr=3ffb0000 size=006fch (  1788) load[0m
+[0;32mI (143) esp_image: segment 2: paddr=000b0020 vaddr=400d0020 size=a3ee8h (671464) map[0m
+[0;32mI (383) esp_image: segment 3: paddr=00153f10 vaddr=3ffb06fc size=03c18h ( 15384) load[0m
+[0;32mI (389) esp_image: segment 4: paddr=00157b30 vaddr=40080000 size=1934ch (103244) load[0m
+[0;32mI (431) esp_image: segment 5: paddr=00170e84 vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (431) esp_image: segment 6: paddr=00170ec4 vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (448) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (448) boot: Disabling RNG early entropy source...[0m
+[0;32mI (459) cpu_start: Multicore app[0m
+[0;32mI (467) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (467) cpu_start: Pro cpu start user code[0m
+[0;32mI (467) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (469) app_init: Application information:[0m
+[0;32mI (473) app_init: Project name:     ake_protocol[0m
+[0;32mI (477) app_init: App version:      3c084834-dirty[0m
+[0;32mI (482) app_init: Compile time:     Apr  3 2026 19:13:46[0m
+[0;32mI (487) app_init: ELF file SHA256:  b72dd807a...[0m
+[0;32mI (491) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (497) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (501) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (505) efuse_init: Chip rev:         v3.1[0m
+[0;32mI (509) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (515) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (520) heap_init: At 3FFB9A30 len 000265D0 (153 KiB): DRAM[0m
+[0;32mI (525) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (530) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (536) heap_init: At 4009934C len 00006CB4 (27 KiB): IRAM[0m
+[0;33mW (543) spi_flash: Detected boya flash chip but using generic driver. For optimal functionality, enable `SPI_FLASH_SUPPORT_BOYA_CHIP` in menuconfig[0m
+[0;32mI (554) spi_flash: detected chip: generic[0m
+[0;32mI (558) spi_flash: flash io: dio[0m
+[0;32mI (562) main_task: Started on CPU0[0m
+[0;32mI (572) main_task: Calling app_main()[0m
+[0;32mI (572) [Protocol Transactions]: ----- Initialize the NVS ------[0m
+[0;32mI (622) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (622) [Protocol Transactions]: ----- Starting WiFi Driver -----[0m
+[0;32mI (642) wifi:wifi driver task: 3ffca714, prio:23, stack:6656, core=0[0m
+[0;32mI (682) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (682) wifi:wifi certification version: v7.0[0m
+[0;32mI (682) wifi:config NVS flash: enabled[0m
+[0;32mI (682) wifi:config nano formatting: disabled[0m
+[0;32mI (692) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (692) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (702) wifi:Init management short buffer num: 32[0m
+[0;32mI (702) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (702) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (712) wifi:Init static rx buffer num: 10[0m
+[0;32mI (712) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (722) wifi_init: rx ba win: 6[0m
+[0;32mI (722) wifi_init: accept mbox: 6[0m
+[0;32mI (722) wifi_init: tcpip mbox: 32[0m
+[0;32mI (722) wifi_init: udp mbox: 6[0m
+[0;32mI (732) wifi_init: tcp mbox: 6[0m
+[0;32mI (732) wifi_init: tcp tx win: 5760[0m
+[0;32mI (732) wifi_init: tcp rx win: 5760[0m
+[0;32mI (742) wifi_init: tcp mss: 1440[0m
+[0;32mI (742) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (742) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (752) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (842) wifi:mode : sta (ec:e3:34:1a:32:48)[0m
+[0;32mI (842) wifi:enable tsf[0m
+[0;32mI (842) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (842) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (852) wifi:new:<11,0>, old:<1,0>, ap:<255,255>, sta:<11,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (862) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (862) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (872) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (882) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (892) wifi:connected with INFINITUM2.0_2.4, aid = 3, channel 11, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (892) wifi:security: WPA2-PSK, phy: bgn, rssi: -52[0m
+[0;32mI (902) wifi:pm start, type: 1[0m
+
+[0;32mI (902) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (942) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1962) esp_netif_handlers: sta ip: 192.168.1.69, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1962) [WIFI]: Got IP: 192.168.1.69[0m
+[0;32mI (1962) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;33mW (1962) [Protocol Transactions]: Free heap after wifi and init: 186784[0m
+[0;32mI (1972) [Protocol Transactions]: ----- Setting Parameter for PUF and Secure Storage Region -----[0m
+[0;33mW (1982) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;33mW (1982) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (1992) [Protocol Transactions]: -----  PROTOCOL TRANSACTIONS -----[0m
+[0;32mI (2002) [Protocol Transactions]: -------- [STEP 0] RoT --------[0m
+[0;32mI (2002) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2012) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2012) [AKE PROTOCOL]: STEP 0 JSON: {[0m
+	"Step":	0,
+	"Device_Name":	"ESP_32_ALEX_SV",
+	"Mac_Address":	"7OM0GjJI",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[0;33mW (3422) [Protocol Transactions]: Free heap: 182424[0m
+[0;32mI (3432) [Protocol Transactions]: Free elements[0m
+[0;33mW (3432) [Protocol Transactions]: Free heap: 182792[0m
+[0;32mI (3432) main_task: Returned from app_main()[0m

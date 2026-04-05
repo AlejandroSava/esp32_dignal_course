@@ -15,6 +15,15 @@
 
 #include "secure_storage_nvs.h"
 
+void init_nvs(){
+    esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ESP_ERROR_CHECK(nvs_flash_init());
+    }
+    else
+        ESP_LOGI("NVS_INIT", "Starting NVS INIT");  
+}
 
 void update_hmac_secure_storage_structure(alex_secstore_record_t *self, uint8_t *hmac){
     /* Store HMAC size and copy HMAC tag bytes. */

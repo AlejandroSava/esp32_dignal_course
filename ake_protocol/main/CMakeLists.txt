@@ -1,6 +1,7 @@
 idf_component_register(
     SRCS
         "./components/src/aes_cbc.c"
+        "./components/src/ake_protocol.c"
         "./components/src/api_secure_storage.c"
         "./components/src/hmac_sha512.c"
         "./components/src/pkcs_7.c"
@@ -9,11 +10,11 @@ idf_component_register(
         "./components/src/base64.c"
         "./components/src/http_transactions.c"
         "./components/src/wifi.c"
-        #"example_transaction.c"
         #"secure_storage.c"
         #"write_secure_storage.c"
         #"read_secure_storage.c"
-        "protocol_transaction.c"
+        #"protocol_transaction.c"
+        "protocol.c"
     INCLUDE_DIRS
         "./components/include"
         "./components/src"
