@@ -58,7 +58,7 @@ void app_main(void)
         "PK_KYBER", aes_key_ss) !=ESP_OK){
         ESP_LOGE(TAG_PROT, "Error Writing in the secure storage region");
         return;
-        }
+    }
     
     free(json_resp_out);
 
@@ -81,13 +81,47 @@ void app_main(void)
     }
     free(json_resp_out);
 
-
-    // ESP_LOG_BUFFER_HEXDUMP("DATA HEX FORMAT", response_step_1->nonce, response_step_1->nonce_len, ESP_LOG_INFO);
-    // ESP_LOG_BUFFER_HEXDUMP("DATA HEX FORMAT", response_step_1->sid, response_step_1->sid_len, ESP_LOG_INFO);
-    // ESP_LOGW(TAG_PROT, "PENDING TO FREE MEMORY FROM STEP 1");
+    ESP_LOGI(TAG_PROT, "-------- [STEP 2] --------");
     
-    //free(response_output);
+    struct ake_key *key_sess = malloc(sizeof(struct ake_key));  
+    struct ake_key *key_auth = malloc(sizeof(struct ake_key));   
+    struct request_step_2 *req_step_2 = malloc(sizeof(struct request_step_2));
+    struct kyber_object_node *kyber_obj = malloc(sizeof(struct kyber_object_node));
 
+    ESP_LOGI(TAG_PROT, "Get Kyber Object"); 
+    if (get_kyber_object_node(kyber_obj, aes_key_ss) != true){
+        ESP_LOGE(TAG_PROT, "Error creating Kyber Object");
+        return;
+    }
+    
+    build_request_2(req_step_2, res_step_1, kyber_obj, key_sess, key_auth, puf_obj, device_name);
+
+    ESP_LOG_BUFFER_HEXDUMP("Key Session: ", key_sess->key, key_sess->key_size, ESP_LOG_INFO);
+    ESP_LOG_BUFFER_HEXDUMP("Key Authentication: ", key_auth->key, key_auth->key_size, ESP_LOG_INFO);
+ 
+    if (send_http_request_2(req_step_2, &json_resp_out, &json_resp_len, http_post) == false){
+        ESP_LOGE(TAG_PROT, "Error sending request 2");
+        return;
+    }
+    struct response_step_2 *res_step_2 = malloc(sizeof(struct response_step_2));
+    if(get_response_2(res_step_2, json_resp_out) == false){
+        ESP_LOGE(TAG_PROT, "Error getting response 2");
+        return;
+    }
+    bool tag_s_verification = verify_tag_s(res_step_2->tag_s,
+                 res_step_2->tag_s_len,
+                 key_sess,
+                 res_step_2->sid,
+                 res_step_2->sid_len,
+                 res_step_1->nonce_s,
+                 res_step_1->nonce_s_len,
+                 req_step_2->nonce_d,
+                 req_step_2->nonce_d_len);
+    
+    ESP_LOGI(TAG_AKE, "Tag S verification: %s",
+         tag_s_verification ? "SUCCESS" : "FAILURE");
+
+    free(json_resp_out);
 
     // dealloacate the memory
     ESP_LOGW(TAG_PROT, "Free heap: %u", (unsigned)esp_get_free_heap_size());
@@ -98,7 +132,13 @@ void app_main(void)
     free_response_step_0(res_step_0);
     // free request step 1 is not necessary!!! 
     free_response_step_1(res_step_1);
+    free_kyber_object_node(kyber_obj);
+    free_request_2(req_step_2);
+    free_ake_key(key_sess);
+    free_ake_key(key_auth);
+    free_response_step_2(res_step_2);
 
     //free(json_resp_out);
+    ESP_LOGW(TAG_PROT, "The memory is Free!!!");
     ESP_LOGW(TAG_PROT, "Free heap: %u", (unsigned)esp_get_free_heap_size());
 }

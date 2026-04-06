@@ -1,0 +1,24 @@
+Command: ninja all
+[1/10] Performing build step for 'bootloader'
+[1/1] cd /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader && /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.bin
+Bootloader binary size 0x6690 bytes. 0x970 bytes (8%) free.
+[2/10] No install step for 'bootloader'
+[3/10] Completed 'bootloader'
+[4/10] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/protocol.c.obj
+[5/10] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/components/src/ake_protocol.c.obj
+[6/10] Linking C static library esp-idf/main/libmain.a
+[7/10] Generating esp-idf/esp_system/ld/sections.ld
+info: Default value for ESP_MAIN_TASK_STACK_SIZE in sdkconfig is 28672 but it is 3584 according to Kconfig.
+Using default value from sdkconfig (28672).
+[8/10] Linking CXX executable ake_protocol.elf
+[9/10] Generating binary image from built executable
+Warning: Deprecated: Option '--flash_mode' is deprecated. Use '--flash-mode' instead.
+Warning: Deprecated: Option '--flash_freq' is deprecated. Use '--flash-freq' instead.
+Warning: Deprecated: Option '--flash_size' is deprecated. Use '--flash-size' instead.
+esptool v5.1.0
+Creating ESP32 image...
+Merged 3 ELF sections.
+Successfully created ESP32 image.
+Generated /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.bin
+[10/10] cd /home/alejandro/esp32_dignal_course/ake_protocol/build && /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/alejandro/esp32_dignal_course/ake_protocol/build/partition_table/partition-table.bin /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.bin
+ake_protocol.bin binary size 0xe6670 bytes. Smallest app partition is 0x100000 bytes. 0x19990 bytes (10%) free.

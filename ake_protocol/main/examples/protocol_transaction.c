@@ -87,8 +87,6 @@ struct response_step_2{
     size_t tad_s_len;
     uint8_t *tag_s;
     
-    char *http_address;
-
     // base 64
     char *sid_b64;
     char *tad_s_b64;
