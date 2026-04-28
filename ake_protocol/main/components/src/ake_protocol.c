@@ -1230,3 +1230,108 @@ bool verify_tag_s(const uint8_t *expected_tag_s,
     ESP_LOG_BUFFER_HEXDUMP(TAG_AKE, computed_tag_s, SHA512_DIGEST_SIZE, ESP_LOG_INFO);
     return true;
 }
+
+
+bool get_context_master_key(struct master_key *self,
+                 size_t sid_len, const uint8_t *sid,
+                 size_t nonce_s_len, const uint8_t *nonce_s,
+                 size_t nonce_d_len, const uint8_t *nonce_d)
+{
+    if (self == NULL || sid == NULL || nonce_s == NULL || nonce_d == NULL)
+        return false;
+
+    // Free previous context if exists (avoid memory leak)
+    if (self->context != NULL) {
+        free(self->context);
+        self->context = NULL;
+        self->context_len = 0;
+    }
+
+    self->context_len = sid_len + nonce_s_len + nonce_d_len;
+
+    self->context = malloc(self->context_len);
+    if (self->context == NULL)
+        return false;
+
+    size_t offset = 0;
+
+    memcpy(self->context + offset, sid, sid_len);
+    offset += sid_len;
+
+    memcpy(self->context + offset, nonce_s, nonce_s_len);
+    offset += nonce_s_len;
+
+    memcpy(self->context + offset, nonce_d, nonce_d_len);
+    offset += nonce_d_len;
+
+    return true;
+}
+
+bool derive_master_key(struct master_key *self,
+                       const uint8_t *puf_hash, size_t puf_hash_size,
+                       const uint8_t *ss, size_t ss_len)
+{
+    uint8_t *temp_buf = NULL;
+    size_t temp_buf_size = 0;
+    size_t offset = 0;
+    const uint8_t *key_info = (const uint8_t *)"AKE KEY MASTER";
+    size_t key_info_len = strlen((const char *)key_info);
+    bool ret = false;
+
+    if (self == NULL || puf_hash == NULL || ss == NULL) {
+        return false;
+    }
+
+    if (puf_hash_size == 0 || ss_len == 0) {
+        return false;
+    }
+
+    if (self->context == NULL || self->context_len == 0) {
+        return false;
+    }
+
+    temp_buf_size = puf_hash_size + ss_len;
+    temp_buf = malloc(temp_buf_size);
+    if (temp_buf == NULL) {
+        return false;
+    }
+
+    memcpy(temp_buf + offset, puf_hash, puf_hash_size);
+    offset += puf_hash_size;
+
+    memcpy(temp_buf + offset, ss, ss_len);
+    offset += ss_len;
+
+    if (offset != temp_buf_size) {
+        goto cleanup;
+    }
+
+    if (self->key != NULL) {
+        free(self->key);
+        self->key = NULL;
+        self->key_len = 0;
+    }
+
+    self->key_len = KEY_SIZE; /* 32 bytes = 256 bits */
+    self->key = malloc(self->key_len);
+    if (self->key == NULL) {
+        self->key_len = 0;
+        goto cleanup;
+    }
+
+    if (!derive_hkdf_sha512(temp_buf, temp_buf_size,
+                            self->context, self->context_len,
+                            key_info, key_info_len,
+                            self->key, self->key_len)) {
+        free(self->key);
+        self->key = NULL;
+        self->key_len = 0;
+        goto cleanup;
+    }
+
+    ret = true;
+
+cleanup:
+    free(temp_buf);
+    return ret;
+}
