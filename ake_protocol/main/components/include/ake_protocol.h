@@ -29,12 +29,13 @@ struct response_step_0{
     int step;
     char *server_name; // TODO: where is used it? 
     size_t kyber_pk_len;
-    uint8_t *kyber_pk;
+    uint8_t *kyber_pk;  
 };
 
 struct request_step_1{
     int step;
     const char *device_name; 
+    // TODO ADD THE MAC ADDRESS
 };
 
 struct response_step_1{
@@ -43,7 +44,7 @@ struct response_step_1{
     size_t sid_len;
     uint8_t *sid;
     size_t nonce_s_len;
-    uint8_t * nonce_s;
+    uint8_t *nonce_s;
 };
 
 struct request_step_2{
@@ -91,6 +92,16 @@ struct ake_key{
     size_t key_info_len;
 };
 
+struct master_key{
+    /*context = SID || nonce_s || nonce_d
+    Kmaster = HKDF-SHA512( PUF_hash || SS, salt = context, info = "AKE master")*/
+    size_t key_len;
+    uint8_t *key;
+    size_t context_len;
+    uint8_t *context;
+
+};
+
 bool build_request_0(struct request_step_0 *self, const char *device_name, struct puf_object *puf);
 void free_request_step_0(struct request_step_0 *self);
 bool send_http_request_0(struct request_step_0 *self, char **json_response_output,
@@ -132,4 +143,12 @@ bool verify_tag_s(const uint8_t *expected_tag_s,
                   size_t nonce_s_len,
                   const uint8_t *nonce_d,
                   size_t nonce_d_len);
+bool get_context_master_key(struct master_key *self, // opaque this function
+                 size_t sid_len, const uint8_t *sid,
+                 size_t nonce_s_len, const uint8_t *nonce_s,
+                 size_t nonce_d_len, const uint8_t *nonce_d);
+bool derive_master_key(struct master_key *self, // opaque this function
+                       const uint8_t *puf_hash, size_t puf_hash_size,
+                       const uint8_t *ss, size_t ss_len);
+
 #endif
