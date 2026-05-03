@@ -10,6 +10,7 @@ idf_component_register(
         "./components/src/base64.c"
         "./components/src/http_transactions.c"
         "./components/src/wifi.c"
+        "./components/src/secure_channel.c"
         #"secure_storage.c"
         #"write_secure_storage.c"
         #"read_secure_storage.c"

@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include "secure_channel.h"
 
 #define TAG_SEC_CHAN "[SECURE CHANNEL]"
 
@@ -11,23 +12,25 @@
 #define SEC_CHAN_VERSION      1
 #define KEY_SEC_CHAN_SIZE    32
 #define STEP_SEC_CHAN 3
+#define MAX_SEQ 70
+#define MIN_SEQ 0
 
 struct secure_message {
     uint32_t step;
 
-    size_t sid_len;
+    uint32_t sid_len;
     uint8_t *sid;
 
     uint32_t seq; // define maximun and minimun. 
     // start in 0 each session. 
 
-    size_t iv_len;
+    uint32_t iv_len;
     uint8_t iv[AES_CBC_IV_SIZE];
 
-    size_t ciphertext_len;
+    uint32_t ciphertext_len;
     uint8_t *ciphertext;
 
-    size_t tag_sc_len;
+    uint32_t tag_sc_len;
     uint8_t tag_sc[HMAC_SHA512_SIZE];
 };
 
@@ -63,4 +66,30 @@ struct secure_session {
     uint8_t kmac[KEY_SEC_CHAN_SIZE];
 };
 
+bool start_secure_channel_session(struct secure_session *self,
+                                  const uint8_t *sid,
+                                  size_t sid_len,
+                                  const uint8_t *kenc,
+                                  const uint8_t *kmac);
+
+void free_secure_channel_session(struct secure_session *self);
+
+bool build_secure_plain_data_float(struct secure_plain_data *self,
+                                   const uint8_t *payload,
+                                   uint32_t payload_len);
+
+void free_secure_plain_data(struct secure_plain_data *self);
+
+bool build_secure_message(struct secure_message *self,
+                          struct secure_session *session,
+                          const struct secure_plain_data *plain_data);
+
+void free_secure_message(struct secure_message *self);
+bool send_secure_channel_message(const struct secure_message *message,
+                                 char **json_response_output,
+                                 size_t *response_length,
+                                 const char *http_address);
+
+bool get_secure_channel_response(struct secure_message *response,
+                                 const char *json_response_output);
 #endif

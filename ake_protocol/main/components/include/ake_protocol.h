@@ -14,13 +14,13 @@
 struct request_step_0{
     int step;
     const char *device_name; 
-    size_t mac_address_size;
-    uint8_t *mac_address;
+    size_t device_mac_size;
+    uint8_t *device_mac;
     size_t puf_hash_size;
     uint8_t *puf_hash;
 
     /* base 64 params*/
-    char *mac_address_b64;
+    char *device_mac_b64;
     char *puf_hash_b64;
 
 };
@@ -34,8 +34,12 @@ struct response_step_0{
 
 struct request_step_1{
     int step;
-    const char *device_name; 
-    // TODO ADD THE MAC ADDRESS
+    const char *device_name;
+    size_t device_mac_size; 
+    uint8_t *device_mac;
+
+    /* base 64 params*/
+    char *device_mac_b64;
 };
 
 struct response_step_1{
@@ -74,7 +78,6 @@ struct response_step_2{
     
 };
 
-
 struct kyber_object_node {
     uint8_t *pk;
     size_t pk_len;
@@ -110,6 +113,7 @@ bool get_response_0(struct response_step_0 *self, char *json_response_output);
 void free_response_step_0(struct response_step_0 *self);
 
 bool build_request_1(struct request_step_1 *self, const char *device_name);
+void free_request_step_1(struct request_step_1 *self);
 bool send_http_request_1(struct request_step_1 *self, char **json_response_output,
                          size_t *json_response_length, const char *http_address);
 bool get_response_1(struct response_step_1 *self, char *json_response_output);

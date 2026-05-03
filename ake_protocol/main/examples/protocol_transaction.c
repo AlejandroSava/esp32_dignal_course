@@ -27,13 +27,13 @@
 struct request_step_0{
     int step;
     const char *device_name; 
-    size_t mac_address_size;
-    uint8_t *mac_address;
+    size_t device_mac_size;
+    uint8_t *device_mac;
     size_t puf_hash_size;
     uint8_t *puf_hash;
 
     /* base 64 params*/
-    char *mac_address_b64;
+    char *device_mac_b64;
     char *puf_hash_b64;
     char *http_address;
 };
@@ -754,30 +754,30 @@ bool build_request_0(struct request_step_0 *self, struct puf_object *puf, char *
         return false;
     }
 
-    self->mac_address = NULL;
+    self->device_mac = NULL;
     self->puf_hash = NULL;
-    self->mac_address_b64 = NULL;
+    self->device_mac_b64 = NULL;
     self->puf_hash_b64 = NULL;
 
     self->step = 0;
     self->device_name = DEVICE_NAME;
     self->http_address = http_post;
 
-    self->mac_address_size = 6;
-    self->mac_address = malloc(self->mac_address_size);
-    if (self->mac_address == NULL) {
+    self->device_mac_size = 6;
+    self->device_mac = malloc(self->device_mac_size);
+    if (self->device_mac == NULL) {
         ESP_LOGE(TAG_PROT, "malloc failed for mac_address");
         return false;
     }
 
-    esp_efuse_mac_get_default(self->mac_address);
+    esp_efuse_mac_get_default(self->device_mac);
 
     self->puf_hash_size = puf->puf_hash_len;
     self->puf_hash = malloc(self->puf_hash_size);
     if (self->puf_hash == NULL) {
         ESP_LOGE(TAG_PROT, "malloc failed for puf_hash");
-        free(self->mac_address);
-        self->mac_address = NULL;
+        free(self->device_mac);
+        self->device_mac = NULL;
         return false;
     }
 
@@ -788,28 +788,28 @@ bool build_request_0(struct request_step_0 *self, struct puf_object *puf, char *
                             &self->puf_hash_b64) != 0) {
         ESP_LOGE(TAG_PROT, "BASE64 ENCODE FAILURE (PUF)");
         free(self->puf_hash);
-        free(self->mac_address);
+        free(self->device_mac);
         self->puf_hash = NULL;
-        self->mac_address = NULL;
+        self->device_mac = NULL;
         return false;
     }
 
     ESP_LOGI(TAG_PROT, "PUF_HASH(b64): %s", self->puf_hash_b64);
 
-    if (base64_encode_alloc(self->mac_address,
-                            self->mac_address_size,
-                            &self->mac_address_b64) != 0) {
+    if (base64_encode_alloc(self->device_mac,
+                            self->device_mac_size,
+                            &self->device_mac_b64) != 0) {
         ESP_LOGE(TAG_PROT, "BASE64 ENCODE FAILURE (MAC)");
         free(self->puf_hash_b64);
         free(self->puf_hash);
-        free(self->mac_address);
+        free(self->device_mac);
         self->puf_hash_b64 = NULL;
         self->puf_hash = NULL;
-        self->mac_address = NULL;
+        self->device_mac = NULL;
         return false;
     }
 
-    ESP_LOGI(TAG_PROT, "MAC_ADDRESS(b64): %s", self->mac_address_b64);
+    ESP_LOGI(TAG_PROT, "MAC_ADDRESS(b64): %s", self->device_mac_b64);
 
     return true;
 }
@@ -827,7 +827,7 @@ bool send_http_request_0(struct request_step_0 *self, char **response_output, si
 
     cJSON_AddNumberToObject(root, "Step", self->step);
     cJSON_AddStringToObject(root, "Device_Name", self->device_name);
-    cJSON_AddStringToObject(root, "Mac_Address", self->mac_address_b64);
+    cJSON_AddStringToObject(root, "Mac_Address", self->device_mac_b64);
     cJSON_AddStringToObject(root, "PUF_Hash", self->puf_hash_b64);
 
     char *json_string = cJSON_Print(root);
@@ -866,17 +866,17 @@ void free_request_0(struct request_step_0 *self)
         return;
     }
 
-    free(self->mac_address);
+    free(self->device_mac);
     free(self->puf_hash);
-    free(self->mac_address_b64);
+    free(self->device_mac_b64);
     free(self->puf_hash_b64);
 
-    self->mac_address = NULL;
+    self->device_mac = NULL;
     self->puf_hash = NULL;
-    self->mac_address_b64 = NULL;
+    self->device_mac_b64 = NULL;
     self->puf_hash_b64 = NULL;
 
-    self->mac_address_size = 0;
+    self->device_mac_size = 0;
     self->puf_hash_size = 0;
     free(self);
 }

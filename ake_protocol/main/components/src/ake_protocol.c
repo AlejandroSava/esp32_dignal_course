@@ -36,20 +36,20 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
     self->step = 0;
     self->device_name = device_name;
 
-    self->mac_address_size = 6;
-    self->mac_address = NULL;
+    self->device_mac_size = 6;
+    self->device_mac = NULL;
     self->puf_hash_size = 0;
     self->puf_hash = NULL;
-    self->mac_address_b64 = NULL;
+    self->device_mac_b64 = NULL;
     self->puf_hash_b64 = NULL;
 
-    self->mac_address = malloc(self->mac_address_size);
-    if (self->mac_address == NULL) {
+    self->device_mac = malloc(self->device_mac_size);
+    if (self->device_mac == NULL) {
         ESP_LOGE(TAG_AKE, "Malloc failed for mac_address");
         return false;
     }
 
-    if (esp_efuse_mac_get_default(self->mac_address) != ESP_OK) {
+    if (esp_efuse_mac_get_default(self->device_mac) != ESP_OK) {
         ESP_LOGE(TAG_AKE, "Error getting mac address from fuses");
         return false;
     }
@@ -58,9 +58,9 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
     self->puf_hash = malloc(self->puf_hash_size);
     if (self->puf_hash == NULL) {
         ESP_LOGE(TAG_AKE, "malloc failed for puf_hash");
-        free(self->mac_address);
-        self->mac_address = NULL;
-        self->mac_address_size = 0;
+        free(self->device_mac);
+        self->device_mac = NULL;
+        self->device_mac_size = 0;
         return false;
     }
 
@@ -71,26 +71,26 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
                             &self->puf_hash_b64) != 0) {
         ESP_LOGE(TAG_AKE, "BASE64 ENCODE FAILURE (PUF)");
         free(self->puf_hash);
-        free(self->mac_address);
+        free(self->device_mac);
         self->puf_hash = NULL;
         self->puf_hash_size = 0;
-        self->mac_address = NULL;
-        self->mac_address_size = 0;
+        self->device_mac = NULL;
+        self->device_mac_size = 0;
         return false;
     }
 
-    if (base64_encode_alloc(self->mac_address,
-                            self->mac_address_size,
-                            &self->mac_address_b64) != 0) {
+    if (base64_encode_alloc(self->device_mac,
+                            self->device_mac_size,
+                            &self->device_mac_b64) != 0) {
         ESP_LOGE(TAG_AKE, "BASE64 ENCODE FAILURE (MAC)");
         free(self->puf_hash_b64);
         free(self->puf_hash);
-        free(self->mac_address);
+        free(self->device_mac);
         self->puf_hash_b64 = NULL;
         self->puf_hash = NULL;
         self->puf_hash_size = 0;
-        self->mac_address = NULL;
-        self->mac_address_size = 0;
+        self->device_mac = NULL;
+        self->device_mac_size = 0;
         return false;
     }
 
@@ -103,21 +103,21 @@ void free_request_step_0(struct request_step_0 *self)
         return;
     }
 
-    if (self->mac_address != NULL)
-        free(self->mac_address);
+    if (self->device_mac != NULL)
+        free(self->device_mac);
     if (self->puf_hash != NULL)
         free(self->puf_hash);
-    if (self->mac_address_b64 != NULL)
-        free(self->mac_address_b64);
+    if (self->device_mac_b64 != NULL)
+        free(self->device_mac_b64);
     if (self->puf_hash_b64 != NULL)
         free(self->puf_hash_b64);
 
-    self->mac_address = NULL;
+    self->device_mac = NULL;
     self->puf_hash = NULL;
-    self->mac_address_b64 = NULL;
+    self->device_mac_b64 = NULL;
     self->puf_hash_b64 = NULL;
 
-    self->mac_address_size = 0;
+    self->device_mac_size = 0;
     self->puf_hash_size = 0;
     free(self);
 }
@@ -132,7 +132,7 @@ bool send_http_request_0(struct request_step_0 *self, char **json_response_outpu
     }
 
     if (self->device_name == NULL ||
-        self->mac_address_b64 == NULL ||
+        self->device_mac_b64 == NULL ||
         self->puf_hash_b64 == NULL) {
         ESP_LOGE(TAG_AKE, "Invalid request_step_0 content");
         return false;
@@ -149,7 +149,7 @@ bool send_http_request_0(struct request_step_0 *self, char **json_response_outpu
 
     if (cJSON_AddNumberToObject(root, "Step", self->step) == NULL ||
         cJSON_AddStringToObject(root, "Device_Name", self->device_name) == NULL ||
-        cJSON_AddStringToObject(root, "Mac_Address", self->mac_address_b64) == NULL ||
+        cJSON_AddStringToObject(root, "Device_Mac", self->device_mac_b64) == NULL ||
         cJSON_AddStringToObject(root, "PUF_Hash", self->puf_hash_b64) == NULL) {
         ESP_LOGE(TAG_AKE, "Failed to build JSON request");
         cJSON_Delete(root);
@@ -295,7 +295,46 @@ bool build_request_1(struct request_step_1 *self, const char *device_name)
     }
     self->step = 1;
     self->device_name = device_name;
+    self->device_mac_size = 6;
+
+    self->device_mac = malloc(self->device_mac_size);
+    if (self->device_mac == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for mac_address");
+        return false;
+    }
+    if (esp_efuse_mac_get_default(self->device_mac) != ESP_OK) {
+        ESP_LOGE(TAG_AKE, "Error getting mac address from fuses");
+        return false;
+    }
+    if (base64_encode_alloc(self->device_mac,
+                            self->device_mac_size,
+                            &self->device_mac_b64) != 0) {
+        ESP_LOGE(TAG_AKE, "BASE64 ENCODE FAILURE (MAC)");
+        
+        free(self->device_mac);
+        self->device_mac = NULL;
+        self->device_mac_size = 0;
+        return false;
+    }
+
     return true;
+}
+
+void free_request_step_1(struct request_step_1 *self)
+{
+    if (self == NULL) {
+        return;
+    }
+
+    if (self->device_mac != NULL)
+        free(self->device_mac);
+    if (self->device_mac_b64 != NULL)
+        free(self->device_mac_b64);
+
+    self->device_mac = NULL;
+    self->device_mac_b64 = NULL;
+    self->device_mac_size = 0;
+    free(self);
 }
 
 bool send_http_request_1(struct request_step_1 *self, char **json_response_output,
@@ -322,7 +361,8 @@ bool send_http_request_1(struct request_step_1 *self, char **json_response_outpu
     }
 
     if (cJSON_AddNumberToObject(root, "Step", self->step) == NULL ||
-        cJSON_AddStringToObject(root, "Device_Name", self->device_name) == NULL) {
+        cJSON_AddStringToObject(root, "Device_Name", self->device_name) == NULL ||
+        cJSON_AddStringToObject(root, "Device_Mac", self->device_mac_b64) == NULL) {
         ESP_LOGE(TAG_AKE, "Failed to build JSON request");
         cJSON_Delete(root);
         return false;

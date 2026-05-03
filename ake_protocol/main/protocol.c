@@ -5,6 +5,7 @@
 #include "api_secure_storage.h"
 #include "wifi.h"
 #include "ake_protocol.h"
+#include "secure_channel.h"
 
 #define TAG_PROT "[Protocol Transactions]"
 
@@ -123,6 +124,39 @@ void app_main(void)
 
     free(json_resp_out);
 
+    //SECURE CHANNEL
+    ESP_LOGI(TAG_AKE, "------------- SECURE CHANNEL -------------");
+    struct secure_session *session = malloc(sizeof(struct secure_session));    
+    start_secure_channel_session(session, 
+                                 res_step_2->sid,
+                                 res_step_2->sid_len,
+                                 key_sess->key,
+                                 key_sess->key);
+    for(int i = 0; i <10; i++){
+        struct secure_plain_data *plain_data= malloc(sizeof(struct secure_plain_data));
+        struct secure_message *secure_chan_message = malloc(sizeof(struct secure_message));
+        float temperature = 25.6f + i;
+        ESP_LOGI(TAG_AKE,"the temperature is: %f", temperature);
+        build_secure_plain_data_float(plain_data,
+                                    (const uint8_t *)&temperature,
+                                    sizeof(float));
+        build_secure_message(secure_chan_message,
+                            session,
+                            plain_data);
+        ESP_LOG_BUFFER_HEXDUMP("[Cipher Data]", secure_chan_message->ciphertext, secure_chan_message->ciphertext_len, ESP_LOG_INFO);
+        send_secure_channel_message(secure_chan_message,
+                                    &json_resp_out, 
+                                    &json_resp_len,
+                                    http_post);
+        
+        free_secure_plain_data(plain_data);
+        free_secure_message(secure_chan_message);
+        free(json_resp_out);
+    }
+
+    free_secure_channel_session(session);
+
+
     // dealloacate the memory
     ESP_LOGW(TAG_PROT, "Free heap: %u", (unsigned)esp_get_free_heap_size());
     ESP_LOGI(TAG_PROT, "Free elements");
@@ -130,7 +164,7 @@ void app_main(void)
     free(aes_key_ss);
     free_request_step_0(req_step_0);
     free_response_step_0(res_step_0);
-    // free request step 1 is not necessary!!! 
+    free_request_step_1(req_step_1);
     free_response_step_1(res_step_1);
     free_kyber_object_node(kyber_obj);
     free_request_2(req_step_2);

@@ -1,0 +1,525 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.elf /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (28) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (28) boot: compile time Apr  4 2026 22:19:44[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v1.0[0m
+[0;32mI (34) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (38) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (45) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (52) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (65) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (71) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (78) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (88) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=21474h (136308) map[0m
+[0;32mI (144) esp_image: segment 1: paddr=000b149c vaddr=3ffb0000 size=04328h ( 17192) load[0m
+[0;32mI (150) esp_image: segment 2: paddr=000b57cc vaddr=40080000 size=0a84ch ( 43084) load[0m
+[0;32mI (168) esp_image: segment 3: paddr=000c0020 vaddr=400d0020 size=a9014h (692244) map[0m
+[0;32mI (413) esp_image: segment 4: paddr=0016903c vaddr=4008a84c size=0ebd0h ( 60368) load[0m
+[0;32mI (437) esp_image: segment 5: paddr=00177c14 vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (438) esp_image: segment 6: paddr=00177c54 vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (454) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (455) boot: Disabling RNG early entropy source...[0m
+[0;32mI (465) cpu_start: Multicore app[0m
+[0;32mI (474) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (474) cpu_start: Pro cpu start user code[0m
+[0;32mI (474) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (476) app_init: Application information:[0m
+[0;32mI (480) app_init: Project name:     ake_protocol[0m
+[0;32mI (484) app_init: App version:      b412a850-dirty[0m
+[0;32mI (489) app_init: Compile time:     Apr 28 2026 12:56:13[0m
+[0;32mI (494) app_init: ELF file SHA256:  8c6f8f1d7...[0m
+[0;32mI (498) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (503) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (507) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (511) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (515) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (521) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (526) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (532) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (537) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (543) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;32mI (549) spi_flash: detected chip: generic[0m
+[0;32mI (552) spi_flash: flash io: dio[0m
+[0;32mI (556) main_task: Started on CPU0[0m
+[0;32mI (566) main_task: Calling app_main()[0m
+[0;32mI (566) [Protocol Transactions]: ----- Initialize the NVS ------[0m
+[0;32mI (626) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (626) [Protocol Transactions]: ----- Starting WiFi Driver -----[0m
+[0;32mI (636) wifi:wifi driver task: 3ffcafc8, prio:23, stack:6656, core=0[0m
+[0;32mI (696) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (696) wifi:wifi certification version: v7.0[0m
+[0;32mI (696) wifi:config NVS flash: enabled[0m
+[0;32mI (696) wifi:config nano formatting: disabled[0m
+[0;32mI (706) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (706) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (706) wifi:Init management short buffer num: 32[0m
+[0;32mI (716) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (716) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (726) wifi:Init static rx buffer num: 10[0m
+[0;32mI (726) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (736) wifi_init: rx ba win: 6[0m
+[0;32mI (736) wifi_init: accept mbox: 6[0m
+[0;32mI (736) wifi_init: tcpip mbox: 32[0m
+[0;32mI (736) wifi_init: udp mbox: 6[0m
+[0;32mI (746) wifi_init: tcp mbox: 6[0m
+[0;32mI (746) wifi_init: tcp tx win: 5760[0m
+[0;32mI (746) wifi_init: tcp rx win: 5760[0m
+[0;32mI (756) wifi_init: tcp mss: 1440[0m
+[0;32mI (756) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (756) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (766) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (846) wifi:mode : sta (24:62:ab:dc:33:28)[0m
+[0;32mI (846) wifi:enable tsf[0m
+[0;32mI (856) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (856) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (866) wifi:new:<6,0>, old:<1,0>, ap:<255,255>, sta:<6,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (876) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (876) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (886) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (896) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (906) wifi:connected with INFINITUM2.0_2.4, aid = 8, channel 6, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (906) wifi:security: WPA2-PSK, phy: bgn, rssi: -39[0m
+[0;32mI (916) wifi:pm start, type: 1[0m
+
+[0;32mI (916) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (946) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (1986) esp_netif_handlers: sta ip: 192.168.1.64, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (1986) [WIFI]: Got IP: 192.168.1.64[0m
+[0;32mI (1986) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+[0;33mW (1986) [Protocol Transactions]: Free heap after wifi and init: 184556[0m
+[0;32mI (1996) [Protocol Transactions]: ----- Setting Parameter for PUF and Secure Storage Region -----[0m
+[0;33mW (2006) [SECURE STORAGE REGION]: TESTING SECURE STORAGE... HARDCODING KEY[0m
+[0;33mW (2006) [SECURE STORAGE REGION]: PUF Object Updated --> hardcoding object, PUF FEAK![0m
+[0;32mI (2016) [Protocol Transactions]: -----  PROTOCOL TRANSACTIONS -----[0m
+[0;32mI (2026) [Protocol Transactions]: -------- [STEP 0] RoT --------[0m
+[0;32mI (2026) [AKE PROTOCOL]: PUF object is not initialized[0m
+[0;32mI (2036) [AKE PROTOCOL]: PUF HARDCODED... Debug testing[0m
+[0;32mI (2036) [AKE PROTOCOL]: STEP 0 JSON: {[0m
+	"Step":	0,
+	"Device_Name":	"ESP_32_ALEX_SV",
+	"Mac_Address":	"JGKr3DMo",
+	"PUF_Hash":	"g4BKtuHkKxe//NiP33BLPbhX0CrtuUvTusJ/Ch56GCMNt7hyfD9dR+qARSz8BvWwZynhlla/q5l5qTDQPpSL0A=="
+}
+[0;32mI (10086) [AKE PROTOCOL]: Data Response from step 0: {[0m
+  "Kyber_Pk": "gMKU7ZQwfglz5sq1d3KCk1QigfoVA3xYKoISXpG3g0W8gkBu7pWVoHQaolYJx1mjDClDhdys3THD7LJRWuBPHlWyFQSe3Sp+LvHKVwITTzwcCpkln6FmLFS0OZFPoTyX88iefLBPPAC3mHZZ1qhF0HCIBaw4iWwDR6RiMCHLXqsbNWiAr4oGJ1ZKZVAqhBFc5EWncDTB21eLmrTKD9BTD7DAOEXJwdWjGykPGvdsvDAAuxqs+5Ua9ySFUvwPtuy44StfVYF2zGLBOemec6GRYBSShbskyCxyAeG7tYGD8CaUiuVzxtAOVdeMoyUu5eECk3w8gqxCymBOlWIrG5NqsYllywkJqgEa8EtNJCu0JLPML1Z4gttb14KQtwHDIGS463SbrhUZhRJ3V1nDHwZHG/k0AqEs1tekQWaXd6ixUClFtwgF9dAQbYONUbpocyABGQSl6WMI4tR9qEdpSal/UuNSWuifyUOtMqcvdtsJLXNVQgyXzedUL4CRoSUKCwktXOOgBzoKdINRLNTH18Cf0NOAVFXCpbyxy/sWrfAPbxe55rZyixaA4jqnKfZTI8hsO9q24ZkoAauq4sJvlidjX2mCkDMOLSZe8oC2opqqg6RGsrxlhqrDZ0W0DIG3VDo+ACmUtieoWDhZ3/O0sYi9UjxU5zGEq1wq9WmTuXd2bvZP6rgcVipKwqZXRaVuAN1ugVONtmyh2PN1yTF+6kYJ1ymNqzsbAKbIXpq1CflB3sq1CTJF83w6qESwoHXIJ1edCOEuCdigCcRn25G4bWIHBuCm7HxfeDdX4SW2BtE9bnV6rUIm8/RnWBAR8iE9dYIveFpBnUsRPvwgFTIHuqaIoETKMwyzSmpPmyqfXlwzp9mMd5y/FkuryqpQ65dmOYZe/pe6RzdeoaC0E3qqsWkISBJjhhgzHkg3PPI+rnxpleJJ3aCAc7xJZRYCB1OfralAhdy32AcJxxnLH6NPnmy/YGCmWXUJqUkl/hhFMQNxHhpVwndJB8peCtqwsDsqx/S65wwFe8OiygtMjwErKmN3C9Ee2oxusPamLVibdJVfGnqbWJOCmKyDc1UjY5Yi3DXAedR+futOzJCoXXiWm9N1s8V8gOqxgAo3k8l89FJC1LcqLQOhybKH/5uiB9ap0ZunAkczSWYlvtuTmCINxARNatQVkAlExZqDkPVG1HzL4LkSG5wS5qJsp5iL68tjxfQaixVi+8oMdPMOBbrLHMTI5cqHClpmGTO8otImTcZheSdMBSwFW6aYy7tc+6KOZ+lcdUAEnsqqAOcE7nmuQeZelXxAWzh5opZff6QePXJg7jh4xZJM93g37KpQl1fLVdCUE1i7+jDLZxw28jNzRudolUkQCpyWLvmR93oUB8G5oBOQasorj8MOV8GCEfYqbAlq7+TLh6ky67IikjdlY/l74VCFvaIMFEiVPWB9MwNLxWYAccNoBFkariImCLId6Cw7K+RCdvtO9ODOKuBa75cpXQxsWvR8GvQk3/yR9CIflgG+iMBUmlnG3+rHLLW8GGpEoo/mdrO6Qb7oDyUqgZmLfotckDoXJ5QzIhjqc1a++yQ=",
+  "Kyber_Pk_Len": 1184,
+  "Server_Name": "IoT_Server",
+  "Step": 0
+}
+
+[0;32mI (10236) [HMAC]: HMAC success[0m
+[0;32mI (10406) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (10406) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 758A2C8EC7EAF7744F7AC2C5920886F3
+[+]HMAC Size: 64
+[+]HMAC: 97B3144845C943E21F91EF6EEB314F4A0B4DD2D7C24996B446427C305B88823FE8706CE505C4F07A69510E7168CAF98D82A497D12C7B6ED2117CBC3D75AF5CA5
+[+]Data Size: 1200
+[+]Data: 9BFAA923DDDD7D1B8C91BB40C3BFEFE227589754FEF84B6FE20AC273FAC7E935BBDAA123917E90A1279D698E363BB951DE3DFAD116B3AA50EC590BA4B509CF33B352F91E1BEB6484F7FCBD0C2A923647CC018F0303DB876A557A35C2A7E2B049911E3B291F42953AA49BFE0C87B2300101941D55724685B6AE3238D88555689FD005A636FD66AE43CA3BE68D62DDB3DEC5292AFEF4E4C7FC23A78B814C195B0842ADD34294005B9AD1134293DBD3EC783D441176EC446E296618F6769DFF2C7DAE4901C33B3B0179BF9CC64C1D4513FAEEC1FC7288F66F24A87D70B4B8A5A81F8FC2FA95046A16ADADAC3176FA8118F3D575F8384BDAECA7546E7EEE025450F187FE704274449CA117A5B705A3E22F2AF6FB8472187908EF63C9B508F3157DB31FB582A45EEDEBFF2155F34A092F2D9832C91D18792CC31D504C4EF3EA102ED9A1652C4656034E71B7ACAAFE9C4C75DA3521DC1F5031820B90B42E54A22D5111E96A462327A446D06B1850CDA33FB13FE13E09E9C9996774ED53D26FF4EFEF870510C7A31AEB422F8E339032CBF4934A00E848B7078BAB98184B6A93FCC7C006697362E9DD361E8F592ADCDD1EDA23731C36A353CC054E2A413B2F09723A5307FE512DD239AC34F5BEF3034CE7EC704374EAA6D63B53DC291C671EDBFED94AFE91DBF3A328759101E3BF1F81DF61AE4D82E8E975D67AFA1250073C7099DF7EEEAD4CEB800C13A0E84953ACC9B869A64CDF4C6BC90F04913BF05CEC11854AEE7E056D056E4CF2D37E65EE003B17EDFF60C79247966F13ED96AE13FA68C01C2D320297320E88AFB0DE4D6D24C87BC0F92B392B0D0533F2C0B68A314F7D7CC64FF7BB94E96FF59D1AD4B4C9EFFD2B6F616104F23823931FB4167973A193D6D064960F08A9C898B4C4D2B671A4F501D5319FB1732BE1C5B6E2DAA16F86AB06FBCA9C002A88190F0A88B1EE7F4837645F036B57458E49FB8B088AB18D164733CAA3F2774D42DBDADD0A921AFC1370815494B5F7324C469C4FEDCCAC59D3D8B4F9AD5706DADFFB4FAEE82850E7ACE21452B5A3D8C1E1F7FA0BC1DB32B63C1D9E9851DBFAE53E51CBB59D16CC8FFAE49DED2E13CA313E54EE69CEC795E7560AE56697B912C2AF3E0A6E6D3179DEA91074DB256E1F60E3081470AD2C534EC520FCBA7EABEB949ACD956A4BFBF1DB3CD9287FF0CBDA371FF5478AC86672EE363EC96C77B413013FFAC17F885764FE6F637F9EF9D8D298CF634816E2232DBA347B706CB505C8CBA7F124C60364806AFA8FBCCD6F030D794DBC525DBF8344392D155C1E89A682FDD41112BA4234BB1DD07CE6A94D0524F172737B0A6ABEDEC56B98E9400B1E6532E97DBE4A760BD5576C5E47758838F0FE524120968C490F7C6E53DDF8238C9665F87A5888FCD3A99462B8F589B1B9D628AB566AA7F3B771E53F61123EAA4B31B8A8A7C653F27FFB24716283853C90333D76E6431988A3D66189BCF4AB53E48A3D47C5AA4362E7365995F3A33976BB5DCC28B420BA2564C6C628F3BF3F2A97A94811D62625FA6C2B8E2C96DAD3BF056E900ABAAD8916AA86EED5B22072E1D016871A1BE9E90913EFEA4050F2D94AC2CCA22B475A705115352B5B69B06D19FBC414BB766213FEF7F1ABADF6FF13CE59A09261BA392362E50F928E81ED30C96A727405A99CDFE2AC31E102A3D7A2F02D
+[0;32mI (10646) DATA HEX FORMAT: 0x3ffd4568   9b fa a9 23 dd dd 7d 1b  8c 91 bb 40 c3 bf ef e2  |...#..}....@....|[0m
+[0;32mI (10656) DATA HEX FORMAT: 0x3ffd4578   27 58 97 54 fe f8 4b 6f  e2 0a c2 73 fa c7 e9 35  |'X.T..Ko...s...5|[0m
+[0;32mI (10666) DATA HEX FORMAT: 0x3ffd4588   bb da a1 23 91 7e 90 a1  27 9d 69 8e 36 3b b9 51  |...#.~..'.i.6;.Q|[0m
+[0;32mI (10676) DATA HEX FORMAT: 0x3ffd4598   de 3d fa d1 16 b3 aa 50  ec 59 0b a4 b5 09 cf 33  |.=.....P.Y.....3|[0m
+[0;32mI (10686) DATA HEX FORMAT: 0x3ffd45a8   b3 52 f9 1e 1b eb 64 84  f7 fc bd 0c 2a 92 36 47  |.R....d.....*.6G|[0m
+[0;32mI (10696) DATA HEX FORMAT: 0x3ffd45b8   cc 01 8f 03 03 db 87 6a  55 7a 35 c2 a7 e2 b0 49  |.......jUz5....I|[0m
+[0;32mI (10706) DATA HEX FORMAT: 0x3ffd45c8   91 1e 3b 29 1f 42 95 3a  a4 9b fe 0c 87 b2 30 01  |..;).B.:......0.|[0m
+[0;32mI (10716) DATA HEX FORMAT: 0x3ffd45d8   01 94 1d 55 72 46 85 b6  ae 32 38 d8 85 55 68 9f  |...UrF...28..Uh.|[0m
+[0;32mI (10726) DATA HEX FORMAT: 0x3ffd45e8   d0 05 a6 36 fd 66 ae 43  ca 3b e6 8d 62 dd b3 de  |...6.f.C.;..b...|[0m
+[0;32mI (10736) DATA HEX FORMAT: 0x3ffd45f8   c5 29 2a fe f4 e4 c7 fc  23 a7 8b 81 4c 19 5b 08  |.)*.....#...L.[.|[0m
+[0;32mI (10746) DATA HEX FORMAT: 0x3ffd4608   42 ad d3 42 94 00 5b 9a  d1 13 42 93 db d3 ec 78  |B..B..[...B....x|[0m
+[0;32mI (10756) DATA HEX FORMAT: 0x3ffd4618   3d 44 11 76 ec 44 6e 29  66 18 f6 76 9d ff 2c 7d  |=D.v.Dn)f..v..,}|[0m
+[0;32mI (10766) DATA HEX FORMAT: 0x3ffd4628   ae 49 01 c3 3b 3b 01 79  bf 9c c6 4c 1d 45 13 fa  |.I..;;.y...L.E..|[0m
+[0;32mI (10776) DATA HEX FORMAT: 0x3ffd4638   ee c1 fc 72 88 f6 6f 24  a8 7d 70 b4 b8 a5 a8 1f  |...r..o$.}p.....|[0m
+[0;32mI (10786) DATA HEX FORMAT: 0x3ffd4648   8f c2 fa 95 04 6a 16 ad  ad ac 31 76 fa 81 18 f3  |.....j....1v....|[0m
+[0;32mI (10796) DATA HEX FORMAT: 0x3ffd4658   d5 75 f8 38 4b da ec a7  54 6e 7e ee 02 54 50 f1  |.u.8K...Tn~..TP.|[0m
+[0;32mI (10806) DATA HEX FORMAT: 0x3ffd4668   87 fe 70 42 74 44 9c a1  17 a5 b7 05 a3 e2 2f 2a  |..pBtD......../*|[0m
+[0;32mI (10816) DATA HEX FORMAT: 0x3ffd4678   f6 fb 84 72 18 79 08 ef  63 c9 b5 08 f3 15 7d b3  |...r.y..c.....}.|[0m
+[0;32mI (10826) DATA HEX FORMAT: 0x3ffd4688   1f b5 82 a4 5e ed eb ff  21 55 f3 4a 09 2f 2d 98  |....^...!U.J./-.|[0m
+[0;32mI (10826) DATA HEX FORMAT: 0x3ffd4698   32 c9 1d 18 79 2c c3 1d  50 4c 4e f3 ea 10 2e d9  |2...y,..PLN.....|[0m
+[0;32mI (10836) DATA HEX FORMAT: 0x3ffd46a8   a1 65 2c 46 56 03 4e 71  b7 ac aa fe 9c 4c 75 da  |.e,FV.Nq.....Lu.|[0m
+[0;32mI (10846) DATA HEX FORMAT: 0x3ffd46b8   35 21 dc 1f 50 31 82 0b  90 b4 2e 54 a2 2d 51 11  |5!..P1.....T.-Q.|[0m
+[0;32mI (10856) DATA HEX FORMAT: 0x3ffd46c8   e9 6a 46 23 27 a4 46 d0  6b 18 50 cd a3 3f b1 3f  |.jF#'.F.k.P..?.?|[0m
+[0;32mI (10866) DATA HEX FORMAT: 0x3ffd46d8   e1 3e 09 e9 c9 99 67 74  ed 53 d2 6f f4 ef ef 87  |.>....gt.S.o....|[0m
+[0;32mI (10876) DATA HEX FORMAT: 0x3ffd46e8   05 10 c7 a3 1a eb 42 2f  8e 33 90 32 cb f4 93 4a  |......B/.3.2...J|[0m
+[0;32mI (10886) DATA HEX FORMAT: 0x3ffd46f8   00 e8 48 b7 07 8b ab 98  18 4b 6a 93 fc c7 c0 06  |..H......Kj.....|[0m
+[0;32mI (10896) DATA HEX FORMAT: 0x3ffd4708   69 73 62 e9 dd 36 1e 8f  59 2a dc dd 1e da 23 73  |isb..6..Y*....#s|[0m
+[0;32mI (10906) DATA HEX FORMAT: 0x3ffd4718   1c 36 a3 53 cc 05 4e 2a  41 3b 2f 09 72 3a 53 07  |.6.S..N*A;/.r:S.|[0m
+[0;32mI (10916) DATA HEX FORMAT: 0x3ffd4728   fe 51 2d d2 39 ac 34 f5  be f3 03 4c e7 ec 70 43  |.Q-.9.4....L..pC|[0m
+[0;32mI (10926) DATA HEX FORMAT: 0x3ffd4738   74 ea a6 d6 3b 53 dc 29  1c 67 1e db fe d9 4a fe  |t...;S.).g....J.|[0m
+[0;32mI (10936) DATA HEX FORMAT: 0x3ffd4748   91 db f3 a3 28 75 91 01  e3 bf 1f 81 df 61 ae 4d  |....(u.......a.M|[0m
+[0;32mI (10946) DATA HEX FORMAT: 0x3ffd4758   82 e8 e9 75 d6 7a fa 12  50 07 3c 70 99 df 7e ee  |...u.z..P.<p..~.|[0m
+[0;32mI (10956) DATA HEX FORMAT: 0x3ffd4768   ad 4c eb 80 0c 13 a0 e8  49 53 ac c9 b8 69 a6 4c  |.L......IS...i.L|[0m
+[0;32mI (10966) DATA HEX FORMAT: 0x3ffd4778   df 4c 6b c9 0f 04 91 3b  f0 5c ec 11 85 4a ee 7e  |.Lk....;.\...J.~|[0m
+[0;32mI (10976) DATA HEX FORMAT: 0x3ffd4788   05 6d 05 6e 4c f2 d3 7e  65 ee 00 3b 17 ed ff 60  |.m.nL..~e..;...`|[0m
+[0;32mI (10986) DATA HEX FORMAT: 0x3ffd4798   c7 92 47 96 6f 13 ed 96  ae 13 fa 68 c0 1c 2d 32  |..G.o......h..-2|[0m
+[0;32mI (10996) DATA HEX FORMAT: 0x3ffd47a8   02 97 32 0e 88 af b0 de  4d 6d 24 c8 7b c0 f9 2b  |..2.....Mm$.{..+|[0m
+[0;32mI (11006) DATA HEX FORMAT: 0x3ffd47b8   39 2b 0d 05 33 f2 c0 b6  8a 31 4f 7d 7c c6 4f f7  |9+..3....1O}|.O.|[0m
+[0;32mI (11016) DATA HEX FORMAT: 0x3ffd47c8   bb 94 e9 6f f5 9d 1a d4  b4 c9 ef fd 2b 6f 61 61  |...o........+oaa|[0m
+[0;32mI (11026) DATA HEX FORMAT: 0x3ffd47d8   04 f2 38 23 93 1f b4 16  79 73 a1 93 d6 d0 64 96  |..8#....ys....d.|[0m
+[0;32mI (11036) DATA HEX FORMAT: 0x3ffd47e8   0f 08 a9 c8 98 b4 c4 d2  b6 71 a4 f5 01 d5 31 9f  |.........q....1.|[0m
+[0;32mI (11036) DATA HEX FORMAT: 0x3ffd47f8   b1 73 2b e1 c5 b6 e2 da  a1 6f 86 ab 06 fb ca 9c  |.s+......o......|[0m
+[0;32mI (11046) DATA HEX FORMAT: 0x3ffd4808   00 2a 88 19 0f 0a 88 b1  ee 7f 48 37 64 5f 03 6b  |.*........H7d_.k|[0m
+[0;32mI (11056) DATA HEX FORMAT: 0x3ffd4818   57 45 8e 49 fb 8b 08 8a  b1 8d 16 47 33 ca a3 f2  |WE.I.......G3...|[0m
+[0;32mI (11066) DATA HEX FORMAT: 0x3ffd4828   77 4d 42 db da dd 0a 92  1a fc 13 70 81 54 94 b5  |wMB........p.T..|[0m
+[0;32mI (11076) DATA HEX FORMAT: 0x3ffd4838   f7 32 4c 46 9c 4f ed cc  ac 59 d3 d8 b4 f9 ad 57  |.2LF.O...Y.....W|[0m
+[0;32mI (11086) DATA HEX FORMAT: 0x3ffd4848   06 da df fb 4f ae e8 28  50 e7 ac e2 14 52 b5 a3  |....O..(P....R..|[0m
+[0;32mI (11096) DATA HEX FORMAT: 0x3ffd4858   d8 c1 e1 f7 fa 0b c1 db  32 b6 3c 1d 9e 98 51 db  |........2.<...Q.|[0m
+[0;32mI (11106) DATA HEX FORMAT: 0x3ffd4868   fa e5 3e 51 cb b5 9d 16  cc 8f fa e4 9d ed 2e 13  |..>Q............|[0m
+[0;32mI (11116) DATA HEX FORMAT: 0x3ffd4878   ca 31 3e 54 ee 69 ce c7  95 e7 56 0a e5 66 97 b9  |.1>T.i....V..f..|[0m
+[0;32mI (11126) DATA HEX FORMAT: 0x3ffd4888   12 c2 af 3e 0a 6e 6d 31  79 de a9 10 74 db 25 6e  |...>.nm1y...t.%n|[0m
+[0;32mI (11136) DATA HEX FORMAT: 0x3ffd4898   1f 60 e3 08 14 70 ad 2c  53 4e c5 20 fc ba 7e ab  |.`...p.,SN. ..~.|[0m
+[0;32mI (11146) DATA HEX FORMAT: 0x3ffd48a8   eb 94 9a cd 95 6a 4b fb  f1 db 3c d9 28 7f f0 cb  |.....jK...<.(...|[0m
+[0;32mI (11156) DATA HEX FORMAT: 0x3ffd48b8   da 37 1f f5 47 8a c8 66  72 ee 36 3e c9 6c 77 b4  |.7..G..fr.6>.lw.|[0m
+[0;32mI (11166) DATA HEX FORMAT: 0x3ffd48c8   13 01 3f fa c1 7f 88 57  64 fe 6f 63 7f 9e f9 d8  |..?....Wd.oc....|[0m
+[0;32mI (11176) DATA HEX FORMAT: 0x3ffd48d8   d2 98 cf 63 48 16 e2 23  2d ba 34 7b 70 6c b5 05  |...cH..#-.4{pl..|[0m
+[0;32mI (11186) DATA HEX FORMAT: 0x3ffd48e8   c8 cb a7 f1 24 c6 03 64  80 6a fa 8f bc cd 6f 03  |....$..d.j....o.|[0m
+[0;32mI (11196) DATA HEX FORMAT: 0x3ffd48f8   0d 79 4d bc 52 5d bf 83  44 39 2d 15 5c 1e 89 a6  |.yM.R]..D9-.\...|[0m
+[0;32mI (11206) DATA HEX FORMAT: 0x3ffd4908   82 fd d4 11 12 ba 42 34  bb 1d d0 7c e6 a9 4d 05  |......B4...|..M.|[0m
+[0;32mI (11216) DATA HEX FORMAT: 0x3ffd4918   24 f1 72 73 7b 0a 6a be  de c5 6b 98 e9 40 0b 1e  |$.rs{.j...k..@..|[0m
+[0;32mI (11226) DATA HEX FORMAT: 0x3ffd4928   65 32 e9 7d be 4a 76 0b  d5 57 6c 5e 47 75 88 38  |e2.}.Jv..Wl^Gu.8|[0m
+[0;32mI (11236) DATA HEX FORMAT: 0x3ffd4938   f0 fe 52 41 20 96 8c 49  0f 7c 6e 53 dd f8 23 8c  |..RA ..I.|nS..#.|[0m
+[0;32mI (11246) DATA HEX FORMAT: 0x3ffd4948   96 65 f8 7a 58 88 fc d3  a9 94 62 b8 f5 89 b1 b9  |.e.zX.....b.....|[0m
+[0;32mI (11246) DATA HEX FORMAT: 0x3ffd4958   d6 28 ab 56 6a a7 f3 b7  71 e5 3f 61 12 3e aa 4b  |.(.Vj...q.?a.>.K|[0m
+[0;32mI (11256) DATA HEX FORMAT: 0x3ffd4968   31 b8 a8 a7 c6 53 f2 7f  fb 24 71 62 83 85 3c 90  |1....S...$qb..<.|[0m
+[0;32mI (11266) DATA HEX FORMAT: 0x3ffd4978   33 3d 76 e6 43 19 88 a3  d6 61 89 bc f4 ab 53 e4  |3=v.C....a....S.|[0m
+[0;32mI (11276) DATA HEX FORMAT: 0x3ffd4988   8a 3d 47 c5 aa 43 62 e7  36 59 95 f3 a3 39 76 bb  |.=G..Cb.6Y...9v.|[0m
+[0;32mI (11286) DATA HEX FORMAT: 0x3ffd4998   5d cc 28 b4 20 ba 25 64  c6 c6 28 f3 bf 3f 2a 97  |].(. .%d..(..?*.|[0m
+[0;32mI (11296) DATA HEX FORMAT: 0x3ffd49a8   a9 48 11 d6 26 25 fa 6c  2b 8e 2c 96 da d3 bf 05  |.H..&%.l+.,.....|[0m
+[0;32mI (11306) DATA HEX FORMAT: 0x3ffd49b8   6e 90 0a ba ad 89 16 aa  86 ee d5 b2 20 72 e1 d0  |n........... r..|[0m
+[0;32mI (11316) DATA HEX FORMAT: 0x3ffd49c8   16 87 1a 1b e9 e9 09 13  ef ea 40 50 f2 d9 4a c2  |..........@P..J.|[0m
+[0;32mI (11326) DATA HEX FORMAT: 0x3ffd49d8   cc a2 2b 47 5a 70 51 15  35 2b 5b 69 b0 6d 19 fb  |..+GZpQ.5+[i.m..|[0m
+[0;32mI (11336) DATA HEX FORMAT: 0x3ffd49e8   c4 14 bb 76 62 13 fe f7  f1 ab ad f6 ff 13 ce 59  |...vb..........Y|[0m
+[0;32mI (11346) DATA HEX FORMAT: 0x3ffd49f8   a0 92 61 ba 39 23 62 e5  0f 92 8e 81 ed 30 c9 6a  |..a.9#b......0.j|[0m
+[0;32mI (11356) DATA HEX FORMAT: 0x3ffd4a08   72 74 05 a9 9c df e2 ac  31 e1 02 a3 d7 a2 f0 2d  |rt......1......-|[0m
+--------------------------------------------
+[0;32mI (11366) [Protocol Transactions]: -------- [STEP 1] --------[0m
+[0;32mI (11376) [AKE PROTOCOL]: STEP 1 JSON: {[0m
+	"Step":	1,
+	"Device_Name":	"ESP_32_ALEX_SV"
+}
+[0;32mI (11456) [AKE PROTOCOL]: Data Response from step 1: {[0m
+  "Nonce_S": "F1Jl3dF9KQPy6Op8F7dujfCUb4Z3j8oZT2NWrUX7zFg=",
+  "Nonce_S_Len": 32,
+  "SID": "q94tuR8Bmv8af6/HARJVtg==",
+  "SID_Len": 16,
+  "Server_Name": "IoT_Server",
+  "Step": 1
+}
+
+[0;32mI (11466) [Protocol Transactions]: -------- [STEP 2] --------[0m
+[0;32mI (11476) [Protocol Transactions]: Get Kyber Object[0m
+[0;32mI (11476) [AKE PROTOCOL]: Getting Kyber public key from secure storage[0m
+[0;32mI (11486) [SECURE_STORE]: Read OK (len=1316)[0m
+[0;32mI (11486) [SECURE_STORE]: Verification success[0m
+[0;32mI (11496) [HMAC]: HMAC success[0m
+[0;32mI (11496) [HMAC]: HMAC Verification Success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 758A2C8EC7EAF7744F7AC2C5920886F3
+[+]HMAC Size: 64
+[+]HMAC: 97B3144845C943E21F91EF6EEB314F4A0B4DD2D7C24996B446427C305B88823FE8706CE505C4F07A69510E7168CAF98D82A497D12C7B6ED2117CBC3D75AF5CA5
+[+]Data Size: 1200
+[+]Data: 9BFAA923DDDD7D1B8C91BB40C3BFEFE227589754FEF84B6FE20AC273FAC7E935BBDAA123917E90A1279D698E363BB951DE3DFAD116B3AA50EC590BA4B509CF33B352F91E1BEB6484F7FCBD0C2A923647CC018F0303DB876A557A35C2A7E2B049911E3B291F42953AA49BFE0C87B2300101941D55724685B6AE3238D88555689FD005A636FD66AE43CA3BE68D62DDB3DEC5292AFEF4E4C7FC23A78B814C195B0842ADD34294005B9AD1134293DBD3EC783D441176EC446E296618F6769DFF2C7DAE4901C33B3B0179BF9CC64C1D4513FAEEC1FC7288F66F24A87D70B4B8A5A81F8FC2FA95046A16ADADAC3176FA8118F3D575F8384BDAECA7546E7EEE025450F187FE704274449CA117A5B705A3E22F2AF6FB8472187908EF63C9B508F3157DB31FB582A45EEDEBFF2155F34A092F2D9832C91D18792CC31D504C4EF3EA102ED9A1652C4656034E71B7ACAAFE9C4C75DA3521DC1F5031820B90B42E54A22D5111E96A462327A446D06B1850CDA33FB13FE13E09E9C9996774ED53D26FF4EFEF870510C7A31AEB422F8E339032CBF4934A00E848B7078BAB98184B6A93FCC7C006697362E9DD361E8F592ADCDD1EDA23731C36A353CC054E2A413B2F09723A5307FE512DD239AC34F5BEF3034CE7EC704374EAA6D63B53DC291C671EDBFED94AFE91DBF3A328759101E3BF1F81DF61AE4D82E8E975D67AFA1250073C7099DF7EEEAD4CEB800C13A0E84953ACC9B869A64CDF4C6BC90F04913BF05CEC11854AEE7E056D056E4CF2D37E65EE003B17EDFF60C79247966F13ED96AE13FA68C01C2D320297320E88AFB0DE4D6D24C87BC0F92B392B0D0533F2C0B68A314F7D7CC64FF7BB94E96FF59D1AD4B4C9EFFD2B6F616104F23823931FB4167973A193D6D064960F08A9C898B4C4D2B671A4F501D5319FB1732BE1C5B6E2DAA16F86AB06FBCA9C002A88190F0A88B1EE7F4837645F036B57458E49FB8B088AB18D164733CAA3F2774D42DBDADD0A921AFC1370815494B5F7324C469C4FEDCCAC59D3D8B4F9AD5706DADFFB4FAEE82850E7ACE21452B5A3D8C1E1F7FA0BC1DB32B63C1D9E9851DBFAE53E51CBB59D16CC8FFAE49DED2E13CA313E54EE69CEC795E7560AE56697B912C2AF3E0A6E6D3179DEA91074DB256E1F60E3081470AD2C534EC520FCBA7EABEB949ACD956A4BFBF1DB3CD9287FF0CBDA371FF5478AC86672EE363EC96C77B413013FFAC17F885764FE6F637F9EF9D8D298CF634816E2232DBA347B706CB505C8CBA7F124C60364806AFA8FBCCD6F030D794DBC525DBF8344392D155C1E89A682FDD41112BA4234BB1DD07CE6A94D0524F172737B0A6ABEDEC56B98E9400B1E6532E97DBE4A760BD5576C5E47758838F0FE524120968C490F7C6E53DDF8238C9665F87A5888FCD3A99462B8F589B1B9D628AB566AA7F3B771E53F61123EAA4B31B8A8A7C653F27FFB24716283853C90333D76E6431988A3D66189BCF4AB53E48A3D47C5AA4362E7365995F3A33976BB5DCC28B420BA2564C6C628F3BF3F2A97A94811D62625FA6C2B8E2C96DAD3BF056E900ABAAD8916AA86EED5B22072E1D016871A1BE9E90913EFEA4050F2D94AC2CCA22B475A705115352B5B69B06D19FBC414BB766213FEF7F1ABADF6FF13CE59A09261BA392362E50F928E81ED30C96A727405A99CDFE2AC31E102A3D7A2F02D
+[0;32mI (11736) DATA HEX FORMAT: 0x3ffd2814   9b fa a9 23 dd dd 7d 1b  8c 91 bb 40 c3 bf ef e2  |...#..}....@....|[0m
+[0;32mI (11746) DATA HEX FORMAT: 0x3ffd2824   27 58 97 54 fe f8 4b 6f  e2 0a c2 73 fa c7 e9 35  |'X.T..Ko...s...5|[0m
+[0;32mI (11756) DATA HEX FORMAT: 0x3ffd2834   bb da a1 23 91 7e 90 a1  27 9d 69 8e 36 3b b9 51  |...#.~..'.i.6;.Q|[0m
+[0;32mI (11766) DATA HEX FORMAT: 0x3ffd2844   de 3d fa d1 16 b3 aa 50  ec 59 0b a4 b5 09 cf 33  |.=.....P.Y.....3|[0m
+[0;32mI (11776) DATA HEX FORMAT: 0x3ffd2854   b3 52 f9 1e 1b eb 64 84  f7 fc bd 0c 2a 92 36 47  |.R....d.....*.6G|[0m
+[0;32mI (11786) DATA HEX FORMAT: 0x3ffd2864   cc 01 8f 03 03 db 87 6a  55 7a 35 c2 a7 e2 b0 49  |.......jUz5....I|[0m
+[0;32mI (11796) DATA HEX FORMAT: 0x3ffd2874   91 1e 3b 29 1f 42 95 3a  a4 9b fe 0c 87 b2 30 01  |..;).B.:......0.|[0m
+[0;32mI (11806) DATA HEX FORMAT: 0x3ffd2884   01 94 1d 55 72 46 85 b6  ae 32 38 d8 85 55 68 9f  |...UrF...28..Uh.|[0m
+[0;32mI (11816) DATA HEX FORMAT: 0x3ffd2894   d0 05 a6 36 fd 66 ae 43  ca 3b e6 8d 62 dd b3 de  |...6.f.C.;..b...|[0m
+[0;32mI (11826) DATA HEX FORMAT: 0x3ffd28a4   c5 29 2a fe f4 e4 c7 fc  23 a7 8b 81 4c 19 5b 08  |.)*.....#...L.[.|[0m
+[0;32mI (11836) DATA HEX FORMAT: 0x3ffd28b4   42 ad d3 42 94 00 5b 9a  d1 13 42 93 db d3 ec 78  |B..B..[...B....x|[0m
+[0;32mI (11846) DATA HEX FORMAT: 0x3ffd28c4   3d 44 11 76 ec 44 6e 29  66 18 f6 76 9d ff 2c 7d  |=D.v.Dn)f..v..,}|[0m
+[0;32mI (11856) DATA HEX FORMAT: 0x3ffd28d4   ae 49 01 c3 3b 3b 01 79  bf 9c c6 4c 1d 45 13 fa  |.I..;;.y...L.E..|[0m
+[0;32mI (11866) DATA HEX FORMAT: 0x3ffd28e4   ee c1 fc 72 88 f6 6f 24  a8 7d 70 b4 b8 a5 a8 1f  |...r..o$.}p.....|[0m
+[0;32mI (11876) DATA HEX FORMAT: 0x3ffd28f4   8f c2 fa 95 04 6a 16 ad  ad ac 31 76 fa 81 18 f3  |.....j....1v....|[0m
+[0;32mI (11876) DATA HEX FORMAT: 0x3ffd2904   d5 75 f8 38 4b da ec a7  54 6e 7e ee 02 54 50 f1  |.u.8K...Tn~..TP.|[0m
+[0;32mI (11886) DATA HEX FORMAT: 0x3ffd2914   87 fe 70 42 74 44 9c a1  17 a5 b7 05 a3 e2 2f 2a  |..pBtD......../*|[0m
+[0;32mI (11896) DATA HEX FORMAT: 0x3ffd2924   f6 fb 84 72 18 79 08 ef  63 c9 b5 08 f3 15 7d b3  |...r.y..c.....}.|[0m
+[0;32mI (11906) DATA HEX FORMAT: 0x3ffd2934   1f b5 82 a4 5e ed eb ff  21 55 f3 4a 09 2f 2d 98  |....^...!U.J./-.|[0m
+[0;32mI (11916) DATA HEX FORMAT: 0x3ffd2944   32 c9 1d 18 79 2c c3 1d  50 4c 4e f3 ea 10 2e d9  |2...y,..PLN.....|[0m
+[0;32mI (11926) DATA HEX FORMAT: 0x3ffd2954   a1 65 2c 46 56 03 4e 71  b7 ac aa fe 9c 4c 75 da  |.e,FV.Nq.....Lu.|[0m
+[0;32mI (11936) DATA HEX FORMAT: 0x3ffd2964   35 21 dc 1f 50 31 82 0b  90 b4 2e 54 a2 2d 51 11  |5!..P1.....T.-Q.|[0m
+[0;32mI (11946) DATA HEX FORMAT: 0x3ffd2974   e9 6a 46 23 27 a4 46 d0  6b 18 50 cd a3 3f b1 3f  |.jF#'.F.k.P..?.?|[0m
+[0;32mI (11956) DATA HEX FORMAT: 0x3ffd2984   e1 3e 09 e9 c9 99 67 74  ed 53 d2 6f f4 ef ef 87  |.>....gt.S.o....|[0m
+[0;32mI (11966) DATA HEX FORMAT: 0x3ffd2994   05 10 c7 a3 1a eb 42 2f  8e 33 90 32 cb f4 93 4a  |......B/.3.2...J|[0m
+[0;32mI (11976) DATA HEX FORMAT: 0x3ffd29a4   00 e8 48 b7 07 8b ab 98  18 4b 6a 93 fc c7 c0 06  |..H......Kj.....|[0m
+[0;32mI (11986) DATA HEX FORMAT: 0x3ffd29b4   69 73 62 e9 dd 36 1e 8f  59 2a dc dd 1e da 23 73  |isb..6..Y*....#s|[0m
+[0;32mI (11996) DATA HEX FORMAT: 0x3ffd29c4   1c 36 a3 53 cc 05 4e 2a  41 3b 2f 09 72 3a 53 07  |.6.S..N*A;/.r:S.|[0m
+[0;32mI (12006) DATA HEX FORMAT: 0x3ffd29d4   fe 51 2d d2 39 ac 34 f5  be f3 03 4c e7 ec 70 43  |.Q-.9.4....L..pC|[0m
+[0;32mI (12016) DATA HEX FORMAT: 0x3ffd29e4   74 ea a6 d6 3b 53 dc 29  1c 67 1e db fe d9 4a fe  |t...;S.).g....J.|[0m
+[0;32mI (12026) DATA HEX FORMAT: 0x3ffd29f4   91 db f3 a3 28 75 91 01  e3 bf 1f 81 df 61 ae 4d  |....(u.......a.M|[0m
+[0;32mI (12036) DATA HEX FORMAT: 0x3ffd2a04   82 e8 e9 75 d6 7a fa 12  50 07 3c 70 99 df 7e ee  |...u.z..P.<p..~.|[0m
+[0;32mI (12046) DATA HEX FORMAT: 0x3ffd2a14   ad 4c eb 80 0c 13 a0 e8  49 53 ac c9 b8 69 a6 4c  |.L......IS...i.L|[0m
+[0;32mI (12056) DATA HEX FORMAT: 0x3ffd2a24   df 4c 6b c9 0f 04 91 3b  f0 5c ec 11 85 4a ee 7e  |.Lk....;.\...J.~|[0m
+[0;32mI (12066) DATA HEX FORMAT: 0x3ffd2a34   05 6d 05 6e 4c f2 d3 7e  65 ee 00 3b 17 ed ff 60  |.m.nL..~e..;...`|[0m
+[0;32mI (12076) DATA HEX FORMAT: 0x3ffd2a44   c7 92 47 96 6f 13 ed 96  ae 13 fa 68 c0 1c 2d 32  |..G.o......h..-2|[0m
+[0;32mI (12086) DATA HEX FORMAT: 0x3ffd2a54   02 97 32 0e 88 af b0 de  4d 6d 24 c8 7b c0 f9 2b  |..2.....Mm$.{..+|[0m
+[0;32mI (12086) DATA HEX FORMAT: 0x3ffd2a64   39 2b 0d 05 33 f2 c0 b6  8a 31 4f 7d 7c c6 4f f7  |9+..3....1O}|.O.|[0m
+[0;32mI (12096) DATA HEX FORMAT: 0x3ffd2a74   bb 94 e9 6f f5 9d 1a d4  b4 c9 ef fd 2b 6f 61 61  |...o........+oaa|[0m
+[0;32mI (12106) DATA HEX FORMAT: 0x3ffd2a84   04 f2 38 23 93 1f b4 16  79 73 a1 93 d6 d0 64 96  |..8#....ys....d.|[0m
+[0;32mI (12116) DATA HEX FORMAT: 0x3ffd2a94   0f 08 a9 c8 98 b4 c4 d2  b6 71 a4 f5 01 d5 31 9f  |.........q....1.|[0m
+[0;32mI (12126) DATA HEX FORMAT: 0x3ffd2aa4   b1 73 2b e1 c5 b6 e2 da  a1 6f 86 ab 06 fb ca 9c  |.s+......o......|[0m
+[0;32mI (12136) DATA HEX FORMAT: 0x3ffd2ab4   00 2a 88 19 0f 0a 88 b1  ee 7f 48 37 64 5f 03 6b  |.*........H7d_.k|[0m
+[0;32mI (12146) DATA HEX FORMAT: 0x3ffd2ac4   57 45 8e 49 fb 8b 08 8a  b1 8d 16 47 33 ca a3 f2  |WE.I.......G3...|[0m
+[0;32mI (12156) DATA HEX FORMAT: 0x3ffd2ad4   77 4d 42 db da dd 0a 92  1a fc 13 70 81 54 94 b5  |wMB........p.T..|[0m
+[0;32mI (12166) DATA HEX FORMAT: 0x3ffd2ae4   f7 32 4c 46 9c 4f ed cc  ac 59 d3 d8 b4 f9 ad 57  |.2LF.O...Y.....W|[0m
+[0;32mI (12176) DATA HEX FORMAT: 0x3ffd2af4   06 da df fb 4f ae e8 28  50 e7 ac e2 14 52 b5 a3  |....O..(P....R..|[0m
+[0;32mI (12186) DATA HEX FORMAT: 0x3ffd2b04   d8 c1 e1 f7 fa 0b c1 db  32 b6 3c 1d 9e 98 51 db  |........2.<...Q.|[0m
+[0;32mI (12196) DATA HEX FORMAT: 0x3ffd2b14   fa e5 3e 51 cb b5 9d 16  cc 8f fa e4 9d ed 2e 13  |..>Q............|[0m
+[0;32mI (12206) DATA HEX FORMAT: 0x3ffd2b24   ca 31 3e 54 ee 69 ce c7  95 e7 56 0a e5 66 97 b9  |.1>T.i....V..f..|[0m
+[0;32mI (12216) DATA HEX FORMAT: 0x3ffd2b34   12 c2 af 3e 0a 6e 6d 31  79 de a9 10 74 db 25 6e  |...>.nm1y...t.%n|[0m
+[0;32mI (12226) DATA HEX FORMAT: 0x3ffd2b44   1f 60 e3 08 14 70 ad 2c  53 4e c5 20 fc ba 7e ab  |.`...p.,SN. ..~.|[0m
+[0;32mI (12236) DATA HEX FORMAT: 0x3ffd2b54   eb 94 9a cd 95 6a 4b fb  f1 db 3c d9 28 7f f0 cb  |.....jK...<.(...|[0m
+[0;32mI (12246) DATA HEX FORMAT: 0x3ffd2b64   da 37 1f f5 47 8a c8 66  72 ee 36 3e c9 6c 77 b4  |.7..G..fr.6>.lw.|[0m
+[0;32mI (12256) DATA HEX FORMAT: 0x3ffd2b74   13 01 3f fa c1 7f 88 57  64 fe 6f 63 7f 9e f9 d8  |..?....Wd.oc....|[0m
+[0;32mI (12266) DATA HEX FORMAT: 0x3ffd2b84   d2 98 cf 63 48 16 e2 23  2d ba 34 7b 70 6c b5 05  |...cH..#-.4{pl..|[0m
+[0;32mI (12276) DATA HEX FORMAT: 0x3ffd2b94   c8 cb a7 f1 24 c6 03 64  80 6a fa 8f bc cd 6f 03  |....$..d.j....o.|[0m
+[0;32mI (12286) DATA HEX FORMAT: 0x3ffd2ba4   0d 79 4d bc 52 5d bf 83  44 39 2d 15 5c 1e 89 a6  |.yM.R]..D9-.\...|[0m
+[0;32mI (12296) DATA HEX FORMAT: 0x3ffd2bb4   82 fd d4 11 12 ba 42 34  bb 1d d0 7c e6 a9 4d 05  |......B4...|..M.|[0m
+[0;32mI (12296) DATA HEX FORMAT: 0x3ffd2bc4   24 f1 72 73 7b 0a 6a be  de c5 6b 98 e9 40 0b 1e  |$.rs{.j...k..@..|[0m
+[0;32mI (12306) DATA HEX FORMAT: 0x3ffd2bd4   65 32 e9 7d be 4a 76 0b  d5 57 6c 5e 47 75 88 38  |e2.}.Jv..Wl^Gu.8|[0m
+[0;32mI (12316) DATA HEX FORMAT: 0x3ffd2be4   f0 fe 52 41 20 96 8c 49  0f 7c 6e 53 dd f8 23 8c  |..RA ..I.|nS..#.|[0m
+[0;32mI (12326) DATA HEX FORMAT: 0x3ffd2bf4   96 65 f8 7a 58 88 fc d3  a9 94 62 b8 f5 89 b1 b9  |.e.zX.....b.....|[0m
+[0;32mI (12336) DATA HEX FORMAT: 0x3ffd2c04   d6 28 ab 56 6a a7 f3 b7  71 e5 3f 61 12 3e aa 4b  |.(.Vj...q.?a.>.K|[0m
+[0;32mI (12346) DATA HEX FORMAT: 0x3ffd2c14   31 b8 a8 a7 c6 53 f2 7f  fb 24 71 62 83 85 3c 90  |1....S...$qb..<.|[0m
+[0;32mI (12356) DATA HEX FORMAT: 0x3ffd2c24   33 3d 76 e6 43 19 88 a3  d6 61 89 bc f4 ab 53 e4  |3=v.C....a....S.|[0m
+[0;32mI (12366) DATA HEX FORMAT: 0x3ffd2c34   8a 3d 47 c5 aa 43 62 e7  36 59 95 f3 a3 39 76 bb  |.=G..Cb.6Y...9v.|[0m
+[0;32mI (12376) DATA HEX FORMAT: 0x3ffd2c44   5d cc 28 b4 20 ba 25 64  c6 c6 28 f3 bf 3f 2a 97  |].(. .%d..(..?*.|[0m
+[0;32mI (12386) DATA HEX FORMAT: 0x3ffd2c54   a9 48 11 d6 26 25 fa 6c  2b 8e 2c 96 da d3 bf 05  |.H..&%.l+.,.....|[0m
+[0;32mI (12396) DATA HEX FORMAT: 0x3ffd2c64   6e 90 0a ba ad 89 16 aa  86 ee d5 b2 20 72 e1 d0  |n........... r..|[0m
+[0;32mI (12406) DATA HEX FORMAT: 0x3ffd2c74   16 87 1a 1b e9 e9 09 13  ef ea 40 50 f2 d9 4a c2  |..........@P..J.|[0m
+[0;32mI (12416) DATA HEX FORMAT: 0x3ffd2c84   cc a2 2b 47 5a 70 51 15  35 2b 5b 69 b0 6d 19 fb  |..+GZpQ.5+[i.m..|[0m
+[0;32mI (12426) DATA HEX FORMAT: 0x3ffd2c94   c4 14 bb 76 62 13 fe f7  f1 ab ad f6 ff 13 ce 59  |...vb..........Y|[0m
+[0;32mI (12436) DATA HEX FORMAT: 0x3ffd2ca4   a0 92 61 ba 39 23 62 e5  0f 92 8e 81 ed 30 c9 6a  |..a.9#b......0.j|[0m
+[0;32mI (12446) DATA HEX FORMAT: 0x3ffd2cb4   72 74 05 a9 9c df e2 ac  31 e1 02 a3 d7 a2 f0 2d  |rt......1......-|[0m
+--------------------------------------------
+[0;32mI (12476) Cipher Text: 0x3ffd37b8   7d c4 46 38 fb 24 2f 28  6e 88 be 74 84 4e f5 3f  |}.F8.$/(n..t.N.?|[0m
+[0;32mI (12476) Cipher Text: 0x3ffd37c8   34 c0 bb 2d 21 c1 9b ba  bf e6 df d1 60 52 b3 0d  |4..-!.......`R..|[0m
+[0;32mI (12476) Cipher Text: 0x3ffd37d8   77 31 9c 13 1d 3e ea bd  e7 39 95 b4 3c 25 e1 50  |w1...>...9..<%.P|[0m
+[0;32mI (12486) Cipher Text: 0x3ffd37e8   5e 31 22 16 63 94 a4 73  10 90 4c f0 a4 a3 c5 3f  |^1".c..s..L....?|[0m
+[0;32mI (12496) Cipher Text: 0x3ffd37f8   2f 2b ca 7d fa c4 d9 6a  e5 81 09 ba 7f 7c 5b 72  |/+.}...j.....|[r|[0m
+[0;32mI (12506) Cipher Text: 0x3ffd3808   1d c8 c0 52 50 6b 0b 7e  bc c1 4b 3d 0a a5 0d da  |...RPk.~..K=....|[0m
+[0;32mI (12516) Cipher Text: 0x3ffd3818   30 da 5a 7b 96 dc e1 de  cb 85 db 0c 3f 98 12 05  |0.Z{........?...|[0m
+[0;32mI (12526) Cipher Text: 0x3ffd3828   ea 2e 6f c8 70 b3 89 19  a6 cf 8b 7a 27 a3 1d df  |..o.p......z'...|[0m
+[0;32mI (12536) Cipher Text: 0x3ffd3838   cd e3 89 8c d0 67 a9 85  d7 d0 34 b5 73 4a bd ca  |.....g....4.sJ..|[0m
+[0;32mI (12546) Cipher Text: 0x3ffd3848   b5 60 eb 9b 39 e0 c8 14  24 58 92 10 af 63 1e 2b  |.`..9...$X...c.+|[0m
+[0;32mI (12556) Cipher Text: 0x3ffd3858   d7 b4 a3 f6 cf de 4d a9  3d 98 f0 1b e9 3a b1 0d  |......M.=....:..|[0m
+[0;32mI (12566) Cipher Text: 0x3ffd3868   f1 15 4f d7 af cd e9 e1  a1 1b b1 46 9a 1d b6 88  |..O........F....|[0m
+[0;32mI (12576) Cipher Text: 0x3ffd3878   45 e5 75 b4 57 62 86 ae  8e 6d 3a 8e 79 5f 0a 1a  |E.u.Wb...m:.y_..|[0m
+[0;32mI (12586) Cipher Text: 0x3ffd3888   21 b6 27 6f ed cf 9c 99  2a 7c 44 49 53 78 31 1c  |!.'o....*|DISx1.|[0m
+[0;32mI (12586) Cipher Text: 0x3ffd3898   81 63 93 40 77 97 fc ec  bc b6 01 46 fe 1c d2 42  |.c.@w......F...B|[0m
+[0;32mI (12596) Cipher Text: 0x3ffd38a8   1b cb 66 60 dc 67 4f 50  fb f9 c2 04 bc 70 05 59  |..f`.gOP.....p.Y|[0m
+[0;32mI (12606) Cipher Text: 0x3ffd38b8   55 ac ff d4 20 6c 35 b0  18 54 49 ba 3e 94 7f 48  |U... l5..TI.>..H|[0m
+[0;32mI (12616) Cipher Text: 0x3ffd38c8   fd 49 c7 d9 2d 47 6d 81  da d4 fa 6a 19 37 11 73  |.I..-Gm....j.7.s|[0m
+[0;32mI (12626) Cipher Text: 0x3ffd38d8   1b eb a6 dc 37 15 fe 72  f8 d0 bd f5 37 ef 2c 59  |....7..r....7.,Y|[0m
+[0;32mI (12636) Cipher Text: 0x3ffd38e8   dd 38 24 78 92 32 e8 ad  f3 03 63 7e 4a 03 01 8c  |.8$x.2....c~J...|[0m
+[0;32mI (12646) Cipher Text: 0x3ffd38f8   30 9a 31 e4 43 d4 dc 29  82 b3 03 c2 5a 90 40 b1  |0.1.C..)....Z.@.|[0m
+[0;32mI (12656) Cipher Text: 0x3ffd3908   01 2f 24 db d0 38 ed 91  4f e2 e3 8b 23 ab 7c 2a  |./$..8..O...#.|*|[0m
+[0;32mI (12666) Cipher Text: 0x3ffd3918   14 97 0a c7 5f 26 45 bd  d0 8c ae 50 e3 c2 73 f3  |...._&E....P..s.|[0m
+[0;32mI (12676) Cipher Text: 0x3ffd3928   b6 56 eb b2 76 40 79 e9  27 72 fa fa 57 33 e7 38  |.V..v@y.'r..W3.8|[0m
+[0;32mI (12686) Cipher Text: 0x3ffd3938   32 20 6f dc b0 cc b6 b7  98 07 16 ca be c2 98 fd  |2 o.............|[0m
+[0;32mI (12696) Cipher Text: 0x3ffd3948   f2 36 84 1f 43 40 8a 7e  b7 f6 5a 74 1c cf 03 23  |.6..C@.~..Zt...#|[0m
+[0;32mI (12706) Cipher Text: 0x3ffd3958   05 69 3a 8f 84 a1 fa e0  e6 72 5b 80 78 45 6d 03  |.i:......r[.xEm.|[0m
+[0;32mI (12706) Cipher Text: 0x3ffd3968   d2 d0 88 2c 0a 5f e9 fa  ff 06 14 a4 15 e3 86 77  |...,._.........w|[0m
+[0;32mI (12716) Cipher Text: 0x3ffd3978   7b 44 49 19 a1 f4 14 06  02 16 d4 ed 7e 1e 97 94  |{DI.........~...|[0m
+[0;32mI (12726) Cipher Text: 0x3ffd3988   bc 28 b3 b7 96 89 84 27  ea 10 25 22 98 8d 62 6c  |.(.....'..%"..bl|[0m
+[0;32mI (12736) Cipher Text: 0x3ffd3998   94 21 d8 0e 48 31 89 6e  62 13 93 19 bd ed ea 58  |.!..H1.nb......X|[0m
+[0;32mI (12746) Cipher Text: 0x3ffd39a8   69 f3 c0 81 78 92 fe 0f  a8 01 30 8a e4 44 c3 06  |i...x.....0..D..|[0m
+[0;32mI (12756) Cipher Text: 0x3ffd39b8   aa 56 71 7e 5d bf 19 bb  24 e2 8d 0b d7 9b fe 31  |.Vq~]...$......1|[0m
+[0;32mI (12766) Cipher Text: 0x3ffd39c8   42 25 4c 49 cc 5c 71 5c  43 d7 95 ea 03 f7 2b b7  |B%LI.\q\C.....+.|[0m
+[0;32mI (12776) Cipher Text: 0x3ffd39d8   7b 98 ad 03 74 47 a4 b5  36 63 94 77 f7 b6 1d 7f  |{...tG..6c.w....|[0m
+[0;32mI (12786) Cipher Text: 0x3ffd39e8   0e 67 e4 27 95 63 10 26  2b 5d a5 e0 66 1f 4a e2  |.g.'.c.&+]..f.J.|[0m
+[0;32mI (12796) Cipher Text: 0x3ffd39f8   30 c4 b1 01 f9 10 66 c4  da 37 4c 4c 54 5d 9c 82  |0.....f..7LLT]..|[0m
+[0;32mI (12806) Cipher Text: 0x3ffd3a08   93 15 06 a9 53 c1 69 9f  57 24 58 23 4a 31 43 9b  |....S.i.W$X#J1C.|[0m
+[0;32mI (12816) Cipher Text: 0x3ffd3a18   a5 49 89 d6 f9 50 78 23  c5 dd 32 3c c3 8e 50 55  |.I...Px#..2<..PU|[0m
+[0;32mI (12816) Cipher Text: 0x3ffd3a28   41 e1 89 a2 63 46 ad cc  98 7a 55 9c c1 f3 5f f5  |A...cF...zU..._.|[0m
+[0;32mI (12826) Cipher Text: 0x3ffd3a38   4e 30 5a cb d0 c9 a5 dc  05 26 e2 5b 95 7c 73 85  |N0Z......&.[.|s.|[0m
+[0;32mI (12836) Cipher Text: 0x3ffd3a48   5c 51 50 5f 20 5a 7b a5  52 ff 2d 95 a0 e2 f9 de  |\QP_ Z{.R.-.....|[0m
+[0;32mI (12846) Cipher Text: 0x3ffd3a58   17 95 26 b5 b3 5d cb ff  98 6f 93 1d 55 b0 94 fc  |..&..]...o..U...|[0m
+[0;32mI (12856) Cipher Text: 0x3ffd3a68   69 0d f8 6a 41 3b 71 21  c5 65 7e 81 7e 37 47 cb  |i..jA;q!.e~.~7G.|[0m
+[0;32mI (12866) Cipher Text: 0x3ffd3a78   e5 d7 b1 68 1c 46 3f 43  00 29 f6 fa 05 c5 27 ee  |...h.F?C.)....'.|[0m
+[0;32mI (12876) Cipher Text: 0x3ffd3a88   0c 92 bc c6 20 a9 22 29  71 eb 39 7d b7 50 e6 ff  |.... .")q.9}.P..|[0m
+[0;32mI (12886) Cipher Text: 0x3ffd3a98   c1 b3 ec 0f 55 51 19 ef  fb d5 64 49 39 7c 22 15  |....UQ....dI9|".|[0m
+[0;32mI (12896) Cipher Text: 0x3ffd3aa8   85 65 74 2f cb 49 ae a5  bc 2d 81 30 60 9f af 14  |.et/.I...-.0`...|[0m
+[0;32mI (12906) Cipher Text: 0x3ffd3ab8   7c 5e 38 fc 39 07 87 b1  76 62 c1 f6 3b 6d 7e 43  ||^8.9...vb..;m~C|[0m
+[0;32mI (12916) Cipher Text: 0x3ffd3ac8   c1 af 12 d2 c5 e3 a4 ea  91 9b 0f e3 a4 e1 78 4d  |..............xM|[0m
+[0;32mI (12926) Cipher Text: 0x3ffd3ad8   a9 ed a9 55 11 1c 6b 45  3f 9d 49 af ec e2 54 3b  |...U..kE?.I...T;|[0m
+[0;32mI (12936) Cipher Text: 0x3ffd3ae8   1f ab d5 b7 db b5 39 36  6a a0 08 a2 f6 82 68 ce  |......96j.....h.|[0m
+[0;32mI (12936) Cipher Text: 0x3ffd3af8   3a 72 04 93 76 ef 9c 28  67 37 1e ed 28 5a 1d ab  |:r..v..(g7..(Z..|[0m
+[0;32mI (12946) Cipher Text: 0x3ffd3b08   34 53 a3 46 98 25 d4 db  3e 18 58 93 a7 cd d8 19  |4S.F.%..>.X.....|[0m
+[0;32mI (12956) Cipher Text: 0x3ffd3b18   8a 9b 07 bc c0 91 8b e1  38 6e 60 cc 00 98 51 dd  |........8n`...Q.|[0m
+[0;32mI (12966) Cipher Text: 0x3ffd3b28   d3 c3 b8 06 1f 4f cf e0  8b 5d 5a 0e 36 09 0e 96  |.....O...]Z.6...|[0m
+[0;32mI (12976) Cipher Text: 0x3ffd3b38   09 e0 d7 8c c5 88 e1 01  f5 32 e1 7a b0 48 15 e8  |.........2.z.H..|[0m
+[0;32mI (12986) Cipher Text: 0x3ffd3b48   40 6d 08 b9 54 56 2f 3d  67 42 e3 c5 21 23 b0 e9  |@m..TV/=gB..!#..|[0m
+[0;32mI (12996) Cipher Text: 0x3ffd3b58   96 ab d6 3b 92 da d5 d8  b2 b1 a9 b3 77 2f ab 77  |...;........w/.w|[0m
+[0;32mI (13006) Cipher Text: 0x3ffd3b68   46 d3 f9 03 23 37 73 19  e2 06 9c 1c aa dc d5 d3  |F...#7s.........|[0m
+[0;32mI (13016) Cipher Text: 0x3ffd3b78   cb 17 8e 76 e3 72 79 fa  c2 ec 83 ae 8e f1 da c7  |...v.ry.........|[0m
+[0;32mI (13026) Cipher Text: 0x3ffd3b88   b2 d3 6f f2 e5 26 e7 9b  f4 4c 82 60 2b 52 b5 1a  |..o..&...L.`+R..|[0m
+[0;32mI (13036) Cipher Text: 0x3ffd3b98   04 fe 30 13 df 3a 77 2c  84 fd dc 2f dd f6 ab a9  |..0..:w,.../....|[0m
+[0;32mI (13046) Cipher Text: 0x3ffd3ba8   b9 fb 98 b1 df 1e d9 03  b0 80 c2 ca 53 09 55 fe  |............S.U.|[0m
+[0;32mI (13046) Cipher Text: 0x3ffd3bb8   6b 9c 82 69 8e 59 75 32  16 be 35 87 44 23 44 ff  |k..i.Yu2..5.D#D.|[0m
+[0;32mI (13056) Cipher Text: 0x3ffd3bc8   1e be 95 f6 b9 e4 fb b3  e9 86 a3 70 f8 23 65 4a  |...........p.#eJ|[0m
+[0;32mI (13066) Cipher Text: 0x3ffd3bd8   a9 34 4d e8 ea 63 61 e4  bf b4 6b 78 e4 63 71 78  |.4M..ca...kx.cqx|[0m
+[0;32mI (13076) Cipher Text: 0x3ffd3be8   b0 3a 79 6d 9f 74 f6 e8  10 4a ef d0 e8 45 df 53  |.:ym.t...J...E.S|[0m
+[0;32mI (13086) Shared Secret: 0x3ffd3054   65 cb cd 56 f4 60 f8 60  90 34 e1 ed 97 32 12 0d  |e..V.`.`.4...2..|[0m
+[0;32mI (13096) Shared Secret: 0x3ffd3064   eb b1 80 27 d4 8d 8a a4  a2 74 20 09 74 47 b6 56  |...'.....t .tG.V|[0m
+[0;32mI (13106) [AKE PROTOCOL]: 0x3ffd3c34   58 4b ba f2 7b e9 80 1e  c3 62 fd 80 48 9c 9e 4e  |XK..{....b..H..N|[0m
+[0;32mI (13116) [AKE PROTOCOL]: 0x3ffd3c44   21 25 f2 7c f0 c2 9c 2d  4f ed ee 01 e7 ac f4 61  |!%.|...-O......a|[0m
+[0;32mI (13126) [AKE PROTOCOL]: 0x3ffd3c54   3a f6 d9 75 0a c0 bc 9d  a9 a6 66 b5 11 3e 05 2e  |:..u......f..>..|[0m
+[0;32mI (13136) [AKE PROTOCOL]: 0x3ffd3c64   fa ed a6 55 1e 45 07 c5  84 32 75 9b 41 ee dd 09  |...U.E...2u.A...|[0m
+[0;32mI (13146) [AKE PROTOCOL]: Request step 2 built successfully[0m
+[0;32mI (13146) Key Session: : 0x3ffd2be4   e7 35 e9 4f c8 9c 22 7c  27 72 f8 58 12 d0 bd 89  |.5.O.."|'r.X....|[0m
+[0;32mI (13156) Key Session: : 0x3ffd2bf4   e9 15 10 6f bc 7f 7c a8  9b 93 7d dc 9f 35 68 bf  |...o..|...}..5h.|[0m
+[0;32mI (13166) Key Authentication: : 0x3ffd2c08   70 e1 06 e3 b2 e2 59 01  b1 e0 18 c5 0c c5 2a 36  |p.....Y.......*6|[0m
+[0;32mI (13176) Key Authentication: : 0x3ffd2c18   85 44 b3 57 12 36 68 af  b5 fe ba ee ea 9c ef 42  |.D.W.6h........B|[0m
+[0;32mI (13186) [AKE PROTOCOL]: STEP 2 JSON: {[0m
+	"Step":	2,
+	"SID":	"q94tuR8Bmv8af6/HARJVtg==",
+	"SID_Len":	16,
+	"Nonce_D":	"xFeIoT+I5Otc4oznVgVS8L1IZ+N4HuajYvrSZabO4A8=",
+	"Nonce_D_Len":	32,
+	"CT_Kyber":	"fcRGOPskLyhuiL50hE71PzTAuy0hwZu6v+bf0WBSsw13MZwTHT7qvec5lbQ8JeFQXjEiFmOUpHMQkEzwpKPFPy8ryn36xNlq5YEJun98W3IdyMBSUGsLfrzBSz0KpQ3aMNpae5bc4d7LhdsMP5gSBeoub8hws4kZps+LeiejHd/N44mM0GephdfQNLVzSr3KtWDrmzngyBQkWJIQr2MeK9e0o/bP3k2pPZjwG+k6sQ3xFU/Xr83p4aEbsUaaHbaIReV1tFdihq6ObTqOeV8KGiG2J2/tz5yZKnxESVN4MRyBY5NAd5f87Ly2AUb+HNJCG8tmYNxnT1D7+cIEvHAFWVWs/9QgbDWwGFRJuj6Uf0j9ScfZLUdtgdrU+moZNxFzG+um3DcV/nL40L31N+8sWd04JHiSMuit8wNjfkoDAYwwmjHkQ9TcKYKzA8JakECxAS8k29A47ZFP4uOLI6t8KhSXCsdfJkW90IyuUOPCc/O2VuuydkB56Sdy+vpXM+c4MiBv3LDMtreYBxbKvsKY/fI2hB9DQIp+t/ZadBzPAyMFaTqPhKH64OZyW4B4RW0D0tCILApf6fr/BhSkFeOGd3tESRmh9BQGAhbU7X4el5S8KLO3lomEJ+oQJSKYjWJslCHYDkgxiW5iE5MZve3qWGnzwIF4kv4PqAEwiuREwwaqVnF+Xb8ZuyTijQvXm/4xQiVMScxccVxD15XqA/crt3uYrQN0R6S1NmOUd/e2HX8OZ+QnlWMQJitdpeBmH0riMMSxAfkQZsTaN0xMVF2cgpMVBqlTwWmfVyRYI0oxQ5ulSYnW+VB4I8XdMjzDjlBVQeGJomNGrcyYelWcwfNf9U4wWsvQyaXcBSbiW5V8c4VcUVBfIFp7pVL/LZWg4vneF5UmtbNdy/+Yb5MdVbCU/GkN+GpBO3EhxWV+gX43R8vl17FoHEY/QwAp9voFxSfuDJK8xiCpIilx6zl9t1Dm/8Gz7A9VURnv+9VkSTl8IhWFZXQvy0mupbwtgTBgn68UfF44/DkHh7F2YsH2O21+Q8GvEtLF46TqkZsP46TheE2p7alVERxrRT+dSa/s4lQ7H6vVt9u1OTZqoAii9oJozjpyBJN275woZzce7ShaHas0U6NGmCXU2z4YWJOnzdgZipsHvMCRi+E4bmDMAJhR3dPDuAYfT8/gi11aDjYJDpYJ4NeMxYjhAfUy4XqwSBXoQG0IuVRWLz1nQuPFISOw6Zar1juS2tXYsrGps3cvq3dG0/kDIzdzGeIGnByq3NXTyxeOduNyefrC7IOujvHax7LTb/LlJueb9EyCYCtStRoE/jAT3zp3LIT93C/d9qupufuYsd8e2QOwgMLKUwlV/mucgmmOWXUyFr41h0QjRP8evpX2ueT7s+mGo3D4I2VKqTRN6OpjYeS/tGt45GNxeLA6eW2fdPboEErv0OhF31M=",
+	"CT_Kyber_Len":	1088,
+	"Tag_D":	"WEu68nvpgB7DYv2ASJyeTiEl8nzwwpwtT+3uAees9GE69tl1CsC8nammZrURPgUu+u2mVR5FB8WEMnWbQe7dCQ==",
+	"Tag_D_Len":	64
+}
+[0;32mI (13896) [AKE PROTOCOL]: Data response from step 2: {[0m
+  "SID": "q94tuR8Bmv8af6/HARJVtg==",
+  "SID_Len": 16,
+  "Step": 2,
+  "Tag_S": "2Iva493CclS3che5NYldExAPxqwzhdrIMnsP7Q0RVtgjzaEeuPzr5g8Nmorio4E3kSTWmPY23ivzC2/a7/q8Mg==",
+  "Tag_S_Len": 64
+}
+
+[0;32mI (13916) [AKE PROTOCOL]: TagS verification successful[0m
+[0;32mI (13916) [AKE PROTOCOL]: TagS: [0m
+[0;32mI (13916) [AKE PROTOCOL]: 0x3ffc1e30   d8 8b da e3 dd c2 72 54  b7 72 17 b9 35 89 5d 13  |......rT.r..5.].|[0m
+[0;32mI (13926) [AKE PROTOCOL]: 0x3ffc1e40   10 0f c6 ac 33 85 da c8  32 7b 0f ed 0d 11 56 d8  |....3...2{....V.|[0m
+[0;32mI (13936) [AKE PROTOCOL]: 0x3ffc1e50   23 cd a1 1e b8 fc eb e6  0f 0d 9a 8a e2 a3 81 37  |#..............7|[0m
+[0;32mI (13946) [AKE PROTOCOL]: 0x3ffc1e60   91 24 d6 98 f6 36 de 2b  f3 0b 6f da ef fa bc 32  |.$...6.+..o....2|[0m
+[0;32mI (13956) [AKE PROTOCOL]: Tag S verification: SUCCESS[0m
+[0;32mI (13966) [AKE PROTOCOL]: ------------- SECURE CHANNEL -------------[0m
+[0;32mI (13966) [SECURE CHANNEL]: START SECURE CHANNEL SESSION[0m
+[0;32mI (13976) [Cipher Data]: 0x3ffd3214   d7 3d 51 62 2a 8e b0 d2  03 b1 bb e1 95 7e b1 bf  |.=Qb*........~..|[0m
+[0;32mI (13986) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"gyeWF3Fp2OC0quhcfESvpg==","CipherText_Len":16,"CipherText":"1z1RYiqOsNIDsbvhlX6xvw==","Tag_SC_Len":64,"Tag_SC":"y7bT23Xtj8lXfK958528SKHyyFapr0qBOA689lcJmCdUli7+D9aI2dQA38/gD4ewzkYABEZg9Fl7VKjqeB6SzQ=="}[0m
+[0;32mI (14086) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (14086) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (14086) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (14096) [Cipher Data]: 0x3ffdada4   fb 23 41 3f c3 00 21 f2  f7 73 08 ff 55 08 ed 12  |.#A?..!..s..U...|[0m
+[0;32mI (14096) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"81sGa8JVtPgPWW4CyYfUZg==","CipherText_Len":16,"CipherText":"+yNBP8MAIfL3cwj/VQjtEg==","Tag_SC_Len":64,"Tag_SC":"UErYoF5jJnz3tgSBbgsf0aj2XI28X5hDsj5qe8Ma9h/2gcmna9oYRvp60E3pOCfsEvWQZsm5uASLNEmqXXul8Q=="}[0m
+[0;32mI (14996) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (14996) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (14996) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (14996) [Cipher Data]: 0x3ffdaa44   28 bc 5f 5f 69 ed 2c 93  97 56 68 d3 05 84 cc d3  |(.__i.,..Vh.....|[0m
+[0;32mI (15006) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"cik+M/0aOLjcWovNJHsAIw==","CipherText_Len":16,"CipherText":"KLxfX2ntLJOXVmjTBYTM0w==","Tag_SC_Len":64,"Tag_SC":"Jx6Zceu5NV43FvXM6fv4Cvsl0mg8guOBx+JegEFBj9RrVXkYatY5l01kUdsSEITFh7WmPp0bHc0KBl33epvGNQ=="}[0m
+[0;32mI (15916) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (15916) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (15916) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (15916) [Cipher Data]: 0x3ffd486c   ed 9f 7f 56 4f 5b 83 f1  b3 61 b5 14 62 c1 ab bd  |...VO[...a..b...|[0m
+[0;32mI (15926) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"qw45D/xckht8II7JBILE9g==","CipherText_Len":16,"CipherText":"7Z9/Vk9bg/GzYbUUYsGrvQ==","Tag_SC_Len":64,"Tag_SC":"sPUj4j68dyhTmwk+2QLLCAdla97HdAXr8zx4zcfQ7iuStMCQ3Tj2MerYkQYC7GTGPOZWAQBa2QNW/XWmCbo5sQ=="}[0m
+[0;32mI (16026) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (16026) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (16026) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (16036) [Cipher Data]: 0x3ffda8fc   22 c8 51 74 18 15 5b 11  9e 6f 16 38 04 c1 d2 da  |".Qt..[..o.8....|[0m
+[0;32mI (16036) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"mDEMXGkGL2uEklQj/soTqQ==","CipherText_Len":16,"CipherText":"IshRdBgVWxGebxY4BMHS2g==","Tag_SC_Len":64,"Tag_SC":"seVwCilibQgkA5wLCsKBKUzjlI8JwCLEy95iz9sBiBggsYVvGDMTytT4VqYydXqxlZuYmdMaTIzwcGB1VfxaVQ=="}[0m
+[0;32mI (16936) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (16936) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (16936) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (16946) [Cipher Data]: 0x3ffd486c   cb 15 ac 6b 37 47 cc 00  f8 e2 e8 64 98 02 8b 77  |...k7G.....d...w|[0m
+[0;32mI (16956) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"YT3eJOFD7ZLIBjWlVta44Q==","CipherText_Len":16,"CipherText":"yxWsazdHzAD44uhkmAKLdw==","Tag_SC_Len":64,"Tag_SC":"UIM15zcVFNVgTscLE7mu72JQbi5anQ6JURt1GFR1Ov9EYbGy/np8DP8amp1O4Op+64kTcuchY1dEy4U3yELIhA=="}[0m
+[0;32mI (17856) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (17866) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (17866) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (17866) [Cipher Data]: 0x3ffd48f4   49 ee 5e 3e f8 59 dd 07  ce 7d 9f 49 54 2c 56 5c  |I.^>.Y...}.IT,V\|[0m
+[0;32mI (17876) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"NCVCWXfE2Q5ac/zDzaTwyQ==","CipherText_Len":16,"CipherText":"Se5ePvhZ3QfOfZ9JVCxWXA==","Tag_SC_Len":64,"Tag_SC":"EcSpB/NBZraFxiUlKU/y+Hnxr540CKkr2bqeikN0lw55uYvKWgTMi2vO1NBGzuwlG5XfckIpx1JgB+mjJPFFMA=="}[0m
+[0;32mI (18276) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (18276) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (18276) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (18276) [Cipher Data]: 0x3ffd4960   83 9a 3b 27 e0 54 e5 30  cb 1b 15 4c 47 d9 86 66  |..;'.T.0...LG..f|[0m
+[0;32mI (18286) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"86M254jEj09hG3DGsoMcVQ==","CipherText_Len":16,"CipherText":"g5o7J+BU5TDLGxVMR9mGZg==","Tag_SC_Len":64,"Tag_SC":"ZHevtMHi9l9B6lqA5HpQ5WSWs5QQ7UBek5cLBYPQmW1zJPBRNxvYuwnGpI94KuUqxgDboY3p/ZBTW5yMdEI/iA=="}[0m
+[0;32mI (19186) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (19186) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (19196) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (19196) [Cipher Data]: 0x3ffd49b0   09 c2 47 a0 d5 13 77 7f  a2 10 d3 3b c6 ec db 9d  |..G...w....;....|[0m
+[0;32mI (19206) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"dKzennzHKHRayual3HDFvg==","CipherText_Len":16,"CipherText":"CcJHoNUTd3+iENM7xuzbnQ==","Tag_SC_Len":64,"Tag_SC":"qz39Pdtg2TG8EaEa/JDJ9JPGOlmDNieyuVivwgPW2z8tW58MuBU+xw7Ncd16pxw9VJtU9mQ2xERapv9DKogPyQ=="}[0m
+[0;32mI (20016) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (20016) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (20016) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (20026) [Cipher Data]: 0x3ffd49f8   a7 1a 10 6e 49 f7 b4 1e  a5 10 cf ea 14 bd 1f 66  |...nI..........f|[0m
+[0;32mI (20026) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"q94tuR8Bmv8af6/HARJVtg==","Seq":0,"IV_Len":16,"IV":"F+NZRLF7TYj09Ln+c1W8Bw==","CipherText_Len":16,"CipherText":"pxoQbkn3tB6lEM/qFL0fZg==","Tag_SC_Len":64,"Tag_SC":"zDWnibeTdIpp8V3wGouiPUCr3Vu/UWnagvTqhQr9BoIFMG5tRbg1ptHWU8R9emiEpA7f6bgbRyLOZVrLWdRg6A=="}[0m
+[0;32mI (20936) [SECURE CHANNEL]: Secure channel response: {[0m
+  "STATUS": "SUCESS",
+  "Step": 3
+}
+
+[0;32mI (20936) [SECURE CHANNEL]: SECURE PLAIN DATA IS FREE[0m
+[0;32mI (20936) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (20936) [SECURE CHANNEL]: SECURE CHANNEL SESSION IS FREE[0m
+[0;33mW (20946) [Protocol Transactions]: Free heap: 151420[0m
+[0;32mI (20946) [Protocol Transactions]: Free elements[0m
+[0;33mW (20956) [Protocol Transactions]: The memory is Free!!![0m
+[0;33mW (20956) [Protocol Transactions]: Free heap: 158500[0m
+[0;32mI (20966) main_task: Returned from app_main()[0m
