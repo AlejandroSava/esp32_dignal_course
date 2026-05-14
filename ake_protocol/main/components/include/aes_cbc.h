@@ -10,6 +10,7 @@
 
 struct aes_256_obj{
     uint8_t key[AES_256];
+    size_t key_len;
     unsigned int keybits;
     uint8_t iv[IV_AES];
 

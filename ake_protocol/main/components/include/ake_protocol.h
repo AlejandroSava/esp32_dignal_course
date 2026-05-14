@@ -126,6 +126,7 @@ bool get_kyber_object_node(struct kyber_object_node *self,
 bool build_request_2(struct request_step_2 *self,
                      const struct response_step_1 *res_step_1,
                      const struct kyber_object_node *kyber_obj,
+                     struct master_key *master_key,
                      struct ake_key *key_sess,
                      struct ake_key *key_auth,
                      const struct puf_object *puf_obj,
@@ -154,5 +155,6 @@ bool get_context_master_key(struct master_key *self, // opaque this function
 bool derive_master_key(struct master_key *self, // opaque this function
                        const uint8_t *puf_hash, size_t puf_hash_size,
                        const uint8_t *ss, size_t ss_len);
+void free_master_key(struct master_key *self);
 
 #endif

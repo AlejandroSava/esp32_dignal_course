@@ -374,7 +374,7 @@ bool build_request_2(struct request_step_2 *self,
     key_auth->key_info = "Kauth";
     key_auth->key_info_len = strlen(key_auth->key_info);
 
-    if (!derive_hkdf_sha512(puf_obj->hash,
+    if (!derive_hkdf_sha512(puf_obj->puf_hash,
                             puf_obj->puf_hash_len,
                             rsp_step_1->nonce,
                             rsp_step_1->nonce_len,
@@ -781,7 +781,7 @@ bool build_request_0(struct request_step_0 *self, struct puf_object *puf, char *
         return false;
     }
 
-    memcpy(self->puf_hash, puf->hash, self->puf_hash_size);
+    memcpy(self->puf_hash, puf->puf_hash, self->puf_hash_size);
 
     if (base64_encode_alloc(self->puf_hash,
                             self->puf_hash_size,

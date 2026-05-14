@@ -16,6 +16,7 @@
 
 #include "mbedtls/sha512.h"
 #include "api_secure_storage.h"
+#include "hkdf.h"
 
 #define AES_COUNTER 1 // PENDING TO DEFINE THE USAGE OF IT
 #define TAG_SSR "[SECURE STORAGE REGION]"
@@ -405,7 +406,114 @@ cleanup:
     return err;
 }
 
-bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool source_puf){
+// bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool source_puf){
+//     uint8_t h512[64];
+//     if (source_puf){
+//         puflib_init(); // needs to be called first in app_main
+
+//         // condition will be true, if a PUF response is ready (useful after a restart)
+//         if(PUF_STATE != RESPONSE_READY) {
+//             bool puf_ok = get_puf_response();
+//             if(!puf_ok) {
+//                 ESP_LOGE(TAG_SSR, "CANNOT RETRIEVE THE PUF!!!");
+//                 get_puf_response_reset(); // the device resets now and the app starts again from app_main
+//                 return false;
+//             }
+//         }
+
+//         // PUF_RESPONSE_LEN is a PUF response length in bytes
+//         for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
+//             printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
+//         }
+
+//         printf("\n");
+        
+
+//         sha512_stream(PUF_RESPONSE, PUF_RESPONSE_LEN, h512);
+//         //print_hex("SHA512", h512, sizeof(h512));
+//         clean_puf_response();
+//         printf("PRINTINF AFTER CLEANING\n");
+//         // PUF_RESPONSE_LEN is a PUF response length in bytes
+//         for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
+//             printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
+//         }
+//         memcpy(key_output, h512, AES_256);
+//         memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
+//         self->init = true;
+//         self->puf_hash_len = PUF_HASH_LEN;
+//         ESP_LOGI(TAG_SSR, "PUF Object Updated");
+//         return true;
+//     }
+
+//     else{
+//         ESP_LOGW(TAG_SSR, "TESTING SECURE STORAGE... HARDCODING KEY");
+//         uint8_t key[16] = {
+//         0x10,0x22,0x33,0x44,0x55,0x66,0x77,0x88,
+//         0x99,0xaa,0xbb,0xcc,0xdd,0xee,0xff,0x01
+//         }; 
+
+//         sha512_stream(key, 16, h512);
+//         //print_hex("SHA512", h512, sizeof(h512));
+//         memcpy(key_output, h512, AES_256);
+//         if(self != NULL){
+//             memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
+//             self->init = false;
+//             self->puf_hash_len = PUF_HASH_LEN;
+//             ESP_LOGW(TAG_SSR, "PUF Object Updated --> hardcoding object, PUF FEAK!");
+//         }
+//         else
+//             ESP_LOGW(TAG_SSR, "There isn't PUF object");
+//         return true;
+//     }
+
+// }
+
+bool derive_aes_puf_key_from_puf(struct puf_object *puf_obj,
+                                 struct aes_256_obj *aes_puf)
+{
+    if (puf_obj == NULL || aes_puf == NULL || puf_obj->puf_hash_len == 0) {
+        ESP_LOGE(TAG_SSR, "Invalid input parameters");
+        return false;
+    }
+
+    const uint8_t salt_aes_puf[16] = {
+        0x11, 0x22, 0x33, 0x44,
+        0x55, 0x66, 0x77, 0x88,
+        0x99, 0xaa, 0xbb, 0xcc,
+        0xdd, 0xee, 0xff, 0x00
+    };
+
+    const char *info_aes_puf = "Secure Storage Key";
+    const size_t aes_key_len = AES_256;   // must be 32 bytes
+
+    uint8_t *aes_key = malloc(aes_key_len);
+    if (aes_key == NULL) {
+        ESP_LOGE(TAG_SSR, "Failed to allocate AES PUF key");
+        return false;
+    }
+
+    bool ok = derive_hkdf_sha512(puf_obj->puf_hash,
+                                 puf_obj->puf_hash_len,
+                                 salt_aes_puf,
+                                 sizeof(salt_aes_puf),
+                                 (const uint8_t *)info_aes_puf,
+                                 strlen(info_aes_puf),
+                                 aes_key,
+                                 aes_key_len);
+
+    if (!ok) {
+        ESP_LOGE(TAG_SSR, "PUF key derivation failed");
+        free(aes_key);
+        return false;
+    }
+
+    create_aes_256_obj(aes_puf, aes_key);
+
+
+    return true;
+}
+
+bool get_puf_obj_from_puf(struct puf_object *self, bool source_puf){
     uint8_t h512[64];
     if (source_puf){
         puflib_init(); // needs to be called first in app_main
@@ -415,6 +523,7 @@ bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool sour
             bool puf_ok = get_puf_response();
             if(!puf_ok) {
                 ESP_LOGE(TAG_SSR, "CANNOT RETRIEVE THE PUF!!!");
+                ESP_LOGE(TAG_SSR, "RESTAR THE SYSTEM!!!");
                 get_puf_response_reset(); // the device resets now and the app starts again from app_main
                 return false;
             }
@@ -436,63 +545,30 @@ bool derive_key_from_puf(uint8_t *key_output, struct puf_object *self, bool sour
         for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
             printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
         }
-        memcpy(key_output, h512, AES_256);
-        memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
+        memcpy(self->puf_hash, h512, PUF_512_HASH_LEN); // data to hash puf
         self->init = true;
-        self->puf_hash_len = PUF_HASH_LEN;
+        self->puf_hash_len = PUF_512_HASH_LEN;
         ESP_LOGI(TAG_SSR, "PUF Object Updated");
         return true;
     }
 
     else{
+
         ESP_LOGW(TAG_SSR, "TESTING SECURE STORAGE... HARDCODING KEY");
-        uint8_t key[16] = {
+        uint8_t dummy_puf[16] = {
         0x10,0x22,0x33,0x44,0x55,0x66,0x77,0x88,
         0x99,0xaa,0xbb,0xcc,0xdd,0xee,0xff,0x01
-        }; 
-
-        sha512_stream(key, 16, h512);
-        //print_hex("SHA512", h512, sizeof(h512));
-        memcpy(key_output, h512, AES_256);
-        if(self != NULL){
-            memcpy(self->hash, h512, PUF_HASH_LEN); // data to hash puf
-            self->init = false;
-            self->puf_hash_len = PUF_HASH_LEN;
-            ESP_LOGW(TAG_SSR, "PUF Object Updated --> hardcoding object, PUF FEAK!");
-        }
-        else
-            ESP_LOGW(TAG_SSR, "There isn't PUF object");
+        };
+        sha512_stream(dummy_puf, sizeof(dummy_puf), h512);        
+        memcpy(self->puf_hash, h512, PUF_512_HASH_LEN); // data to hash puf
+        self->init = false;
+        self->puf_hash_len = PUF_512_HASH_LEN;
+        ESP_LOGW(TAG_SSR, "PUF Object Updated --> hardcoding object, PUF FEAK!");        
         return true;
     }
-
 }
 
-// void get_puf_hash(uint8_t *buffer){
-//     uint8_t h512[64];
-//     puflib_init(); // needs to be called first in app_main
 
-//     // condition will be true, if a PUF response is ready (useful after a restart)
-//     if(PUF_STATE != RESPONSE_READY) {
-//         bool puf_ok = get_puf_response();
-//         if(!puf_ok) {
-//             ESP_LOGE(TAG_SSR, "CANNOT RETRIEVE THE PUFF!!!");
-//             get_puf_response_reset(); // the device resets now and the app starts again from app_main
-//             return;
-//         }
-//     }   
-//     // PUF_RESPONSE_LEN is a PUF response length in bytes
-//     for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
-//         printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
-//     }
-//     sha512_stream(PUF_RESPONSE, PUF_RESPONSE_LEN, buffer);
-//     clean_puf_response();
-//     // PUF_RESPONSE_LEN is a PUF response length in bytes
-//     for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
-//         printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
-//     }
-
-//     ESP_LOGI(TAG_SSR, "Getting the hash digest (sha512) from puf");
-// }
 
 void RTC_IRAM_ATTR esp_wake_deep_sleep(void) { // this function is needed
     esp_default_wake_deep_sleep();

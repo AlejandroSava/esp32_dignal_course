@@ -17,13 +17,13 @@ void puf_enrollment(){
 void app_main(void)
 {
     puflib_init(); // needs to be called first in app_main
-    puf_enrollment();
-
+    puf_enrollment(); // Comment after enrollment
 
     // condition will be true, if a PUF response is ready (useful after a restart)
     if(PUF_STATE != RESPONSE_READY) {
         bool puf_ok = get_puf_response();
         if(!puf_ok) {
+            printf("RESET!!!!!!!\n");
             get_puf_response_reset(); // the device resets now and the app starts again from app_main
         }
     }
@@ -32,6 +32,8 @@ void app_main(void)
     for (size_t i = 0; i < PUF_RESPONSE_LEN; ++i) {
         printf("%02X ", PUF_RESPONSE[i]); // PUF_RESPONSE is a buffer with the PUF response
     }
+    printf("\n");
+    printf("The PUF size in bytes is: %d\n", PUF_RESPONSE_LEN);
 
     printf("\n");
 

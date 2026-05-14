@@ -15,6 +15,8 @@
 #define MAX_SEQ 70
 #define MIN_SEQ 0
 
+#define MAX_PAYLOAD 1024 //add a maximum payload
+
 struct secure_message {
     uint32_t step;
 
@@ -92,4 +94,7 @@ bool send_secure_channel_message(const struct secure_message *message,
 
 bool get_secure_channel_response(struct secure_message *response,
                                  const char *json_response_output);
+bool get_response_plain_data_json(const struct secure_message *rsp_sec_msg,
+                                  const struct secure_session *session,
+                                  struct secure_plain_data *rsp_plain_data);
 #endif

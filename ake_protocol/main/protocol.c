@@ -7,36 +7,74 @@
 #include "ake_protocol.h"
 #include "secure_channel.h"
 
+#include "esp_timer.h"
 #define TAG_PROT "[Protocol Transactions]"
 
-void app_main(void) 
-{
-    // starting the functions
+struct device_info{
+    const char *device_name;
+    size_t device_name_size;
+    uint8_t *device_mac;
+    size_t device_mac_size;
+    size_t puf_hash_len;
+    uint8_t *puf_hash;    
+};
+
+bool get_device_info(struct device_info *self, const char *device_name, struct puf_object *puf_obj){
+    self->device_name = device_name;
+    self->device_name_size = strlen(device_name);
+    self->device_mac_size = 6; 
+
+    self->device_mac = malloc(self->device_mac_size);
+    if (self->device_mac == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for mac_address");
+        return false;
+    }
+
+    if (esp_efuse_mac_get_default(self->device_mac) != ESP_OK) {
+        ESP_LOGE(TAG_AKE, "Error getting mac address from fuses");
+        return false;
+    }
+
+    self->puf_hash_len = PUF_512_HASH_LEN;
+    self->puf_hash = malloc(self->puf_hash_len);
+    if (self->puf_hash == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for mac_address");
+        return false;
+    }
+    memcpy(self->puf_hash, puf_obj->puf_hash, self->puf_hash_len);
+
+}
+
+void start_drivers(){
+
     ESP_LOGI(TAG_PROT, "----- Initialize the NVS ------");
     init_nvs();
     ESP_LOGI(TAG_PROT, "----- Starting WiFi Driver -----");
     wifi_init_sta();
-    ESP_LOGW(TAG_PROT, "Free heap after wifi and init: %u", (unsigned)esp_get_free_heap_size());
+}
 
+void app_main(void) 
+{
+    // starting the functions
+
+    ESP_LOGW(TAG_PROT, "----- STARTING THE DRIVERS ------");
+    start_drivers();
+    
     /* Provisioning Secure Storage Parameters*/
     ESP_LOGI(TAG_PROT, "----- Setting Parameter for PUF and Secure Storage Region -----");
     struct puf_object *puf_obj = malloc(sizeof(struct puf_object)); /*PUF object*/   
-    /*Create AES obj*/
-    uint8_t key_sec_stor[AES_256]; //Key for AES Object
+    /*Create AES obj for secure storage*/
     struct aes_256_obj *aes_key_ss = malloc(sizeof(struct aes_256_obj));
-    if(!derive_key_from_puf(&key_sec_stor[0], puf_obj, false)) { /*TODO: CHANGE TO TRUE AFTER PROVISIONING */
-        ESP_LOGE(TAG_PROT, "Derivation Failure");
-        return;
-    }    
-    create_aes_256_obj(aes_key_ss, &key_sec_stor[0]);
+    get_puf_obj_from_puf(puf_obj, true); /*CHANGE TO TRUE AFTER PROVISIONING */
+    derive_aes_puf_key_from_puf(puf_obj, aes_key_ss);
 
+    
 
-    /* Protocol transaction secction*/
     ESP_LOGI(TAG_PROT, "-----  PROTOCOL TRANSACTIONS -----");    
     const char *http_post = "http://192.168.1.236:5000/example"; 
     const char *device_name = "ESP_32_ALEX_SV";
     char *json_resp_out = NULL;
-    size_t json_resp_len = 0;
+    size_t json_resp_len = 0; 
 
     ESP_LOGI(TAG_PROT, "-------- [STEP 0] RoT --------");
 
@@ -63,7 +101,14 @@ void app_main(void)
     
     free(json_resp_out);
 
+   
+    
+    ESP_LOGW(TAG_PROT, "Free heap end STEP 0: %u", (unsigned)esp_get_free_heap_size());
+
     ESP_LOGI(TAG_PROT, "-------- [STEP 1] --------");
+
+    ESP_LOGW(TAG_PROT, "Free heap STEP 1 start: %u", (unsigned)esp_get_free_heap_size());
+    
 
     struct request_step_1 *req_step_1 = malloc(sizeof(struct request_step_1 ));
     if (build_request_1(req_step_1, device_name) == false) {
@@ -82,12 +127,20 @@ void app_main(void)
     }
     free(json_resp_out);
 
-    ESP_LOGI(TAG_PROT, "-------- [STEP 2] --------");
     
-    struct ake_key *key_sess = malloc(sizeof(struct ake_key));  
-    struct ake_key *key_auth = malloc(sizeof(struct ake_key));   
+    
+    ESP_LOGW(TAG_PROT, "Free heap end STEP 1: %u", (unsigned)esp_get_free_heap_size());
+
+    ESP_LOGI(TAG_PROT, "-------- [STEP 2] --------");
+    ESP_LOGW(TAG_PROT, "Free heap STEP 2 start: %u", (unsigned)esp_get_free_heap_size());
+   
+
+    struct master_key *master_key = malloc(sizeof(struct master_key));
+    struct ake_key *key_sess = malloc(sizeof(struct ake_key));      
+    struct ake_key *key_auth = malloc(sizeof(struct ake_key));  
     struct request_step_2 *req_step_2 = malloc(sizeof(struct request_step_2));
     struct kyber_object_node *kyber_obj = malloc(sizeof(struct kyber_object_node));
+    
 
     ESP_LOGI(TAG_PROT, "Get Kyber Object"); 
     if (get_kyber_object_node(kyber_obj, aes_key_ss) != true){
@@ -95,10 +148,13 @@ void app_main(void)
         return;
     }
     
-    build_request_2(req_step_2, res_step_1, kyber_obj, key_sess, key_auth, puf_obj, device_name);
-
-    ESP_LOG_BUFFER_HEXDUMP("Key Session: ", key_sess->key, key_sess->key_size, ESP_LOG_INFO);
-    ESP_LOG_BUFFER_HEXDUMP("Key Authentication: ", key_auth->key, key_auth->key_size, ESP_LOG_INFO);
+    build_request_2(req_step_2, res_step_1, kyber_obj, master_key, key_sess, key_auth, puf_obj, device_name);
+    ESP_LOG_BUFFER_HEXDUMP("Context ", master_key->context, master_key->context_len, ESP_LOG_WARN);
+    ESP_LOG_BUFFER_HEXDUMP("Master Key: ", master_key->key, master_key->key_len, ESP_LOG_WARN);
+    ESP_LOG_BUFFER_HEXDUMP("Key Authentication: ", key_auth->key, key_auth->key_size, ESP_LOG_WARN);
+    ESP_LOG_BUFFER_HEXDUMP("Key Session: ", key_sess->key, key_sess->key_size, ESP_LOG_WARN);
+    ESP_LOG_BUFFER_HEXDUMP("Tag_D: ", req_step_2->tag_d, req_step_2->tag_d_len, ESP_LOG_WARN);
+    
  
     if (send_http_request_2(req_step_2, &json_resp_out, &json_resp_len, http_post) == false){
         ESP_LOGE(TAG_PROT, "Error sending request 2");
@@ -123,18 +179,27 @@ void app_main(void)
          tag_s_verification ? "SUCCESS" : "FAILURE");
 
     free(json_resp_out);
+    
+    
+   
+    ESP_LOGW(TAG_PROT, "Free heap end STEP 2: %u", (unsigned)esp_get_free_heap_size());
 
     //SECURE CHANNEL
     ESP_LOGI(TAG_AKE, "------------- SECURE CHANNEL -------------");
+    ESP_LOGW(TAG_PROT, "Free heap Secure channel start: %u", (unsigned)esp_get_free_heap_size());
+    
+
     struct secure_session *session = malloc(sizeof(struct secure_session));    
     start_secure_channel_session(session, 
                                  res_step_2->sid,
                                  res_step_2->sid_len,
                                  key_sess->key,
                                  key_sess->key);
-    for(int i = 0; i <10; i++){
+    for(int i = 0; i <1; i++){
         struct secure_plain_data *plain_data= malloc(sizeof(struct secure_plain_data));
         struct secure_message *secure_chan_message = malloc(sizeof(struct secure_message));
+        struct secure_message *rsp_sec_channel_mesg = malloc(sizeof(struct secure_message));
+        struct secure_plain_data *rsp_plain_data= malloc(sizeof(struct secure_plain_data));
         float temperature = 25.6f + i;
         ESP_LOGI(TAG_AKE,"the temperature is: %f", temperature);
         build_secure_plain_data_float(plain_data,
@@ -148,14 +213,24 @@ void app_main(void)
                                     &json_resp_out, 
                                     &json_resp_len,
                                     http_post);
-        
+        get_secure_channel_response(rsp_sec_channel_mesg, json_resp_out);
+        get_response_plain_data_json(rsp_sec_channel_mesg, 
+                                  session,
+                                  rsp_plain_data);
+        ESP_LOG_BUFFER_HEXDUMP("RESPONSE DATA FROM SECURE CHANNEL: ", rsp_plain_data->payload, rsp_plain_data->payload_len, ESP_LOG_WARN);
+
         free_secure_plain_data(plain_data);
         free_secure_message(secure_chan_message);
+        free_secure_message(rsp_sec_channel_mesg);
+        free_secure_plain_data(rsp_plain_data);
         free(json_resp_out);
     }
 
     free_secure_channel_session(session);
 
+    
+    
+    ESP_LOGW(TAG_PROT, "Free heap end secure channel: %u", (unsigned)esp_get_free_heap_size());
 
     // dealloacate the memory
     ESP_LOGW(TAG_PROT, "Free heap: %u", (unsigned)esp_get_free_heap_size());
@@ -168,6 +243,7 @@ void app_main(void)
     free_response_step_1(res_step_1);
     free_kyber_object_node(kyber_obj);
     free_request_2(req_step_2);
+    free_master_key(master_key);
     free_ake_key(key_sess);
     free_ake_key(key_auth);
     free_response_step_2(res_step_2);

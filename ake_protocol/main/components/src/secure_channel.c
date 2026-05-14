@@ -80,7 +80,7 @@ bool build_secure_plain_data_float(struct secure_plain_data *self,
         return false;
     }
 
-    memset(self, 0, sizeof(*self));
+    //memset(self, 0, sizeof(*self));
 
     self->payload = malloc(payload_len);
     if (self->payload == NULL) {
@@ -631,4 +631,167 @@ fail:
 
     // free_secure_message(response); // pending to free memory from caller
     return false;
+}
+
+// bool get_response_plain_data_json(struct secure_message *rsp_sec_msg,
+//     struct secure_session *session, struct secure_plain_data *rsp_plain_data)
+                          
+// {
+//     // 0. start the objects
+//     struct aes_256_obj *aes = malloc(sizeof(struct aes_256_obj));
+//     self->iv_len = AES_CBC_IV_SIZE;
+//     esp_fill_random(self->iv, AES_CBC_IV_SIZE);
+//     create_aes_256_obj(aes, session->kenc);
+//     read_and_update_iv_aes(aes, self->iv);
+
+//     uint8_t *temp_buf;
+//     size_t temp_buf_size;
+
+
+//     //1 . decode b64 the encrypted info
+//     uint8_t *cipher_data_decoded;
+//     size_t cipher_data_decoded_len;
+
+//     base64_decode_alloc(rsp_sec_msg->ciphertext, &cipher_data_decoded, &cipher_data_decoded_len);
+
+//     //2. decrypt the data
+//     aes_cbc_decrypt_pkcs7(aes->key, aes->keybits,
+//                           aes->iv,
+//                           cipher_data_decoded, cipher_data_decoded_len,
+//                           &temp_buf, &temp_buf_size);
+
+
+//     //3. format the data 
+//     int offset = 0;
+//     memcpy(rsp_plain_data->version, temp_buf + offset, sizeof(rsp_plain_data->version));
+//     offset += sizeof(rsp_plain_data->version);
+    
+//     memcpy(rsp_plain_data->payload_type, temp_buf + offset, sizeof(rsp_plain_data->payload_type));
+//     offset += sizeof(rsp_plain_data->payload_type);
+    
+//     memcpy(rsp_plain_data->payload_type, temp_buf + offset, sizeof(rsp_plain_data->payload_type));
+//     offset += sizeof(rsp_plain_data->payload_type);
+
+//     memcpy(rsp_plain_data->reserved, temp_buf + offset, sizeof(rsp_plain_data->reserved));
+//     offset += sizeof(rsp_plain_data->reserved);
+
+//     memcpy(rsp_plain_data->payload_len, temp_buf + offset, sizeof(rsp_plain_data->payload_len));
+//     offset += sizeof(rsp_plain_data->payload_len);
+
+//     memcpy(rsp_plain_data->payload_len, temp_buf + offset, rsp_plain_data->payload_len);
+
+
+//     free(aes);
+//     free(temp_buf);
+// }
+
+
+bool get_response_plain_data_json(const struct secure_message *rsp_sec_msg,
+                                  const struct secure_session *session,
+                                  struct secure_plain_data *rsp_plain_data)
+{
+    int ret;
+    uint8_t *temp_buf = NULL;
+    size_t temp_buf_size = 0;
+    size_t offset = 0;
+    struct aes_256_obj aes;
+
+    if (rsp_sec_msg == NULL || session == NULL || rsp_plain_data == NULL) {
+        ESP_LOGE(TAG_SEC_CHAN, "Invalid NULL parameter");
+        return false;
+    }
+
+    if (rsp_sec_msg->ciphertext == NULL ||
+        rsp_sec_msg->ciphertext_len == 0 ||
+        rsp_sec_msg->iv_len != AES_CBC_IV_SIZE ||
+        rsp_sec_msg->tag_sc_len != HMAC_SHA512_SIZE) {
+        ESP_LOGE(TAG_SEC_CHAN, "Invalid secure message");
+        return false;
+    }
+
+
+
+    /*
+     * TODO:
+     * HMAC verification should be done before this function,
+     * or at the beginning of this function.
+     */
+
+    create_aes_256_obj(&aes, session->kenc);
+    read_and_update_iv_aes(&aes, rsp_sec_msg->iv);
+
+    ret = aes_cbc_decrypt_pkcs7(aes.key,
+                                aes.keybits,
+                                aes.iv,
+                                rsp_sec_msg->ciphertext,
+                                (size_t)rsp_sec_msg->ciphertext_len,
+                                &temp_buf,
+                                &temp_buf_size);
+
+    if (ret != 0) {
+        ESP_LOGE(TAG_SEC_CHAN, "AES-CBC decrypt failed: %d", ret);
+        return false;
+    }
+
+    /*
+     * Plaintext format:
+     * version      : 1 byte
+     * payload_type : 1 byte
+     * reserved     : 2 bytes
+     * payload_len  : 4 bytes
+     * payload      : variable
+     */
+    if (temp_buf_size < 8) {
+        ESP_LOGE(TAG_SEC_CHAN, "Plain data too short");
+        free(temp_buf);
+        return false;
+    }
+
+    rsp_plain_data->version = temp_buf[offset++];
+    rsp_plain_data->payload_type = temp_buf[offset++];
+
+    rsp_plain_data->reserved =
+        ((uint16_t)temp_buf[offset] << 8) |
+        ((uint16_t)temp_buf[offset + 1]);
+    offset += 2;
+
+    rsp_plain_data->payload_len =
+        ((uint32_t)temp_buf[offset] << 24) |
+        ((uint32_t)temp_buf[offset + 1] << 16) |
+        ((uint32_t)temp_buf[offset + 2] << 8) |
+        ((uint32_t)temp_buf[offset + 3]);
+    offset += 4;
+
+    if (rsp_plain_data->payload_len == 0 ||
+        offset + rsp_plain_data->payload_len > temp_buf_size) {
+        ESP_LOGE(TAG_SEC_CHAN, "Invalid payload length");
+        free(temp_buf);
+        return false;
+    }
+
+    if (rsp_plain_data->payload_type != PAYLOAD_TYPE_JSON) {
+        ESP_LOGE(TAG_SEC_CHAN, "Unexpected payload type: %u",
+                 rsp_plain_data->payload_type);
+        free(temp_buf);
+        return false;
+    }
+
+    rsp_plain_data->payload = malloc((size_t)rsp_plain_data->payload_len + 1);
+    if (rsp_plain_data->payload == NULL) {
+        ESP_LOGE(TAG_SEC_CHAN, "Failed to allocate payload");
+        free(temp_buf);
+        return false;
+    }
+
+    memcpy(rsp_plain_data->payload,
+           temp_buf + offset,
+           (size_t)rsp_plain_data->payload_len);
+
+    /*
+     * Optional null terminator for JSON string parsing.
+     */
+    rsp_plain_data->payload[rsp_plain_data->payload_len] = '\0';
+
+    free(temp_buf);
+    return true;
 }

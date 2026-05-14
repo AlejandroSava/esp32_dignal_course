@@ -14,13 +14,13 @@
 struct request_step_0{
     int step;
     const char *device_name; 
-    size_t mac_address_size;
-    uint8_t *mac_address;
+    size_t device_mac_size;
+    uint8_t *device_mac;
     size_t puf_hash_size;
     uint8_t *puf_hash;
 
     /* base 64 params*/
-    char *mac_address_b64;
+    char *device_mac_b64;
     char *puf_hash_b64;
 };
 
@@ -47,9 +47,9 @@ void app_main(void)
     struct request_step_0 *r_step_0 = malloc(sizeof(struct request_step_0 ));
     r_step_0->step = 0;
     r_step_0->device_name = "Alex_ESP32";
-    r_step_0->mac_address_size = 6;
-    r_step_0->mac_address = malloc(r_step_0->mac_address_size);
-    esp_efuse_mac_get_default(r_step_0->mac_address);
+    r_step_0->device_mac_size = 6;
+    r_step_0->device_mac = malloc(r_step_0->device_mac_size);
+    esp_efuse_mac_get_default(r_step_0->device_mac);
     r_step_0->puf_hash_size = 64;
     r_step_0->puf_hash = malloc(r_step_0->puf_hash_size);
     esp_fill_random(r_step_0->puf_hash , r_step_0->puf_hash_size);
@@ -58,14 +58,14 @@ void app_main(void)
         ESP_LOGI("Struct", "PUF_HASH(b64): %s", r_step_0->puf_hash_b64);        
     }
 
-    if (base64_encode_alloc(r_step_0->mac_address, r_step_0->mac_address_size , &r_step_0->mac_address_b64) == 0) {
-        ESP_LOGI("Struct", "MAC_ADDRESS(b64): %s", r_step_0->mac_address_b64);        
+    if (base64_encode_alloc(r_step_0->device_mac, r_step_0->device_mac_size , &r_step_0->device_mac_b64) == 0) {
+        ESP_LOGI("Struct", "MAC_ADDRESS(b64): %s", r_step_0->device_mac_b64);        
     }
 
     cJSON *root = cJSON_CreateObject();
     cJSON_AddNumberToObject(root, "Step", 0);
     cJSON_AddStringToObject(root, "Device_Name", r_step_0->device_name);     
-    cJSON_AddStringToObject(root, "Mac_Address", r_step_0->mac_address_b64);
+    cJSON_AddStringToObject(root, "Mac_Address", r_step_0->device_mac_b64);
     cJSON_AddStringToObject(root, "PUF_Hash", r_step_0->puf_hash_b64);
     
     char *json_string = cJSON_Print(root);

@@ -13,6 +13,7 @@
 #include "kem.h"
 #include "mbedtls/hkdf.h"
 #include "mbedtls/md.h"
+#include "hkdf.h"
 
 bool build_request_0(struct request_step_0 *self, const char *device_name,
                      struct puf_object *puf)
@@ -28,7 +29,7 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
         /* return false; // hardcoded for testing */
     }
 
-    if (puf->puf_hash_len == 0 || puf->puf_hash_len > PUF_HASH_LEN) {
+    if (puf->puf_hash_len == 0 || puf->puf_hash_len > PUF_512_HASH_LEN) {
         ESP_LOGE(TAG_AKE, "Invalid PUF hash length: %zu", puf->puf_hash_len);
         return false;
     }
@@ -64,7 +65,7 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
         return false;
     }
 
-    memcpy(self->puf_hash, puf->hash, self->puf_hash_size);
+    memcpy(self->puf_hash, puf->puf_hash, self->puf_hash_size);
 
     if (base64_encode_alloc(self->puf_hash,
                             self->puf_hash_size,
@@ -625,35 +626,7 @@ cleanup:
     return false;
 }
 
-bool derive_hkdf_sha512(const uint8_t *ikm, size_t ikm_len,
-                        const uint8_t *salt, size_t salt_len,
-                        const uint8_t *info, size_t info_len,
-                        uint8_t *okm, size_t okm_len)
-{
-    if (ikm == NULL || ikm_len == 0 || okm == NULL || okm_len == 0) {
-        ESP_LOGE(TAG_AKE, "Invalid HKDF input parameters");
-        return false;
-    }
 
-    const mbedtls_md_info_t *md = mbedtls_md_info_from_type(MBEDTLS_MD_SHA512);
-    if (md == NULL) {
-        ESP_LOGE(TAG_AKE, "SHA-512 not available");
-        return false;
-    }
-
-    int ret = mbedtls_hkdf(md,
-                           salt, salt_len,
-                           ikm, ikm_len,
-                           info, info_len,
-                           okm, okm_len);
-
-    if (ret != 0) {
-        ESP_LOGE(TAG_AKE, "mbedtls_hkdf failed: -0x%04X", (unsigned)(-ret));
-        return false;
-    }
-
-    return true;
-}
 
 void free_request_2(struct request_step_2 *self)
 {
@@ -722,7 +695,8 @@ bool compute_tag_d_hmac_sha512(const uint8_t *key, size_t key_len,
                                const uint8_t *nonce_d, size_t nonce_d_len,
                                const uint8_t *pk, size_t pk_len,
                                const uint8_t *ct, size_t ct_len,
-                               const char *device_name,
+                               const char *device_name, size_t device_name_len,
+                               const uint8_t *device_mac, size_t device_mac_len,
                                uint8_t *tag_d, size_t tag_d_len)
 {
     int ret;
@@ -800,9 +774,17 @@ bool compute_tag_d_hmac_sha512(const uint8_t *key, size_t key_len,
 
     ret = mbedtls_md_hmac_update(&ctx,
                                  (const unsigned char *)device_name,
-                                 strlen(device_name));
+                                 device_name_len);
     if (ret != 0) {
         ESP_LOGE(TAG_AKE, "HMAC update device_name failed: %d", ret);
+        mbedtls_md_free(&ctx);
+        return false;
+    }
+
+
+    ret = mbedtls_md_hmac_update(&ctx, device_mac, device_mac_len);
+    if (ret != 0) {
+        ESP_LOGE(TAG_AKE, "HMAC update device_mac failed: %d", ret);
         mbedtls_md_free(&ctx);
         return false;
     }
@@ -821,6 +803,7 @@ bool compute_tag_d_hmac_sha512(const uint8_t *key, size_t key_len,
 bool build_request_2(struct request_step_2 *self,
                      const struct response_step_1 *res_step_1,
                      const struct kyber_object_node *kyber_obj,
+                     struct master_key *master_key,
                      struct ake_key *key_sess,
                      struct ake_key *key_auth,
                      const struct puf_object *puf_obj,
@@ -888,6 +871,23 @@ bool build_request_2(struct request_step_2 *self,
         ESP_LOGE(TAG_AKE, "Malloc failed for tag_d");
         goto cleanup;
     }
+    /* --------------- DERIVATE THE KEYS ----------------*/
+    ESP_LOGW(TAG_AKE, "DERIVATION OF THE KEYS");
+    if (!get_context_master_key(master_key,
+                 self->sid_len, self->sid,
+                 res_step_1->nonce_s_len, res_step_1->nonce_s,
+                 self->nonce_d_len, self->nonce_d)){
+            ESP_LOGE(TAG_AKE, "Failed to get context");
+            goto cleanup;
+        }
+
+    if (!derive_master_key(master_key,
+                      puf_obj->puf_hash, puf_obj->puf_hash_len,
+                      kyber_obj->ss, kyber_obj->ss_len)){
+            ESP_LOGE(TAG_AKE, "Failed to derive master key");
+            goto cleanup;
+        }
+    
 
     /* Derive Ksess = HKDF(ss, nonce_s, "Ksess") */
     key_sess->key_size = KEY_SIZE;
@@ -897,13 +897,13 @@ bool build_request_2(struct request_step_2 *self,
         goto cleanup;
     }
 
-    key_sess->key_info = "Ksess";
+    key_sess->key_info = "AKE Ksess";
     key_sess->key_info_len = strlen(key_sess->key_info);
 
-    if (!derive_hkdf_sha512(kyber_obj->ss,
-                            kyber_obj->ss_len,
-                            res_step_1->nonce_s,
-                            res_step_1->nonce_s_len,
+    if (!derive_hkdf_sha512(master_key->key,
+                            master_key->key_len,
+                            master_key->context,
+                            master_key->context_len,
                             (const uint8_t *)key_sess->key_info,
                             key_sess->key_info_len,
                             key_sess->key,
@@ -921,13 +921,13 @@ bool build_request_2(struct request_step_2 *self,
         goto cleanup;
     }
 
-    key_auth->key_info = "Kauth";
+    key_auth->key_info = "AKE Kauth";
     key_auth->key_info_len = strlen(key_auth->key_info);
 
-    if (!derive_hkdf_sha512(puf_obj->hash,
-                            puf_obj->puf_hash_len,
-                            res_step_1->nonce_s,
-                            res_step_1->nonce_s_len,
+    if (!derive_hkdf_sha512(master_key->key,
+                            master_key->key_len,
+                            master_key->context,
+                            master_key->context_len,
                             (const uint8_t *)key_auth->key_info,
                             key_auth->key_info_len,
                             key_auth->key,
@@ -936,6 +936,15 @@ bool build_request_2(struct request_step_2 *self,
         goto cleanup;
     }
     key_auth->ready = true;
+
+    /* --------------- END DERIVATE THE KEYS ----------------*/
+
+    // add a new object called device_info
+    size_t device_mac_len = 6;
+    uint8_t *device_mac;
+
+    device_mac = malloc(device_mac_len);
+    esp_efuse_mac_get_default(device_mac);
 
     /* Compute TagD = HMAC-SHA512(Kauth, SID || nonce_s || nonce_d || PK || CT || device_name) */
     if (!compute_tag_d_hmac_sha512(key_auth->key,
@@ -951,6 +960,9 @@ bool build_request_2(struct request_step_2 *self,
                                    self->ct_kyber,
                                    self->ct_kyber_len,
                                    device_name,
+                                   strlen(device_name),
+                                   device_mac,
+                                   device_mac_len,
                                    self->tag_d,
                                    self->tag_d_len)) {
     ESP_LOGE(TAG_AKE, "Failed to compute TagD");
@@ -984,6 +996,7 @@ bool build_request_2(struct request_step_2 *self,
 
 cleanup:
     free_request_2(self);
+    free_master_key(master_key);
     free_ake_key(key_sess);
     free_ake_key(key_auth);
     return false;
@@ -1280,13 +1293,6 @@ bool get_context_master_key(struct master_key *self,
     if (self == NULL || sid == NULL || nonce_s == NULL || nonce_d == NULL)
         return false;
 
-    // Free previous context if exists (avoid memory leak)
-    if (self->context != NULL) {
-        free(self->context);
-        self->context = NULL;
-        self->context_len = 0;
-    }
-
     self->context_len = sid_len + nonce_s_len + nonce_d_len;
 
     self->context = malloc(self->context_len);
@@ -1303,7 +1309,7 @@ bool get_context_master_key(struct master_key *self,
 
     memcpy(self->context + offset, nonce_d, nonce_d_len);
     offset += nonce_d_len;
-
+    ESP_LOGW(TAG_AKE, "GET CONTEXT");
     return true;
 }
 
@@ -1314,7 +1320,7 @@ bool derive_master_key(struct master_key *self,
     uint8_t *temp_buf = NULL;
     size_t temp_buf_size = 0;
     size_t offset = 0;
-    const uint8_t *key_info = (const uint8_t *)"AKE KEY MASTER";
+    const uint8_t *key_info = (const uint8_t *)"AKE Kmaster";
     size_t key_info_len = strlen((const char *)key_info);
     bool ret = false;
 
@@ -1346,12 +1352,6 @@ bool derive_master_key(struct master_key *self,
         goto cleanup;
     }
 
-    if (self->key != NULL) {
-        free(self->key);
-        self->key = NULL;
-        self->key_len = 0;
-    }
-
     self->key_len = KEY_SIZE; /* 32 bytes = 256 bits */
     self->key = malloc(self->key_len);
     if (self->key == NULL) {
@@ -1368,10 +1368,33 @@ bool derive_master_key(struct master_key *self,
         self->key_len = 0;
         goto cleanup;
     }
-
+    ESP_LOGW(TAG_AKE, "DERIVE MASTER KEY");
     ret = true;
 
 cleanup:
     free(temp_buf);
     return ret;
+}
+
+// add a function to free the master key
+
+void free_master_key(struct master_key *self)
+{
+    if (self == NULL) {
+        return;
+    }
+
+    if (self->key != NULL) {
+        // Optional: wipe sensitive data before freeing
+        memset(self->key, 0, self->key_len);
+        free(self->key);
+        self->key = NULL;
+        self->key_len = 0;
+    }
+
+    if (self->context != NULL) {
+        free(self->context);
+        self->context = NULL;
+        self->context_len = 0;
+    }
 }

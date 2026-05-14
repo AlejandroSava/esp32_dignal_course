@@ -16,6 +16,7 @@ void create_aes_256_obj(struct aes_256_obj *self, uint8_t *key){
     uint8_t iv[IV_AES];
     esp_fill_random(iv, IV_AES);
     memcpy(self->iv, iv, IV_AES);
+    self->key_len = AES_256;
 
     self->keybits = 256;
 }
