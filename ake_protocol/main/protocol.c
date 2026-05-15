@@ -258,7 +258,7 @@ void app_main(void)
 
     
     ESP_LOGI(TAG_PROT, "-----  PROTOCOL TRANSACTIONS -----");    
-    const char *http_post = "http://192.168.1.236:5000/example"; 
+    const char *http_post = "http://192.168.1.236:5000/example"; // RoT
     char *device_name = "ESP_32_ALEX_SV";
     struct device_info *device_info = malloc(sizeof(struct device_info));
     get_device_info(device_info, device_name, puf_obj);
@@ -291,7 +291,7 @@ void app_main(void)
    }
     ESP_LOGI(TAG_AKE, "------------- SECURE CHANNEL -------------");
 // TODO: MOVE THIS PART TO A FUNCTION
-    for(int i = 0; i <1; i++){
+    for(int i = 0; i <100; i++){
         struct secure_plain_data *plain_data= malloc(sizeof(struct secure_plain_data));
         struct secure_message *secure_chan_message = malloc(sizeof(struct secure_message));
         struct secure_message *rsp_sec_channel_mesg = malloc(sizeof(struct secure_message));
