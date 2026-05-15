@@ -33,6 +33,6 @@ bool derive_hkdf_sha512(const uint8_t *ikm, size_t ikm_len,
         return false;
     }
 
-    ESP_LOGI(TAG_HKDF, "SUCESS HMAC Derivation");
+    ESP_LOGI(TAG_HKDF, "SUCESS HKDF Derivation");
     return true;
 }

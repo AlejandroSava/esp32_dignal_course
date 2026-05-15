@@ -15,31 +15,100 @@
 #include "mbedtls/md.h"
 #include "hkdf.h"
 
-bool build_request_0(struct request_step_0 *self, const char *device_name,
-                     struct puf_object *puf)
+bool get_device_info(struct device_info *self,
+                     const char *device_name,
+                     struct puf_object *puf_obj)
 {
-    if (self == NULL || puf == NULL || device_name == NULL) {
+    if (self == NULL || device_name == NULL || puf_obj == NULL) {
+        ESP_LOGE(TAG_AKE, "Invalid input parameters");
+        return false;
+    }
+
+    self->device_name_size = strlen(device_name);
+
+    self->device_name = malloc(self->device_name_size + 1);
+    if (self->device_name == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for device name");
+        return false;
+    }
+
+    strcpy(self->device_name, device_name);
+
+    self->device_mac_size = 6;
+    self->device_mac = malloc(self->device_mac_size);
+    if (self->device_mac == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for device MAC");
+        return false;
+    }
+
+    if (esp_efuse_mac_get_default(self->device_mac) != ESP_OK) {
+        ESP_LOGE(TAG_AKE, "Error getting MAC address from eFuse");
+        free(self->device_mac);
+        self->device_mac = NULL;
+        self->device_mac_size = 0;
+        return false;
+    }
+
+    self->puf_hash_len = PUF_512_HASH_LEN;
+    self->puf_hash = malloc(self->puf_hash_len);
+    if (self->puf_hash == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for PUF hash");
+        free(self->device_mac);
+        self->device_mac = NULL;
+        self->device_mac_size = 0;
+        return false;
+    }
+
+    memcpy(self->puf_hash, puf_obj->puf_hash, self->puf_hash_len);
+
+    return true;
+}
+
+void free_device_info(struct device_info *self)
+{
+    if (self == NULL) {
+        return;
+    }
+
+    if (self->device_name != NULL) {
+        free(self->device_name);
+        self->device_name = NULL;
+    }
+    self->device_name_size = 0;
+
+    if (self->device_mac != NULL) {
+        free(self->device_mac);
+        self->device_mac = NULL;
+    }
+    self->device_mac_size = 0;
+
+    if (self->puf_hash != NULL) {
+        free(self->puf_hash);
+        self->puf_hash = NULL;
+    }
+    self->puf_hash_len = 0;
+}
+
+bool build_request_0(struct request_step_0 *self, struct device_info *device_info)
+{
+    if (self == NULL || device_info == NULL) {
         ESP_LOGE(TAG_AKE, "Invalid input parameter");
         return false;
     }
 
-    if (!puf->init) {
-        ESP_LOGI(TAG_AKE, "PUF object is not initialized");
-        ESP_LOGI(TAG_AKE, "PUF HARDCODED... Debug testing");
-        /* return false; // hardcoded for testing */
-    }
-
-    if (puf->puf_hash_len == 0 || puf->puf_hash_len > PUF_512_HASH_LEN) {
-        ESP_LOGE(TAG_AKE, "Invalid PUF hash length: %zu", puf->puf_hash_len);
+    if (device_info->puf_hash_len == 0 || device_info->puf_hash_len > PUF_512_HASH_LEN) {
+        ESP_LOGE(TAG_AKE, "Invalid PUF hash length: %zu", device_info->puf_hash_len);
         return false;
     }
 
     self->step = 0;
-    self->device_name = device_name;
+    self->device_name = malloc(device_info->device_name_size + 1);
+    strcpy(self->device_name, device_info->device_name);
 
-    self->device_mac_size = 6;
+
+    self->device_mac_size = device_info->device_mac_size;
     self->device_mac = NULL;
-    self->puf_hash_size = 0;
+    self->puf_hash_size = device_info->puf_hash_len;
     self->puf_hash = NULL;
     self->device_mac_b64 = NULL;
     self->puf_hash_b64 = NULL;
@@ -50,12 +119,8 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
         return false;
     }
 
-    if (esp_efuse_mac_get_default(self->device_mac) != ESP_OK) {
-        ESP_LOGE(TAG_AKE, "Error getting mac address from fuses");
-        return false;
-    }
+    memcpy(self->device_mac, device_info->device_mac, device_info->device_mac_size);
 
-    self->puf_hash_size = puf->puf_hash_len;
     self->puf_hash = malloc(self->puf_hash_size);
     if (self->puf_hash == NULL) {
         ESP_LOGE(TAG_AKE, "malloc failed for puf_hash");
@@ -65,7 +130,7 @@ bool build_request_0(struct request_step_0 *self, const char *device_name,
         return false;
     }
 
-    memcpy(self->puf_hash, puf->puf_hash, self->puf_hash_size);
+    memcpy(self->puf_hash, device_info->puf_hash, self->puf_hash_size);
 
     if (base64_encode_alloc(self->puf_hash,
                             self->puf_hash_size,
@@ -102,6 +167,10 @@ void free_request_step_0(struct request_step_0 *self)
 {
     if (self == NULL) {
         return;
+    }
+    if (self->device_name != NULL) {
+        free(self->device_name);
+        self->device_name = NULL;
     }
 
     if (self->device_mac != NULL)
@@ -288,25 +357,27 @@ void free_response_step_0(struct response_step_0 *self)
     self->step = 0;
 }
 
-bool build_request_1(struct request_step_1 *self, const char *device_name)
+bool build_request_1(struct request_step_1 *self, struct device_info *device_info)
 {
-    if (self == NULL || device_name == NULL) {
+    if (self == NULL || device_info == NULL) {
         ESP_LOGE(TAG_AKE, "Invalid input parameter");
         return false;
     }
     self->step = 1;
-    self->device_name = device_name;
-    self->device_mac_size = 6;
+    self->device_name = malloc(device_info->device_name_size + 1);
+    strcpy(self->device_name, device_info->device_name);
+
+
+    self->device_mac_size = device_info->device_mac_size;
 
     self->device_mac = malloc(self->device_mac_size);
     if (self->device_mac == NULL) {
         ESP_LOGE(TAG_AKE, "Malloc failed for mac_address");
         return false;
     }
-    if (esp_efuse_mac_get_default(self->device_mac) != ESP_OK) {
-        ESP_LOGE(TAG_AKE, "Error getting mac address from fuses");
-        return false;
-    }
+    memcpy(self->device_mac, device_info->device_mac, self->device_mac_size);
+
+
     if (base64_encode_alloc(self->device_mac,
                             self->device_mac_size,
                             &self->device_mac_b64) != 0) {
@@ -326,7 +397,10 @@ void free_request_step_1(struct request_step_1 *self)
     if (self == NULL) {
         return;
     }
-
+    if (self->device_name != NULL) {
+        free(self->device_name);
+        self->device_name = NULL;
+    }
     if (self->device_mac != NULL)
         free(self->device_mac);
     if (self->device_mac_b64 != NULL)
@@ -804,14 +878,13 @@ bool build_request_2(struct request_step_2 *self,
                      const struct response_step_1 *res_step_1,
                      const struct kyber_object_node *kyber_obj,
                      struct master_key *master_key,
-                     struct ake_key *key_sess,
                      struct ake_key *key_auth,
-                     const struct puf_object *puf_obj,
-                     const char *device_name)
+                     struct ake_key *key_sess,
+                     struct ake_key *key_hmac_sec_cha,                     
+                     struct device_info *device_info)
 {
     if (self == NULL || res_step_1 == NULL || kyber_obj == NULL ||
-        key_sess == NULL || key_auth == NULL || puf_obj == NULL ||
-        device_name == NULL) {
+        key_sess == NULL || key_auth == NULL || device_info == NULL) {
         ESP_LOGE(TAG_AKE, "Invalid input parameter");
         return false;
     }
@@ -829,12 +902,11 @@ bool build_request_2(struct request_step_2 *self,
         return false;
     }
 
-    if (puf_obj->puf_hash_len == 0) {
+    if (device_info->puf_hash_len == 0) {
         ESP_LOGE(TAG_AKE, "Invalid PUF object content");
         return false;
     }
 
-    memset(self, 0, sizeof(*self));
     self->step = 2;
 
     /* Copy SID */
@@ -882,7 +954,7 @@ bool build_request_2(struct request_step_2 *self,
         }
 
     if (!derive_master_key(master_key,
-                      puf_obj->puf_hash, puf_obj->puf_hash_len,
+                      device_info->puf_hash, device_info->puf_hash_len,
                       kyber_obj->ss, kyber_obj->ss_len)){
             ESP_LOGE(TAG_AKE, "Failed to derive master key");
             goto cleanup;
@@ -913,6 +985,31 @@ bool build_request_2(struct request_step_2 *self,
     }
     key_sess->ready = true;
 
+    /* Derive  key_hmac_sec_cha*/
+    key_hmac_sec_cha->key_size = KEY_SIZE;
+    key_hmac_sec_cha->key = malloc(key_hmac_sec_cha->key_size);
+    if (key_hmac_sec_cha->key == NULL) {
+        ESP_LOGE(TAG_AKE, "Malloc failed for key_hmac_sec_cha");
+        goto cleanup;
+    }
+
+    key_hmac_sec_cha->key_info = "HMAC Sec Cha";
+    key_hmac_sec_cha->key_info_len = strlen(key_hmac_sec_cha->key_info);
+
+    if (!derive_hkdf_sha512(master_key->key,
+                            master_key->key_len,
+                            master_key->context,
+                            master_key->context_len,
+                            (const uint8_t *)key_hmac_sec_cha->key_info,
+                            key_hmac_sec_cha->key_info_len,
+                            key_hmac_sec_cha->key,
+                            key_hmac_sec_cha->key_size)) {
+        ESP_LOGE(TAG_AKE, "Failed to derive KeyHmac");
+        goto cleanup;
+    }
+    key_hmac_sec_cha->ready = true;
+    
+
     /* Derive Kauth = HKDF(puf_hash, nonce_s, "Kauth") */
     key_auth->key_size = KEY_SIZE;
     key_auth->key = malloc(key_auth->key_size);
@@ -939,13 +1036,7 @@ bool build_request_2(struct request_step_2 *self,
 
     /* --------------- END DERIVATE THE KEYS ----------------*/
 
-    // add a new object called device_info
-    size_t device_mac_len = 6;
-    uint8_t *device_mac;
-
-    device_mac = malloc(device_mac_len);
-    esp_efuse_mac_get_default(device_mac);
-
+ 
     /* Compute TagD = HMAC-SHA512(Kauth, SID || nonce_s || nonce_d || PK || CT || device_name) */
     if (!compute_tag_d_hmac_sha512(key_auth->key,
                                    key_auth->key_size,
@@ -959,10 +1050,10 @@ bool build_request_2(struct request_step_2 *self,
                                    kyber_obj->pk_len,
                                    self->ct_kyber,
                                    self->ct_kyber_len,
-                                   device_name,
-                                   strlen(device_name),
-                                   device_mac,
-                                   device_mac_len,
+                                   device_info->device_name,
+                                   device_info->device_name_size,
+                                   device_info->device_mac,
+                                   device_info->device_mac_size,
                                    self->tag_d,
                                    self->tag_d_len)) {
     ESP_LOGE(TAG_AKE, "Failed to compute TagD");

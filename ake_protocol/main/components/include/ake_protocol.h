@@ -11,9 +11,19 @@
 #define KEY_SIZE 32 //bytes
 #define NONCE_SIZE 32 //bytes
 
+struct device_info{
+    char *device_name;
+    size_t device_name_size;
+    uint8_t *device_mac;
+    size_t device_mac_size;
+    size_t puf_hash_len;
+    uint8_t *puf_hash;    
+};
+
+
 struct request_step_0{
     int step;
-    const char *device_name; 
+    char *device_name; 
     size_t device_mac_size;
     uint8_t *device_mac;
     size_t puf_hash_size;
@@ -34,7 +44,7 @@ struct response_step_0{
 
 struct request_step_1{
     int step;
-    const char *device_name;
+    char *device_name;
     size_t device_mac_size; 
     uint8_t *device_mac;
 
@@ -105,14 +115,18 @@ struct master_key{
 
 };
 
-bool build_request_0(struct request_step_0 *self, const char *device_name, struct puf_object *puf);
+bool get_device_info(struct device_info *self,
+                     const char *device_name,
+                     struct puf_object *puf_obj); 
+void free_device_info(struct device_info *self);
+bool build_request_0(struct request_step_0 *self, struct device_info *device_info);
 void free_request_step_0(struct request_step_0 *self);
 bool send_http_request_0(struct request_step_0 *self, char **json_response_output,
                          size_t *response_length, const char *http_address);
 bool get_response_0(struct response_step_0 *self, char *json_response_output);
 void free_response_step_0(struct response_step_0 *self);
 
-bool build_request_1(struct request_step_1 *self, const char *device_name);
+bool build_request_1(struct request_step_1 *self, struct device_info *device_info);
 void free_request_step_1(struct request_step_1 *self);
 bool send_http_request_1(struct request_step_1 *self, char **json_response_output,
                          size_t *json_response_length, const char *http_address);
@@ -127,10 +141,11 @@ bool build_request_2(struct request_step_2 *self,
                      const struct response_step_1 *res_step_1,
                      const struct kyber_object_node *kyber_obj,
                      struct master_key *master_key,
-                     struct ake_key *key_sess,
                      struct ake_key *key_auth,
-                     const struct puf_object *puf_obj,
-                     const char *device_name);
+                     struct ake_key *key_sess,
+                     struct ake_key *key_hmac_sec_cha,                     
+                     struct device_info *device_info);
+
 void free_request_2(struct request_step_2 *self);
 void free_ake_key(struct ake_key *key);
 bool send_http_request_2(struct request_step_2 *self,
