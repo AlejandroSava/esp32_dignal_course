@@ -62,6 +62,7 @@ void free_secure_channel_session(struct secure_session *self)
 
     memset(self->kenc, 0, KEY_SEC_CHAN_SIZE);
     memset(self->kmac, 0, KEY_SEC_CHAN_SIZE);
+    free(self);
     ESP_LOGI(TAG_SEC_CHAN, "SECURE CHANNEL SESSION IS FREE");
 }
 
@@ -115,9 +116,9 @@ void free_secure_plain_data(struct secure_plain_data *self)
     self->payload_type = 0;
     self->version = 0;
     self->reserved = 0;
-    ESP_LOGI(TAG_SEC_CHAN, "SECURE PLAIN DATA IS FREE");
-}
 
+    free(self);
+}
 
 bool hmac_update_u32_be(mbedtls_md_context_t *ctx, uint32_t value)
 {
@@ -357,6 +358,7 @@ cleanup:
     if (!status) {
         free_secure_message(self);
     }
+    free(aes);
 
     return status;
 }
@@ -386,6 +388,7 @@ void free_secure_message(struct secure_message *self)
 
     memset(self->iv, 0, AES_CBC_IV_SIZE);
     memset(self->tag_sc, 0, HMAC_SHA512_SIZE);
+    free(self);
     ESP_LOGI(TAG_SEC_CHAN, "SECURE MESSAGE IS FREE");
 }
 
@@ -694,7 +697,7 @@ bool get_response_plain_data_json(const struct secure_message *rsp_sec_msg,
     uint8_t *temp_buf = NULL;
     size_t temp_buf_size = 0;
     size_t offset = 0;
-    struct aes_256_obj aes;
+    struct aes_256_obj *aes = malloc(sizeof(struct aes_256_obj));
 
     if (rsp_sec_msg == NULL || session == NULL || rsp_plain_data == NULL) {
         ESP_LOGE(TAG_SEC_CHAN, "Invalid NULL parameter");
@@ -717,12 +720,12 @@ bool get_response_plain_data_json(const struct secure_message *rsp_sec_msg,
      * or at the beginning of this function.
      */
 
-    create_aes_256_obj(&aes, session->kenc);
-    read_and_update_iv_aes(&aes, rsp_sec_msg->iv);
+    create_aes_256_obj(aes, session->kenc);
+    read_and_update_iv_aes(aes, rsp_sec_msg->iv);
 
-    ret = aes_cbc_decrypt_pkcs7(aes.key,
-                                aes.keybits,
-                                aes.iv,
+    ret = aes_cbc_decrypt_pkcs7(aes->key,
+                                aes->keybits,
+                                aes->iv,
                                 rsp_sec_msg->ciphertext,
                                 (size_t)rsp_sec_msg->ciphertext_len,
                                 &temp_buf,
@@ -793,5 +796,6 @@ bool get_response_plain_data_json(const struct secure_message *rsp_sec_msg,
     rsp_plain_data->payload[rsp_plain_data->payload_len] = '\0';
 
     free(temp_buf);
+    free(aes);
     return true;
 }

@@ -2,7 +2,6 @@
 #define API_SECURE_STORAGE
 
 #include "aes_cbc.h"
-#include "aes_cbc.h"
 #include "hmac_sha512.h"
 #include "pkcs_7.h"
 #include "secure_storage_nvs.h"

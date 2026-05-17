@@ -87,6 +87,7 @@ void free_device_info(struct device_info *self)
         self->puf_hash = NULL;
     }
     self->puf_hash_len = 0;
+    free(self);
 }
 
 bool build_request_0(struct request_step_0 *self, struct device_info *device_info)
@@ -355,6 +356,7 @@ void free_response_step_0(struct response_step_0 *self)
 
     self->kyber_pk_len = 0;
     self->step = 0;
+    free(self);
 }
 
 bool build_request_1(struct request_step_1 *self, struct device_info *device_info)
@@ -599,6 +601,7 @@ void free_response_step_1(struct response_step_1 *self)
     self->step = 0;
     self->sid_len = 0;
     self->nonce_s_len = 0;
+    free(self);
 }
 
 void free_kyber_object_node(struct kyber_object_node *self)
@@ -625,6 +628,7 @@ void free_kyber_object_node(struct kyber_object_node *self)
     self->pk_len = 0;
     self->ct_len = 0;
     self->ss_len = 0;
+    free(self);
 }
 
 bool get_kyber_object_node(struct kyber_object_node *self,
@@ -745,6 +749,7 @@ void free_request_2(struct request_step_2 *self)
     self->tag_d_b64 = NULL;
 
     self->step = 0;
+    free(self);
 }
 
 
@@ -761,6 +766,7 @@ void free_ake_key(struct ake_key *key)
     key->ready = false;
     key->key_info = NULL;
     key->key_info_len = 0;
+    free(key);
 }
 
 bool compute_tag_d_hmac_sha512(const uint8_t *key, size_t key_len,
@@ -1183,6 +1189,7 @@ void free_response_step_2(struct response_step_2 *self)
     self->step = 0;
     self->sid_len = 0;
     self->tag_s_len = 0;
+    free(self);
 }
 
 bool get_response_2(struct response_step_2 *self, char *json_response_output)

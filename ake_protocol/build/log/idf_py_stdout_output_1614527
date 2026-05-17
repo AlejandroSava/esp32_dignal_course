@@ -1,0 +1,771 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.elf /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+ets Jun  8 2016 00:22:57
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (28) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time May 17 2026 12:32:08[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (31) boot: chip revision: v1.0[0m
+[0;32mI (34) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (38) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (41) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (45) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (52) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (58) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (65) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (78) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (88) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=21b44h (138052) map[0m
+[0;32mI (144) esp_image: segment 1: paddr=000b1b6c vaddr=3ffb0000 size=04328h ( 17192) load[0m
+[0;32mI (151) esp_image: segment 2: paddr=000b5e9c vaddr=40080000 size=0a17ch ( 41340) load[0m
+[0;32mI (168) esp_image: segment 3: paddr=000c0020 vaddr=400d0020 size=a9f1ch (696092) map[0m
+[0;32mI (414) esp_image: segment 4: paddr=00169f44 vaddr=4008a17c size=0f2a0h ( 62112) load[0m
+[0;32mI (439) esp_image: segment 5: paddr=001791ec vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (440) esp_image: segment 6: paddr=0017922c vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (456) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (457) boot: Disabling RNG early entropy source...[0m
+[0;32mI (467) cpu_start: Multicore app[0m
+[0;32mI (476) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (476) cpu_start: Pro cpu start user code[0m
+[0;32mI (476) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (478) app_init: Application information:[0m
+[0;32mI (482) app_init: Project name:     ake_protocol[0m
+[0;32mI (486) app_init: App version:      196c6f5a-dirty[0m
+[0;32mI (491) app_init: Compile time:     May 17 2026 12:32:00[0m
+[0;32mI (496) app_init: ELF file SHA256:  988f8c5ec...[0m
+[0;32mI (500) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (505) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (509) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (513) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (517) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (524) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (528) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (534) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (539) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (545) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;32mI (551) spi_flash: detected chip: generic[0m
+[0;32mI (554) spi_flash: flash io: dio[0m
+[0;32mI (558) main_task: Started on CPU0[0m
+[0;32mI (568) main_task: Calling app_main()[0m
+[0;33mW (568) [Protocol Transactions]: ----- STARTING THE DRIVERS ------[0m
+[0;32mI (568) [Protocol Transactions]: ----- Initialize the NVS ------[0m
+[0;32mI (628) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (628) [Protocol Transactions]: ----- Starting WiFi Driver -----[0m
+[0;32mI (638) wifi:wifi driver task: 3ffcb04c, prio:23, stack:6656, core=0[0m
+[0;32mI (698) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (698) wifi:wifi certification version: v7.0[0m
+[0;32mI (698) wifi:config NVS flash: enabled[0m
+[0;32mI (698) wifi:config nano formatting: disabled[0m
+[0;32mI (698) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (708) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (708) wifi:Init management short buffer num: 32[0m
+[0;32mI (718) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (718) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (728) wifi:Init static rx buffer num: 10[0m
+[0;32mI (728) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (728) wifi_init: rx ba win: 6[0m
+[0;32mI (738) wifi_init: accept mbox: 6[0m
+[0;32mI (738) wifi_init: tcpip mbox: 32[0m
+[0;32mI (738) wifi_init: udp mbox: 6[0m
+[0;32mI (738) wifi_init: tcp mbox: 6[0m
+[0;32mI (748) wifi_init: tcp tx win: 5760[0m
+[0;32mI (748) wifi_init: tcp rx win: 5760[0m
+[0;32mI (748) wifi_init: tcp mss: 1440[0m
+[0;32mI (758) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (758) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (768) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (5588) esp_netif_handlers: sta ip: 192.168.1.64, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (5588) [WIFI]: Got IP: 192.168.1.64[0m
+[0;32mI (5588) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+PUF INIT
+[1;31mE (5658) [SECURE STORAGE REGION]: CANNOT RETRIEVE THE PUF!!![0m
+[1;31mE (5658) [SECURE STORAGE REGION]: RESTAR THE SYSTEM!!![0m
+ets Jun  8 2016 00:22:57
+
+rst:0x5 (DEEPSLEEP_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time May 17 2026 12:32:08[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v1.0[0m
+[0;32mI (35) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (39) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (46) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (53) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (66) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (79) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (89) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=21b44h (138052) map[0m
+[0;32mI (145) esp_image: segment 1: paddr=000b1b6c vaddr=3ffb0000 size=04328h ( 17192) load[0m
+[0;32mI (152) esp_image: segment 2: paddr=000b5e9c vaddr=40080000 size=0a17ch ( 41340) load[0m
+[0;32mI (169) esp_image: segment 3: paddr=000c0020 vaddr=400d0020 size=a9f1ch (696092) map[0m
+[0;32mI (415) esp_image: segment 4: paddr=00169f44 vaddr=4008a17c size=0f2a0h ( 62112) load[0m
+[0;32mI (440) esp_image: segment 5: paddr=001791ec vaddr=400c0000 size=00038h (    56) [0m
+[0;32mI (441) esp_image: segment 6: paddr=0017922c vaddr=50000000 size=000a8h (   168) [0m
+[0;32mI (457) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (457) boot: Disabling RNG early entropy source...[0m
+[0;32mI (468) cpu_start: Multicore app[0m
+[0;32mI (476) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (476) cpu_start: Pro cpu start user code[0m
+[0;32mI (476) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (478) app_init: Application information:[0m
+[0;32mI (482) app_init: Project name:     ake_protocol[0m
+[0;32mI (486) app_init: App version:      196c6f5a-dirty[0m
+[0;32mI (491) app_init: Compile time:     May 17 2026 12:32:00[0m
+[0;32mI (496) app_init: ELF file SHA256:  988f8c5ec...[0m
+[0;32mI (500) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (506) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (509) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (513) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (518) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (524) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (529) heap_init: At 3FFB9A40 len 000265C0 (153 KiB): DRAM[0m
+[0;32mI (534) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (539) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (545) heap_init: At 4009941C len 00006BE4 (26 KiB): IRAM[0m
+[0;32mI (552) spi_flash: detected chip: generic[0m
+[0;32mI (554) spi_flash: flash io: dio[0m
+[0;32mI (558) main_task: Started on CPU0[0m
+[0;32mI (568) main_task: Calling app_main()[0m
+[0;33mW (568) [Protocol Transactions]: ----- STARTING THE DRIVERS ------[0m
+[0;32mI (568) [Protocol Transactions]: ----- Initialize the NVS ------[0m
+[0;32mI (628) NVS_INIT: Starting NVS INIT[0m
+[0;32mI (628) [Protocol Transactions]: ----- Starting WiFi Driver -----[0m
+[0;32mI (638) wifi:wifi driver task: 3ffcb04c, prio:23, stack:6656, core=0[0m
+[0;32mI (698) wifi:wifi firmware version: 5984c42[0m
+[0;32mI (698) wifi:wifi certification version: v7.0[0m
+[0;32mI (698) wifi:config NVS flash: enabled[0m
+[0;32mI (698) wifi:config nano formatting: disabled[0m
+[0;32mI (698) wifi:Init data frame dynamic rx buffer num: 32[0m
+[0;32mI (708) wifi:Init static rx mgmt buffer num: 5[0m
+[0;32mI (708) wifi:Init management short buffer num: 32[0m
+[0;32mI (718) wifi:Init dynamic tx buffer num: 32[0m
+[0;32mI (718) wifi:Init static rx buffer size: 1600[0m
+[0;32mI (728) wifi:Init static rx buffer num: 10[0m
+[0;32mI (728) wifi:Init dynamic rx buffer num: 32[0m
+[0;32mI (728) wifi_init: rx ba win: 6[0m
+[0;32mI (738) wifi_init: accept mbox: 6[0m
+[0;32mI (738) wifi_init: tcpip mbox: 32[0m
+[0;32mI (738) wifi_init: udp mbox: 6[0m
+[0;32mI (738) wifi_init: tcp mbox: 6[0m
+[0;32mI (748) wifi_init: tcp tx win: 5760[0m
+[0;32mI (748) wifi_init: tcp rx win: 5760[0m
+[0;32mI (748) wifi_init: tcp mss: 1440[0m
+[0;32mI (758) wifi_init: WiFi IRAM OP enabled[0m
+[0;32mI (758) wifi_init: WiFi RX IRAM OP enabled[0m
+[0;32mI (768) phy_init: phy_version 4860,6b7a6e5,Feb  6 2025,14:47:07[0m
+[0;32mI (788) wifi:mode : sta (24:62:ab:dc:33:28)[0m
+[0;32mI (788) wifi:enable tsf[0m
+[0;32mI (788) [WIFI]: wifi_init_sta finished. Waiting for connection...[0m
+[0;32mI (788) [WIFI]: Wi-Fi started, connecting...[0m
+[0;32mI (868) wifi:new:<1,0>, old:<1,0>, ap:<255,255>, sta:<1,0>, prof:1, snd_ch_cfg:0x0[0m
+[0;32mI (868) wifi:state: init -> auth (0xb0)[0m
+[0;32mI (878) wifi:state: auth -> assoc (0x0)[0m
+[0;32mI (888) wifi:state: assoc -> run (0x10)[0m
+[0;32mI (908) wifi:<ba-add>idx:0 (ifx:0, f4:9e:ef:af:c7:7d), tid:0, ssn:0, winSize:64[0m
+[0;32mI (928) wifi:connected with INFINITUM2.0_2.4, aid = 4, channel 1, BW20, bssid = f4:9e:ef:af:c7:7d[0m
+[0;32mI (928) wifi:security: WPA2-PSK, phy: bgn, rssi: -34[0m
+[0;32mI (938) wifi:pm start, type: 1[0m
+
+[0;32mI (938) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us[0m
+[0;32mI (968) wifi:AP's beacon interval = 102400 us, DTIM period = 1[0m
+[0;32mI (9488) esp_netif_handlers: sta ip: 192.168.1.64, mask: 255.255.255.0, gw: 192.168.1.254[0m
+[0;32mI (9488) [WIFI]: Got IP: 192.168.1.64[0m
+[0;32mI (9488) [WIFI]: Connected to AP: INFINITUM2.0_2.4[0m
+PUF INIT
+2D AA DE 78 CB 78 FB 17 88 6C E6 9C 08 78 A2 DE 11 51 10 68 F4 FC BE 8B 74 05 EE 72 FC 31 87 EC 08 F2 1C 55 88 85 C6 59 51 3C 3A AA 6B 5B F4 AD 41 5D 24 97 EF 1B 99 11 82 0D B9 BE DA 9B 1A D8 61 75 D4 93 8F 90 9D 2D E8 89 A3 77 6E 0C EF E9 D1 80 19 B8 D8 4F F8 53 A8 69 86 6C ED 76 59 1F 42 9B F5 84 10 32 D8 C7 2D 43 47 AC 2B 50 AD 40 D8 E1 12 3B E5 24 8B DA 55 10 2B 7A 85 95 A8 61 CB F3 15 4F 23 12 BA 12 27 3B 46 6A A4 C2 23 22 0F 23 D2 59 6E BB DE 3E FF 75 12 C9 45 F8 C9 4D B2 6F 2F F5 D0 65 38 85 CF 01 C1 DB 08 A9 2C 8A F6 9A 52 64 09 71 25 78 8C D6 54 CF 2E FA B5 ED F2 8F 5E 50 C6 CB 7D 53 29 90 BC 54 3D ED 5C CF 23 37 A8 17 66 4C 13 1D D3 D2 30 7E 78 0D 08 FD B4 E1 83 37 92 B5 39 2E 12 39 95 B3 21 70 A7 58 57 E7 D0 92 D1 DA 5B 2D 13 58 B5 69 02 4D 57 2F D0 F6 B2 42 ED 5C DB 66 B8 9C F8 E0 BE 7B 3F 55 4C 8A 52 40 9C 70 AE 0B F2 8D 56 AB B6 0D 54 49 58 C7 A3 4B 4F FF 8D 73 2F BF E7 18 26 B6 B5 58 06 0F 14 C5 B5 7E 16 60 2A 30 F0 7A 0F 09 A6 7A A2 3B 25 47 B5 CE 99 FC E5 23 42 9B 3B 23 6A 47 A6 5D 1E 6A 55 A1 1A 60 C8 20 A6 5E 05 9E DD B4 D6 B3 C0 C6 D6 67 E2 F9 
+PRINTINF AFTER CLEANING
+[0;32mI (9618) [SECURE STORAGE REGION]: PUF Object Updated[0m
+[0;32mI (9628) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+[0;32mI (9628) [API AKE PROTOCOL]: -------- [STEP 0] RoT --------[0m
+[0;32mI (9638) [AKE PROTOCOL]: STEP 0 JSON: {[0m
+	"Step":	0,
+	"Device_Name":	"ESP_32_ALEX_SV",
+	"Device_Mac":	"JGKr3DMo",
+	"PUF_Hash":	"usoF9YCpBfoynTL/sHcrN+JEB5Rbk+sWoJwnnaFnr2IVZaujgDV5hubXF+AmmI8QiWuw9BdA2jWJmjzeWOVkbQ=="
+}
+[0;32mI (14288) [AKE PROTOCOL]: Data Response from step 0: {[0m
+  "Kyber_Pk": "gMKU7ZQwfglz5sq1d3KCk1QigfoVA3xYKoISXpG3g0W8gkBu7pWVoHQaolYJx1mjDClDhdys3THD7LJRWuBPHlWyFQSe3Sp+LvHKVwITTzwcCpkln6FmLFS0OZFPoTyX88iefLBPPAC3mHZZ1qhF0HCIBaw4iWwDR6RiMCHLXqsbNWiAr4oGJ1ZKZVAqhBFc5EWncDTB21eLmrTKD9BTD7DAOEXJwdWjGykPGvdsvDAAuxqs+5Ua9ySFUvwPtuy44StfVYF2zGLBOemec6GRYBSShbskyCxyAeG7tYGD8CaUiuVzxtAOVdeMoyUu5eECk3w8gqxCymBOlWIrG5NqsYllywkJqgEa8EtNJCu0JLPML1Z4gttb14KQtwHDIGS463SbrhUZhRJ3V1nDHwZHG/k0AqEs1tekQWaXd6ixUClFtwgF9dAQbYONUbpocyABGQSl6WMI4tR9qEdpSal/UuNSWuifyUOtMqcvdtsJLXNVQgyXzedUL4CRoSUKCwktXOOgBzoKdINRLNTH18Cf0NOAVFXCpbyxy/sWrfAPbxe55rZyixaA4jqnKfZTI8hsO9q24ZkoAauq4sJvlidjX2mCkDMOLSZe8oC2opqqg6RGsrxlhqrDZ0W0DIG3VDo+ACmUtieoWDhZ3/O0sYi9UjxU5zGEq1wq9WmTuXd2bvZP6rgcVipKwqZXRaVuAN1ugVONtmyh2PN1yTF+6kYJ1ymNqzsbAKbIXpq1CflB3sq1CTJF83w6qESwoHXIJ1edCOEuCdigCcRn25G4bWIHBuCm7HxfeDdX4SW2BtE9bnV6rUIm8/RnWBAR8iE9dYIveFpBnUsRPvwgFTIHuqaIoETKMwyzSmpPmyqfXlwzp9mMd5y/FkuryqpQ65dmOYZe/pe6RzdeoaC0E3qqsWkISBJjhhgzHkg3PPI+rnxpleJJ3aCAc7xJZRYCB1OfralAhdy32AcJxxnLH6NPnmy/YGCmWXUJqUkl/hhFMQNxHhpVwndJB8peCtqwsDsqx/S65wwFe8OiygtMjwErKmN3C9Ee2oxusPamLVibdJVfGnqbWJOCmKyDc1UjY5Yi3DXAedR+futOzJCoXXiWm9N1s8V8gOqxgAo3k8l89FJC1LcqLQOhybKH/5uiB9ap0ZunAkczSWYlvtuTmCINxARNatQVkAlExZqDkPVG1HzL4LkSG5wS5qJsp5iL68tjxfQaixVi+8oMdPMOBbrLHMTI5cqHClpmGTO8otImTcZheSdMBSwFW6aYy7tc+6KOZ+lcdUAEnsqqAOcE7nmuQeZelXxAWzh5opZff6QePXJg7jh4xZJM93g37KpQl1fLVdCUE1i7+jDLZxw28jNzRudolUkQCpyWLvmR93oUB8G5oBOQasorj8MOV8GCEfYqbAlq7+TLh6ky67IikjdlY/l74VCFvaIMFEiVPWB9MwNLxWYAccNoBFkariImCLId6Cw7K+RCdvtO9ODOKuBa75cpXQxsWvR8GvQk3/yR9CIflgG+iMBUmlnG3+rHLLW8GGpEoo/mdrO6Qb7oDyUqgZmLfotckDoXJ5QzIhjqc1a++yQ=",
+  "Kyber_Pk_Len": 1184,
+  "Server_Name": "IoT_Server",
+  "Step": 0
+}
+
+[0;32mI (14428) [HMAC]: HMAC success[0m
+[0;32mI (14788) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (14798) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 6BF83428A110B1D3898E6693EA6F7B4A
+[+]HMAC Size: 64
+[+]HMAC: 5CAAD2331F4F3706C9A6BA908E1C86E50A5B1BD42CAB3E1F722F6620D7864ADB1BA7D26F8F19722B2C86B3140880C4944FD4BE1A2C48E64A451234D606087611
+[+]Data Size: 1200
+[+]Data: 8E2A8D485A554E63BC7EF008B3269AA13BC5F2520E08EDFE0EA17F72BECC309CCBC607838F05643DD3F5CA71A84643CB4DB2B151748217DC1D705B99D97ABE67C5B811C8AB577DE3057D9ECFF09E400EC47A15A7CDFD4F43701CCD9F944FC81328BBC2C81C97A8B2933BADA6A5DF556B4DEBA217F6AC5D507D942223EE22DAE7E343DFB97EF480EC8131A528BE6E0F64A961A9F6E1831C61D2B6E33175E29C5C1BD54FA90B9059712851229A3B9D71FB4098AFC90C7E21744A978BDE3E75028FC40B01A9854A887409EE88364D7B999F9C84DC64FA3E6C20E7DC5D3945877BD33D08D214F79B552B29923B7C83E4B808EF724F69A6F54CB989148E7E479A9E61C370C76CD89BCAB4FE31BF371AD3F2850A5E816C5062513BCD2116783B2E299F957B295729DBE020AEDC133C3A4961E7B3FB5F7103E6E5DB974A279B64BF8AE3838D1DE525BEFEB58146E7F85A3347FACF2E836A94ABE6ABBCAF43E69B3D19BF4F90A5EE2F2B530DB6BF0D68313C7895E567850F5DB0B708B060F28DF5A4095B339EDD0544B938AFF4E3EB2AB513FF58BAD1142B2D46F5598CF2875EB15FB21F856F41DBB6A3965DF2180680A09D3864270F5CADA62AC8E553E68094F1C53A96B467E44ABE9F57A0BB8FFA84C0852DBC4C38B4AC737379DBC24AA41A88C48C7BD402A42F6AF2F760DCAF784161B4564FBAF9E32C0A771479F045E7E3D43E8A810E6D580D40F759539F861B9089EB968BA669F6B3BC041C961622864EFFD236D136BA9255406A24334F13CB5C6D473EB6E1EE5162A4DDA97651B17157085EE0908C03C4FF38580364CD81F6C44E8C24F5A26CC283E5D258B31FBA67EE0861C15064FF70374A79F23731B855E5A86BD8A9A9231D28409C87C99B1B7FA989D68F25C84BC32A64503756298E6465874598472EA23096DC00C73A6B407B0A7363BC280854CDAD667A26CEB4B35EF3E93D786CB1A0AE82B8FEED76C5973D5FCE408A0A2DD5851557EFF906AAAFF130FE2934BC689E2172EAA1463AB780B35012C2FB580414E733510FEA5B211C74919C972124C9F5E40D6BD56A16D262732FA68437EF45AD0ED5C21CD3C9FCD7F987DC59F29C1E393BC8EE9076CE551899A808B15BE64716CF036F0751BDF94AD9E9200F516F63CAF40E65B49424E755E92C4C985A4128235C965183F543563DFF061A8343FDF6676213E513C0271A3964DBDB69C0E6DBC49852E3FA1E608C9B73A089438395D64F6A49653B92AFBE4C54980A5F71DF4D78FC8975CB8A207803BB29B038E84484C15D36300C6FCA1F00EACA4EEA53646BFF0F865E9D02BF88B5E7A3B27197A94F1F51C2BF6F1B2BCAC46A2D1A1CC477A14F7BF8F7B35AE41392253B853B26D559C82EF3C0E766AA1CC89A2D9E321B0CDBF000279F46AD49B07AD38FDABE87A22926BBEE9C9E1A638A7A5CE12CDC045ECC45224C00B060AD81E8908342C3E6EAEC8E207FD338547D69CF89268C6B2E1E4EE86EC72DE0D2B3CF14FBC86865717B0ABF8D1127CFF013AFFDA5F567F955DDEEE151866939257071299693FD346D4C4E891069F0FE4699F06D740B7C997EE510DDDFA3EF864A382F75B5821C29911EF445184D9E94CFAE26C3C7722B3B48D517BB2B014C824DFB3A0D817600B8A050153019A8B19B1FB8DB41B544D1D7C5D934C2B80195D1FA0C2AC32B7ED988E45D
+[0;32mI (15038) DATA HEX FORMAT: 0x3ffd3504   8e 2a 8d 48 5a 55 4e 63  bc 7e f0 08 b3 26 9a a1  |.*.HZUNc.~...&..|[0m
+[0;32mI (15038) DATA HEX FORMAT: 0x3ffd3514   3b c5 f2 52 0e 08 ed fe  0e a1 7f 72 be cc 30 9c  |;..R.......r..0.|[0m
+[0;32mI (15048) DATA HEX FORMAT: 0x3ffd3524   cb c6 07 83 8f 05 64 3d  d3 f5 ca 71 a8 46 43 cb  |......d=...q.FC.|[0m
+[0;32mI (15058) DATA HEX FORMAT: 0x3ffd3534   4d b2 b1 51 74 82 17 dc  1d 70 5b 99 d9 7a be 67  |M..Qt....p[..z.g|[0m
+[0;32mI (15068) DATA HEX FORMAT: 0x3ffd3544   c5 b8 11 c8 ab 57 7d e3  05 7d 9e cf f0 9e 40 0e  |.....W}..}....@.|[0m
+[0;32mI (15078) DATA HEX FORMAT: 0x3ffd3554   c4 7a 15 a7 cd fd 4f 43  70 1c cd 9f 94 4f c8 13  |.z....OCp....O..|[0m
+[0;32mI (15088) DATA HEX FORMAT: 0x3ffd3564   28 bb c2 c8 1c 97 a8 b2  93 3b ad a6 a5 df 55 6b  |(........;....Uk|[0m
+[0;32mI (15098) DATA HEX FORMAT: 0x3ffd3574   4d eb a2 17 f6 ac 5d 50  7d 94 22 23 ee 22 da e7  |M.....]P}."#."..|[0m
+[0;32mI (15108) DATA HEX FORMAT: 0x3ffd3584   e3 43 df b9 7e f4 80 ec  81 31 a5 28 be 6e 0f 64  |.C..~....1.(.n.d|[0m
+[0;32mI (15118) DATA HEX FORMAT: 0x3ffd3594   a9 61 a9 f6 e1 83 1c 61  d2 b6 e3 31 75 e2 9c 5c  |.a.....a...1u..\|[0m
+[0;32mI (15128) DATA HEX FORMAT: 0x3ffd35a4   1b d5 4f a9 0b 90 59 71  28 51 22 9a 3b 9d 71 fb  |..O...Yq(Q".;.q.|[0m
+[0;32mI (15138) DATA HEX FORMAT: 0x3ffd35b4   40 98 af c9 0c 7e 21 74  4a 97 8b de 3e 75 02 8f  |@....~!tJ...>u..|[0m
+[0;32mI (15148) DATA HEX FORMAT: 0x3ffd35c4   c4 0b 01 a9 85 4a 88 74  09 ee 88 36 4d 7b 99 9f  |.....J.t...6M{..|[0m
+[0;32mI (15158) DATA HEX FORMAT: 0x3ffd35d4   9c 84 dc 64 fa 3e 6c 20  e7 dc 5d 39 45 87 7b d3  |...d.>l ..]9E.{.|[0m
+[0;32mI (15168) DATA HEX FORMAT: 0x3ffd35e4   3d 08 d2 14 f7 9b 55 2b  29 92 3b 7c 83 e4 b8 08  |=.....U+).;|....|[0m
+[0;32mI (15178) DATA HEX FORMAT: 0x3ffd35f4   ef 72 4f 69 a6 f5 4c b9  89 14 8e 7e 47 9a 9e 61  |.rOi..L....~G..a|[0m
+[0;32mI (15188) DATA HEX FORMAT: 0x3ffd3604   c3 70 c7 6c d8 9b ca b4  fe 31 bf 37 1a d3 f2 85  |.p.l.....1.7....|[0m
+[0;32mI (15198) DATA HEX FORMAT: 0x3ffd3614   0a 5e 81 6c 50 62 51 3b  cd 21 16 78 3b 2e 29 9f  |.^.lPbQ;.!.x;.).|[0m
+[0;32mI (15208) DATA HEX FORMAT: 0x3ffd3624   95 7b 29 57 29 db e0 20  ae dc 13 3c 3a 49 61 e7  |.{)W).. ...<:Ia.|[0m
+[0;32mI (15218) DATA HEX FORMAT: 0x3ffd3634   b3 fb 5f 71 03 e6 e5 db  97 4a 27 9b 64 bf 8a e3  |.._q.....J'.d...|[0m
+[0;32mI (15228) DATA HEX FORMAT: 0x3ffd3644   83 8d 1d e5 25 be fe b5  81 46 e7 f8 5a 33 47 fa  |....%....F..Z3G.|[0m
+[0;32mI (15238) DATA HEX FORMAT: 0x3ffd3654   cf 2e 83 6a 94 ab e6 ab  bc af 43 e6 9b 3d 19 bf  |...j......C..=..|[0m
+[0;32mI (15248) DATA HEX FORMAT: 0x3ffd3664   4f 90 a5 ee 2f 2b 53 0d  b6 bf 0d 68 31 3c 78 95  |O.../+S....h1<x.|[0m
+[0;32mI (15248) DATA HEX FORMAT: 0x3ffd3674   e5 67 85 0f 5d b0 b7 08  b0 60 f2 8d f5 a4 09 5b  |.g..]....`.....[|[0m
+[0;32mI (15258) DATA HEX FORMAT: 0x3ffd3684   33 9e dd 05 44 b9 38 af  f4 e3 eb 2a b5 13 ff 58  |3...D.8....*...X|[0m
+[0;32mI (15268) DATA HEX FORMAT: 0x3ffd3694   ba d1 14 2b 2d 46 f5 59  8c f2 87 5e b1 5f b2 1f  |...+-F.Y...^._..|[0m
+[0;32mI (15278) DATA HEX FORMAT: 0x3ffd36a4   85 6f 41 db b6 a3 96 5d  f2 18 06 80 a0 9d 38 64  |.oA....]......8d|[0m
+[0;32mI (15288) DATA HEX FORMAT: 0x3ffd36b4   27 0f 5c ad a6 2a c8 e5  53 e6 80 94 f1 c5 3a 96  |'.\..*..S.....:.|[0m
+[0;32mI (15298) DATA HEX FORMAT: 0x3ffd36c4   b4 67 e4 4a be 9f 57 a0  bb 8f fa 84 c0 85 2d bc  |.g.J..W.......-.|[0m
+[0;32mI (15308) DATA HEX FORMAT: 0x3ffd36d4   4c 38 b4 ac 73 73 79 db  c2 4a a4 1a 88 c4 8c 7b  |L8..ssy..J.....{|[0m
+[0;32mI (15318) DATA HEX FORMAT: 0x3ffd36e4   d4 02 a4 2f 6a f2 f7 60  dc af 78 41 61 b4 56 4f  |.../j..`..xAa.VO|[0m
+[0;32mI (15328) DATA HEX FORMAT: 0x3ffd36f4   ba f9 e3 2c 0a 77 14 79  f0 45 e7 e3 d4 3e 8a 81  |...,.w.y.E...>..|[0m
+[0;32mI (15338) DATA HEX FORMAT: 0x3ffd3704   0e 6d 58 0d 40 f7 59 53  9f 86 1b 90 89 eb 96 8b  |.mX.@.YS........|[0m
+[0;32mI (15348) DATA HEX FORMAT: 0x3ffd3714   a6 69 f6 b3 bc 04 1c 96  16 22 86 4e ff d2 36 d1  |.i.......".N..6.|[0m
+[0;32mI (15358) DATA HEX FORMAT: 0x3ffd3724   36 ba 92 55 40 6a 24 33  4f 13 cb 5c 6d 47 3e b6  |6..U@j$3O..\mG>.|[0m
+[0;32mI (15368) DATA HEX FORMAT: 0x3ffd3734   e1 ee 51 62 a4 dd a9 76  51 b1 71 57 08 5e e0 90  |..Qb...vQ.qW.^..|[0m
+[0;32mI (15378) DATA HEX FORMAT: 0x3ffd3744   8c 03 c4 ff 38 58 03 64  cd 81 f6 c4 4e 8c 24 f5  |....8X.d....N.$.|[0m
+[0;32mI (15388) DATA HEX FORMAT: 0x3ffd3754   a2 6c c2 83 e5 d2 58 b3  1f ba 67 ee 08 61 c1 50  |.l....X...g..a.P|[0m
+[0;32mI (15398) DATA HEX FORMAT: 0x3ffd3764   64 ff 70 37 4a 79 f2 37  31 b8 55 e5 a8 6b d8 a9  |d.p7Jy.71.U..k..|[0m
+[0;32mI (15408) DATA HEX FORMAT: 0x3ffd3774   a9 23 1d 28 40 9c 87 c9  9b 1b 7f a9 89 d6 8f 25  |.#.(@..........%|[0m
+[0;32mI (15418) DATA HEX FORMAT: 0x3ffd3784   c8 4b c3 2a 64 50 37 56  29 8e 64 65 87 45 98 47  |.K.*dP7V).de.E.G|[0m
+[0;32mI (15428) DATA HEX FORMAT: 0x3ffd3794   2e a2 30 96 dc 00 c7 3a  6b 40 7b 0a 73 63 bc 28  |..0....:k@{.sc.(|[0m
+[0;32mI (15438) DATA HEX FORMAT: 0x3ffd37a4   08 54 cd ad 66 7a 26 ce  b4 b3 5e f3 e9 3d 78 6c  |.T..fz&...^..=xl|[0m
+[0;32mI (15448) DATA HEX FORMAT: 0x3ffd37b4   b1 a0 ae 82 b8 fe ed 76  c5 97 3d 5f ce 40 8a 0a  |.......v..=_.@..|[0m
+[0;32mI (15458) DATA HEX FORMAT: 0x3ffd37c4   2d d5 85 15 57 ef f9 06  aa af f1 30 fe 29 34 bc  |-...W......0.)4.|[0m
+[0;32mI (15458) DATA HEX FORMAT: 0x3ffd37d4   68 9e 21 72 ea a1 46 3a  b7 80 b3 50 12 c2 fb 58  |h.!r..F:...P...X|[0m
+[0;32mI (15468) DATA HEX FORMAT: 0x3ffd37e4   04 14 e7 33 51 0f ea 5b  21 1c 74 91 9c 97 21 24  |...3Q..[!.t...!$|[0m
+[0;32mI (15478) DATA HEX FORMAT: 0x3ffd37f4   c9 f5 e4 0d 6b d5 6a 16  d2 62 73 2f a6 84 37 ef  |....k.j..bs/..7.|[0m
+[0;32mI (15488) DATA HEX FORMAT: 0x3ffd3804   45 ad 0e d5 c2 1c d3 c9  fc d7 f9 87 dc 59 f2 9c  |E............Y..|[0m
+[0;32mI (15498) DATA HEX FORMAT: 0x3ffd3814   1e 39 3b c8 ee 90 76 ce  55 18 99 a8 08 b1 5b e6  |.9;...v.U.....[.|[0m
+[0;32mI (15508) DATA HEX FORMAT: 0x3ffd3824   47 16 cf 03 6f 07 51 bd  f9 4a d9 e9 20 0f 51 6f  |G...o.Q..J.. .Qo|[0m
+[0;32mI (15518) DATA HEX FORMAT: 0x3ffd3834   63 ca f4 0e 65 b4 94 24  e7 55 e9 2c 4c 98 5a 41  |c...e..$.U.,L.ZA|[0m
+[0;32mI (15528) DATA HEX FORMAT: 0x3ffd3844   28 23 5c 96 51 83 f5 43  56 3d ff 06 1a 83 43 fd  |(#\.Q..CV=....C.|[0m
+[0;32mI (15538) DATA HEX FORMAT: 0x3ffd3854   f6 67 62 13 e5 13 c0 27  1a 39 64 db db 69 c0 e6  |.gb....'.9d..i..|[0m
+[0;32mI (15548) DATA HEX FORMAT: 0x3ffd3864   db c4 98 52 e3 fa 1e 60  8c 9b 73 a0 89 43 83 95  |...R...`..s..C..|[0m
+[0;32mI (15558) DATA HEX FORMAT: 0x3ffd3874   d6 4f 6a 49 65 3b 92 af  be 4c 54 98 0a 5f 71 df  |.OjIe;...LT.._q.|[0m
+[0;32mI (15568) DATA HEX FORMAT: 0x3ffd3884   4d 78 fc 89 75 cb 8a 20  78 03 bb 29 b0 38 e8 44  |Mx..u.. x..).8.D|[0m
+[0;32mI (15578) DATA HEX FORMAT: 0x3ffd3894   84 c1 5d 36 30 0c 6f ca  1f 00 ea ca 4e ea 53 64  |..]60.o.....N.Sd|[0m
+[0;32mI (15588) DATA HEX FORMAT: 0x3ffd38a4   6b ff 0f 86 5e 9d 02 bf  88 b5 e7 a3 b2 71 97 a9  |k...^........q..|[0m
+[0;32mI (15598) DATA HEX FORMAT: 0x3ffd38b4   4f 1f 51 c2 bf 6f 1b 2b  ca c4 6a 2d 1a 1c c4 77  |O.Q..o.+..j-...w|[0m
+[0;32mI (15608) DATA HEX FORMAT: 0x3ffd38c4   a1 4f 7b f8 f7 b3 5a e4  13 92 25 3b 85 3b 26 d5  |.O{...Z...%;.;&.|[0m
+[0;32mI (15618) DATA HEX FORMAT: 0x3ffd38d4   59 c8 2e f3 c0 e7 66 aa  1c c8 9a 2d 9e 32 1b 0c  |Y.....f....-.2..|[0m
+[0;32mI (15628) DATA HEX FORMAT: 0x3ffd38e4   db f0 00 27 9f 46 ad 49  b0 7a d3 8f da be 87 a2  |...'.F.I.z......|[0m
+[0;32mI (15638) DATA HEX FORMAT: 0x3ffd38f4   29 26 bb ee 9c 9e 1a 63  8a 7a 5c e1 2c dc 04 5e  |)&.....c.z\.,..^|[0m
+[0;32mI (15648) DATA HEX FORMAT: 0x3ffd3904   cc 45 22 4c 00 b0 60 ad  81 e8 90 83 42 c3 e6 ea  |.E"L..`.....B...|[0m
+[0;32mI (15658) DATA HEX FORMAT: 0x3ffd3914   ec 8e 20 7f d3 38 54 7d  69 cf 89 26 8c 6b 2e 1e  |.. ..8T}i..&.k..|[0m
+[0;32mI (15668) DATA HEX FORMAT: 0x3ffd3924   4e e8 6e c7 2d e0 d2 b3  cf 14 fb c8 68 65 71 7b  |N.n.-.......heq{|[0m
+[0;32mI (15678) DATA HEX FORMAT: 0x3ffd3934   0a bf 8d 11 27 cf f0 13  af fd a5 f5 67 f9 55 dd  |....'.......g.U.|[0m
+[0;32mI (15678) DATA HEX FORMAT: 0x3ffd3944   ee e1 51 86 69 39 25 70  71 29 96 93 fd 34 6d 4c  |..Q.i9%pq)...4mL|[0m
+[0;32mI (15688) DATA HEX FORMAT: 0x3ffd3954   4e 89 10 69 f0 fe 46 99  f0 6d 74 0b 7c 99 7e e5  |N..i..F..mt.|.~.|[0m
+[0;32mI (15698) DATA HEX FORMAT: 0x3ffd3964   10 dd df a3 ef 86 4a 38  2f 75 b5 82 1c 29 91 1e  |......J8/u...)..|[0m
+[0;32mI (15708) DATA HEX FORMAT: 0x3ffd3974   f4 45 18 4d 9e 94 cf ae  26 c3 c7 72 2b 3b 48 d5  |.E.M....&..r+;H.|[0m
+[0;32mI (15718) DATA HEX FORMAT: 0x3ffd3984   17 bb 2b 01 4c 82 4d fb  3a 0d 81 76 00 b8 a0 50  |..+.L.M.:..v...P|[0m
+[0;32mI (15728) DATA HEX FORMAT: 0x3ffd3994   15 30 19 a8 b1 9b 1f b8  db 41 b5 44 d1 d7 c5 d9  |.0.......A.D....|[0m
+[0;32mI (15738) DATA HEX FORMAT: 0x3ffd39a4   34 c2 b8 01 95 d1 fa 0c  2a c3 2b 7e d9 88 e4 5d  |4.......*.+~...]|[0m
+--------------------------------------------
+[0;32mI (15758) [API AKE PROTOCOL]: -------- AKE FLOW STEP 1 & 2 --------[0m
+[0;32mI (15758) [API AKE PROTOCOL]: -------- [STEP 1] --------[0m
+[0;32mI (15768) [AKE PROTOCOL]: STEP 1 JSON: {[0m
+	"Step":	1,
+	"Device_Name":	"ESP_32_ALEX_SV",
+	"Device_Mac":	"JGKr3DMo"
+}
+[0;32mI (16468) [AKE PROTOCOL]: Data Response from step 1: {[0m
+  "Nonce_S": "ZWBpcx+Yq678v2vHvEeat6iR5yq2U07gl30JQrhGPm8=",
+  "Nonce_S_Len": 32,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Server_Name": "IoT_Server",
+  "Step": 1
+}
+
+[0;32mI (16488) [API AKE PROTOCOL]: -------- [STEP 2] --------[0m
+[0;32mI (16488) [AKE PROTOCOL]: Getting Kyber public key from secure storage[0m
+[0;32mI (16498) [SECURE_STORE]: Read OK (len=1316)[0m
+[0;32mI (16498) [SECURE_STORE]: Verification success[0m
+[0;32mI (16508) [HMAC]: HMAC success[0m
+[0;32mI (16508) [HMAC]: HMAC Verification Success[0m
+--- SECURE STORAGE STRUCTURE ---
+[+]Header: __AlexSecStore__
+[+]Version: 1
+[+]Reserved: 0
+[+]Counter: 1
+[+]IV Size: 16
+[+]IV: 6BF83428A110B1D3898E6693EA6F7B4A
+[+]HMAC Size: 64
+[+]HMAC: 5CAAD2331F4F3706C9A6BA908E1C86E50A5B1BD42CAB3E1F722F6620D7864ADB1BA7D26F8F19722B2C86B3140880C4944FD4BE1A2C48E64A451234D606087611
+[+]Data Size: 1200
+[+]Data: 8E2A8D485A554E63BC7EF008B3269AA13BC5F2520E08EDFE0EA17F72BECC309CCBC607838F05643DD3F5CA71A84643CB4DB2B151748217DC1D705B99D97ABE67C5B811C8AB577DE3057D9ECFF09E400EC47A15A7CDFD4F43701CCD9F944FC81328BBC2C81C97A8B2933BADA6A5DF556B4DEBA217F6AC5D507D942223EE22DAE7E343DFB97EF480EC8131A528BE6E0F64A961A9F6E1831C61D2B6E33175E29C5C1BD54FA90B9059712851229A3B9D71FB4098AFC90C7E21744A978BDE3E75028FC40B01A9854A887409EE88364D7B999F9C84DC64FA3E6C20E7DC5D3945877BD33D08D214F79B552B29923B7C83E4B808EF724F69A6F54CB989148E7E479A9E61C370C76CD89BCAB4FE31BF371AD3F2850A5E816C5062513BCD2116783B2E299F957B295729DBE020AEDC133C3A4961E7B3FB5F7103E6E5DB974A279B64BF8AE3838D1DE525BEFEB58146E7F85A3347FACF2E836A94ABE6ABBCAF43E69B3D19BF4F90A5EE2F2B530DB6BF0D68313C7895E567850F5DB0B708B060F28DF5A4095B339EDD0544B938AFF4E3EB2AB513FF58BAD1142B2D46F5598CF2875EB15FB21F856F41DBB6A3965DF2180680A09D3864270F5CADA62AC8E553E68094F1C53A96B467E44ABE9F57A0BB8FFA84C0852DBC4C38B4AC737379DBC24AA41A88C48C7BD402A42F6AF2F760DCAF784161B4564FBAF9E32C0A771479F045E7E3D43E8A810E6D580D40F759539F861B9089EB968BA669F6B3BC041C961622864EFFD236D136BA9255406A24334F13CB5C6D473EB6E1EE5162A4DDA97651B17157085EE0908C03C4FF38580364CD81F6C44E8C24F5A26CC283E5D258B31FBA67EE0861C15064FF70374A79F23731B855E5A86BD8A9A9231D28409C87C99B1B7FA989D68F25C84BC32A64503756298E6465874598472EA23096DC00C73A6B407B0A7363BC280854CDAD667A26CEB4B35EF3E93D786CB1A0AE82B8FEED76C5973D5FCE408A0A2DD5851557EFF906AAAFF130FE2934BC689E2172EAA1463AB780B35012C2FB580414E733510FEA5B211C74919C972124C9F5E40D6BD56A16D262732FA68437EF45AD0ED5C21CD3C9FCD7F987DC59F29C1E393BC8EE9076CE551899A808B15BE64716CF036F0751BDF94AD9E9200F516F63CAF40E65B49424E755E92C4C985A4128235C965183F543563DFF061A8343FDF6676213E513C0271A3964DBDB69C0E6DBC49852E3FA1E608C9B73A089438395D64F6A49653B92AFBE4C54980A5F71DF4D78FC8975CB8A207803BB29B038E84484C15D36300C6FCA1F00EACA4EEA53646BFF0F865E9D02BF88B5E7A3B27197A94F1F51C2BF6F1B2BCAC46A2D1A1CC477A14F7BF8F7B35AE41392253B853B26D559C82EF3C0E766AA1CC89A2D9E321B0CDBF000279F46AD49B07AD38FDABE87A22926BBEE9C9E1A638A7A5CE12CDC045ECC45224C00B060AD81E8908342C3E6EAEC8E207FD338547D69CF89268C6B2E1E4EE86EC72DE0D2B3CF14FBC86865717B0ABF8D1127CFF013AFFDA5F567F955DDEEE151866939257071299693FD346D4C4E891069F0FE4699F06D740B7C997EE510DDDFA3EF864A382F75B5821C29911EF445184D9E94CFAE26C3C7722B3B48D517BB2B014C824DFB3A0D817600B8A050153019A8B19B1FB8DB41B544D1D7C5D934C2B80195D1FA0C2AC32B7ED988E45D
+[0;32mI (16748) DATA HEX FORMAT: 0x3ffd3504   8e 2a 8d 48 5a 55 4e 63  bc 7e f0 08 b3 26 9a a1  |.*.HZUNc.~...&..|[0m
+[0;32mI (16758) DATA HEX FORMAT: 0x3ffd3514   3b c5 f2 52 0e 08 ed fe  0e a1 7f 72 be cc 30 9c  |;..R.......r..0.|[0m
+[0;32mI (16768) DATA HEX FORMAT: 0x3ffd3524   cb c6 07 83 8f 05 64 3d  d3 f5 ca 71 a8 46 43 cb  |......d=...q.FC.|[0m
+[0;32mI (16778) DATA HEX FORMAT: 0x3ffd3534   4d b2 b1 51 74 82 17 dc  1d 70 5b 99 d9 7a be 67  |M..Qt....p[..z.g|[0m
+[0;32mI (16788) DATA HEX FORMAT: 0x3ffd3544   c5 b8 11 c8 ab 57 7d e3  05 7d 9e cf f0 9e 40 0e  |.....W}..}....@.|[0m
+[0;32mI (16798) DATA HEX FORMAT: 0x3ffd3554   c4 7a 15 a7 cd fd 4f 43  70 1c cd 9f 94 4f c8 13  |.z....OCp....O..|[0m
+[0;32mI (16808) DATA HEX FORMAT: 0x3ffd3564   28 bb c2 c8 1c 97 a8 b2  93 3b ad a6 a5 df 55 6b  |(........;....Uk|[0m
+[0;32mI (16818) DATA HEX FORMAT: 0x3ffd3574   4d eb a2 17 f6 ac 5d 50  7d 94 22 23 ee 22 da e7  |M.....]P}."#."..|[0m
+[0;32mI (16828) DATA HEX FORMAT: 0x3ffd3584   e3 43 df b9 7e f4 80 ec  81 31 a5 28 be 6e 0f 64  |.C..~....1.(.n.d|[0m
+[0;32mI (16838) DATA HEX FORMAT: 0x3ffd3594   a9 61 a9 f6 e1 83 1c 61  d2 b6 e3 31 75 e2 9c 5c  |.a.....a...1u..\|[0m
+[0;32mI (16848) DATA HEX FORMAT: 0x3ffd35a4   1b d5 4f a9 0b 90 59 71  28 51 22 9a 3b 9d 71 fb  |..O...Yq(Q".;.q.|[0m
+[0;32mI (16858) DATA HEX FORMAT: 0x3ffd35b4   40 98 af c9 0c 7e 21 74  4a 97 8b de 3e 75 02 8f  |@....~!tJ...>u..|[0m
+[0;32mI (16858) DATA HEX FORMAT: 0x3ffd35c4   c4 0b 01 a9 85 4a 88 74  09 ee 88 36 4d 7b 99 9f  |.....J.t...6M{..|[0m
+[0;32mI (16868) DATA HEX FORMAT: 0x3ffd35d4   9c 84 dc 64 fa 3e 6c 20  e7 dc 5d 39 45 87 7b d3  |...d.>l ..]9E.{.|[0m
+[0;32mI (16878) DATA HEX FORMAT: 0x3ffd35e4   3d 08 d2 14 f7 9b 55 2b  29 92 3b 7c 83 e4 b8 08  |=.....U+).;|....|[0m
+[0;32mI (16888) DATA HEX FORMAT: 0x3ffd35f4   ef 72 4f 69 a6 f5 4c b9  89 14 8e 7e 47 9a 9e 61  |.rOi..L....~G..a|[0m
+[0;32mI (16898) DATA HEX FORMAT: 0x3ffd3604   c3 70 c7 6c d8 9b ca b4  fe 31 bf 37 1a d3 f2 85  |.p.l.....1.7....|[0m
+[0;32mI (16908) DATA HEX FORMAT: 0x3ffd3614   0a 5e 81 6c 50 62 51 3b  cd 21 16 78 3b 2e 29 9f  |.^.lPbQ;.!.x;.).|[0m
+[0;32mI (16918) DATA HEX FORMAT: 0x3ffd3624   95 7b 29 57 29 db e0 20  ae dc 13 3c 3a 49 61 e7  |.{)W).. ...<:Ia.|[0m
+[0;32mI (16928) DATA HEX FORMAT: 0x3ffd3634   b3 fb 5f 71 03 e6 e5 db  97 4a 27 9b 64 bf 8a e3  |.._q.....J'.d...|[0m
+[0;32mI (16938) DATA HEX FORMAT: 0x3ffd3644   83 8d 1d e5 25 be fe b5  81 46 e7 f8 5a 33 47 fa  |....%....F..Z3G.|[0m
+[0;32mI (16948) DATA HEX FORMAT: 0x3ffd3654   cf 2e 83 6a 94 ab e6 ab  bc af 43 e6 9b 3d 19 bf  |...j......C..=..|[0m
+[0;32mI (16958) DATA HEX FORMAT: 0x3ffd3664   4f 90 a5 ee 2f 2b 53 0d  b6 bf 0d 68 31 3c 78 95  |O.../+S....h1<x.|[0m
+[0;32mI (16968) DATA HEX FORMAT: 0x3ffd3674   e5 67 85 0f 5d b0 b7 08  b0 60 f2 8d f5 a4 09 5b  |.g..]....`.....[|[0m
+[0;32mI (16978) DATA HEX FORMAT: 0x3ffd3684   33 9e dd 05 44 b9 38 af  f4 e3 eb 2a b5 13 ff 58  |3...D.8....*...X|[0m
+[0;32mI (16988) DATA HEX FORMAT: 0x3ffd3694   ba d1 14 2b 2d 46 f5 59  8c f2 87 5e b1 5f b2 1f  |...+-F.Y...^._..|[0m
+[0;32mI (16998) DATA HEX FORMAT: 0x3ffd36a4   85 6f 41 db b6 a3 96 5d  f2 18 06 80 a0 9d 38 64  |.oA....]......8d|[0m
+[0;32mI (17008) DATA HEX FORMAT: 0x3ffd36b4   27 0f 5c ad a6 2a c8 e5  53 e6 80 94 f1 c5 3a 96  |'.\..*..S.....:.|[0m
+[0;32mI (17018) DATA HEX FORMAT: 0x3ffd36c4   b4 67 e4 4a be 9f 57 a0  bb 8f fa 84 c0 85 2d bc  |.g.J..W.......-.|[0m
+[0;32mI (17028) DATA HEX FORMAT: 0x3ffd36d4   4c 38 b4 ac 73 73 79 db  c2 4a a4 1a 88 c4 8c 7b  |L8..ssy..J.....{|[0m
+[0;32mI (17038) DATA HEX FORMAT: 0x3ffd36e4   d4 02 a4 2f 6a f2 f7 60  dc af 78 41 61 b4 56 4f  |.../j..`..xAa.VO|[0m
+[0;32mI (17048) DATA HEX FORMAT: 0x3ffd36f4   ba f9 e3 2c 0a 77 14 79  f0 45 e7 e3 d4 3e 8a 81  |...,.w.y.E...>..|[0m
+[0;32mI (17058) DATA HEX FORMAT: 0x3ffd3704   0e 6d 58 0d 40 f7 59 53  9f 86 1b 90 89 eb 96 8b  |.mX.@.YS........|[0m
+[0;32mI (17068) DATA HEX FORMAT: 0x3ffd3714   a6 69 f6 b3 bc 04 1c 96  16 22 86 4e ff d2 36 d1  |.i.......".N..6.|[0m
+[0;32mI (17068) DATA HEX FORMAT: 0x3ffd3724   36 ba 92 55 40 6a 24 33  4f 13 cb 5c 6d 47 3e b6  |6..U@j$3O..\mG>.|[0m
+[0;32mI (17078) DATA HEX FORMAT: 0x3ffd3734   e1 ee 51 62 a4 dd a9 76  51 b1 71 57 08 5e e0 90  |..Qb...vQ.qW.^..|[0m
+[0;32mI (17088) DATA HEX FORMAT: 0x3ffd3744   8c 03 c4 ff 38 58 03 64  cd 81 f6 c4 4e 8c 24 f5  |....8X.d....N.$.|[0m
+[0;32mI (17098) DATA HEX FORMAT: 0x3ffd3754   a2 6c c2 83 e5 d2 58 b3  1f ba 67 ee 08 61 c1 50  |.l....X...g..a.P|[0m
+[0;32mI (17108) DATA HEX FORMAT: 0x3ffd3764   64 ff 70 37 4a 79 f2 37  31 b8 55 e5 a8 6b d8 a9  |d.p7Jy.71.U..k..|[0m
+[0;32mI (17118) DATA HEX FORMAT: 0x3ffd3774   a9 23 1d 28 40 9c 87 c9  9b 1b 7f a9 89 d6 8f 25  |.#.(@..........%|[0m
+[0;32mI (17128) DATA HEX FORMAT: 0x3ffd3784   c8 4b c3 2a 64 50 37 56  29 8e 64 65 87 45 98 47  |.K.*dP7V).de.E.G|[0m
+[0;32mI (17138) DATA HEX FORMAT: 0x3ffd3794   2e a2 30 96 dc 00 c7 3a  6b 40 7b 0a 73 63 bc 28  |..0....:k@{.sc.(|[0m
+[0;32mI (17148) DATA HEX FORMAT: 0x3ffd37a4   08 54 cd ad 66 7a 26 ce  b4 b3 5e f3 e9 3d 78 6c  |.T..fz&...^..=xl|[0m
+[0;32mI (17158) DATA HEX FORMAT: 0x3ffd37b4   b1 a0 ae 82 b8 fe ed 76  c5 97 3d 5f ce 40 8a 0a  |.......v..=_.@..|[0m
+[0;32mI (17168) DATA HEX FORMAT: 0x3ffd37c4   2d d5 85 15 57 ef f9 06  aa af f1 30 fe 29 34 bc  |-...W......0.)4.|[0m
+[0;32mI (17178) DATA HEX FORMAT: 0x3ffd37d4   68 9e 21 72 ea a1 46 3a  b7 80 b3 50 12 c2 fb 58  |h.!r..F:...P...X|[0m
+[0;32mI (17188) DATA HEX FORMAT: 0x3ffd37e4   04 14 e7 33 51 0f ea 5b  21 1c 74 91 9c 97 21 24  |...3Q..[!.t...!$|[0m
+[0;32mI (17198) DATA HEX FORMAT: 0x3ffd37f4   c9 f5 e4 0d 6b d5 6a 16  d2 62 73 2f a6 84 37 ef  |....k.j..bs/..7.|[0m
+[0;32mI (17208) DATA HEX FORMAT: 0x3ffd3804   45 ad 0e d5 c2 1c d3 c9  fc d7 f9 87 dc 59 f2 9c  |E............Y..|[0m
+[0;32mI (17218) DATA HEX FORMAT: 0x3ffd3814   1e 39 3b c8 ee 90 76 ce  55 18 99 a8 08 b1 5b e6  |.9;...v.U.....[.|[0m
+[0;32mI (17228) DATA HEX FORMAT: 0x3ffd3824   47 16 cf 03 6f 07 51 bd  f9 4a d9 e9 20 0f 51 6f  |G...o.Q..J.. .Qo|[0m
+[0;32mI (17238) DATA HEX FORMAT: 0x3ffd3834   63 ca f4 0e 65 b4 94 24  e7 55 e9 2c 4c 98 5a 41  |c...e..$.U.,L.ZA|[0m
+[0;32mI (17248) DATA HEX FORMAT: 0x3ffd3844   28 23 5c 96 51 83 f5 43  56 3d ff 06 1a 83 43 fd  |(#\.Q..CV=....C.|[0m
+[0;32mI (17258) DATA HEX FORMAT: 0x3ffd3854   f6 67 62 13 e5 13 c0 27  1a 39 64 db db 69 c0 e6  |.gb....'.9d..i..|[0m
+[0;32mI (17268) DATA HEX FORMAT: 0x3ffd3864   db c4 98 52 e3 fa 1e 60  8c 9b 73 a0 89 43 83 95  |...R...`..s..C..|[0m
+[0;32mI (17278) DATA HEX FORMAT: 0x3ffd3874   d6 4f 6a 49 65 3b 92 af  be 4c 54 98 0a 5f 71 df  |.OjIe;...LT.._q.|[0m
+[0;32mI (17278) DATA HEX FORMAT: 0x3ffd3884   4d 78 fc 89 75 cb 8a 20  78 03 bb 29 b0 38 e8 44  |Mx..u.. x..).8.D|[0m
+[0;32mI (17288) DATA HEX FORMAT: 0x3ffd3894   84 c1 5d 36 30 0c 6f ca  1f 00 ea ca 4e ea 53 64  |..]60.o.....N.Sd|[0m
+[0;32mI (17298) DATA HEX FORMAT: 0x3ffd38a4   6b ff 0f 86 5e 9d 02 bf  88 b5 e7 a3 b2 71 97 a9  |k...^........q..|[0m
+[0;32mI (17308) DATA HEX FORMAT: 0x3ffd38b4   4f 1f 51 c2 bf 6f 1b 2b  ca c4 6a 2d 1a 1c c4 77  |O.Q..o.+..j-...w|[0m
+[0;32mI (17318) DATA HEX FORMAT: 0x3ffd38c4   a1 4f 7b f8 f7 b3 5a e4  13 92 25 3b 85 3b 26 d5  |.O{...Z...%;.;&.|[0m
+[0;32mI (17328) DATA HEX FORMAT: 0x3ffd38d4   59 c8 2e f3 c0 e7 66 aa  1c c8 9a 2d 9e 32 1b 0c  |Y.....f....-.2..|[0m
+[0;32mI (17338) DATA HEX FORMAT: 0x3ffd38e4   db f0 00 27 9f 46 ad 49  b0 7a d3 8f da be 87 a2  |...'.F.I.z......|[0m
+[0;32mI (17348) DATA HEX FORMAT: 0x3ffd38f4   29 26 bb ee 9c 9e 1a 63  8a 7a 5c e1 2c dc 04 5e  |)&.....c.z\.,..^|[0m
+[0;32mI (17358) DATA HEX FORMAT: 0x3ffd3904   cc 45 22 4c 00 b0 60 ad  81 e8 90 83 42 c3 e6 ea  |.E"L..`.....B...|[0m
+[0;32mI (17368) DATA HEX FORMAT: 0x3ffd3914   ec 8e 20 7f d3 38 54 7d  69 cf 89 26 8c 6b 2e 1e  |.. ..8T}i..&.k..|[0m
+[0;32mI (17378) DATA HEX FORMAT: 0x3ffd3924   4e e8 6e c7 2d e0 d2 b3  cf 14 fb c8 68 65 71 7b  |N.n.-.......heq{|[0m
+[0;32mI (17388) DATA HEX FORMAT: 0x3ffd3934   0a bf 8d 11 27 cf f0 13  af fd a5 f5 67 f9 55 dd  |....'.......g.U.|[0m
+[0;32mI (17398) DATA HEX FORMAT: 0x3ffd3944   ee e1 51 86 69 39 25 70  71 29 96 93 fd 34 6d 4c  |..Q.i9%pq)...4mL|[0m
+[0;32mI (17408) DATA HEX FORMAT: 0x3ffd3954   4e 89 10 69 f0 fe 46 99  f0 6d 74 0b 7c 99 7e e5  |N..i..F..mt.|.~.|[0m
+[0;32mI (17418) DATA HEX FORMAT: 0x3ffd3964   10 dd df a3 ef 86 4a 38  2f 75 b5 82 1c 29 91 1e  |......J8/u...)..|[0m
+[0;32mI (17428) DATA HEX FORMAT: 0x3ffd3974   f4 45 18 4d 9e 94 cf ae  26 c3 c7 72 2b 3b 48 d5  |.E.M....&..r+;H.|[0m
+[0;32mI (17438) DATA HEX FORMAT: 0x3ffd3984   17 bb 2b 01 4c 82 4d fb  3a 0d 81 76 00 b8 a0 50  |..+.L.M.:..v...P|[0m
+[0;32mI (17448) DATA HEX FORMAT: 0x3ffd3994   15 30 19 a8 b1 9b 1f b8  db 41 b5 44 d1 d7 c5 d9  |.0.......A.D....|[0m
+[0;32mI (17458) DATA HEX FORMAT: 0x3ffd39a4   34 c2 b8 01 95 d1 fa 0c  2a c3 2b 7e d9 88 e4 5d  |4.......*.+~...]|[0m
+--------------------------------------------
+[0;32mI (17488) Cipher Text: 0x3ffd3490   85 da a7 ec 54 77 81 6b  21 e6 9c d7 85 e5 d7 3b  |....Tw.k!......;|[0m
+[0;32mI (17488) Cipher Text: 0x3ffd34a0   cc 6a 9f 3c 59 cc 96 0d  5c b5 be 10 b9 56 d0 34  |.j.<Y...\....V.4|[0m
+[0;32mI (17488) Cipher Text: 0x3ffd34b0   1e 22 ce 6a f3 e0 a3 15  45 ac 33 d4 41 fa 7f 34  |.".j....E.3.A..4|[0m
+[0;32mI (17498) Cipher Text: 0x3ffd34c0   d4 24 5a 9e 11 87 14 c7  63 d0 d4 e6 13 af dc 5a  |.$Z.....c......Z|[0m
+[0;32mI (17508) Cipher Text: 0x3ffd34d0   51 82 e0 a5 e9 fe 66 2c  3c 1b 5b 67 8e 17 f2 6e  |Q.....f,<.[g...n|[0m
+[0;32mI (17518) Cipher Text: 0x3ffd34e0   20 79 c5 b7 70 99 49 30  58 38 4d bc 7d 47 c8 9d  | y..p.I0X8M.}G..|[0m
+[0;32mI (17528) Cipher Text: 0x3ffd34f0   18 fb 1f 83 ff 45 6a 9d  28 32 06 98 d2 dc 3a 7e  |.....Ej.(2....:~|[0m
+[0;32mI (17538) Cipher Text: 0x3ffd3500   f3 3b 72 da b8 d5 46 6d  d0 77 af 43 3f 18 7c 6f  |.;r...Fm.w.C?.|o|[0m
+[0;32mI (17548) Cipher Text: 0x3ffd3510   ac eb 13 e1 a3 31 e8 f9  62 77 2e bf 36 96 6f d8  |.....1..bw..6.o.|[0m
+[0;32mI (17558) Cipher Text: 0x3ffd3520   04 29 e8 66 83 01 45 fe  68 83 7d 1d 31 2a a6 35  |.).f..E.h.}.1*.5|[0m
+[0;32mI (17568) Cipher Text: 0x3ffd3530   9e 13 96 68 ae 50 3c b4  90 e6 52 c0 66 99 1c df  |...h.P<...R.f...|[0m
+[0;32mI (17578) Cipher Text: 0x3ffd3540   f6 1e 20 3c 6b 2f f0 2f  57 28 0a d7 c9 9a 49 b7  |.. <k/./W(....I.|[0m
+[0;32mI (17588) Cipher Text: 0x3ffd3550   a7 3a 8a d4 b8 71 e6 d0  eb 5f 4e ff 2c c6 68 0f  |.:...q..._N.,.h.|[0m
+[0;32mI (17588) Cipher Text: 0x3ffd3560   81 cd 25 ec b2 f7 02 93  24 8f 54 43 36 5c 21 e4  |..%.....$.TC6\!.|[0m
+[0;32mI (17598) Cipher Text: 0x3ffd3570   66 8b d9 bf fb 4f 63 97  fb 41 19 46 d7 f5 ff b0  |f....Oc..A.F....|[0m
+[0;32mI (17608) Cipher Text: 0x3ffd3580   71 98 e7 89 fa 91 b1 87  64 50 2f 0a c5 16 a5 72  |q.......dP/....r|[0m
+[0;32mI (17618) Cipher Text: 0x3ffd3590   20 54 ed 52 1c f1 95 17  ee 15 b2 a5 a4 1d 27 3b  | T.R..........';|[0m
+[0;32mI (17628) Cipher Text: 0x3ffd35a0   f4 12 ba 14 2c da 81 00  19 77 0d e0 af 20 58 f5  |....,....w... X.|[0m
+[0;32mI (17638) Cipher Text: 0x3ffd35b0   9c 33 49 67 f2 26 f9 fc  78 55 26 cf b3 3a 50 9f  |.3Ig.&..xU&..:P.|[0m
+[0;32mI (17648) Cipher Text: 0x3ffd35c0   bb 39 1a 70 fa c6 10 a5  dd 1a c9 49 d7 6c e3 a2  |.9.p.......I.l..|[0m
+[0;32mI (17658) Cipher Text: 0x3ffd35d0   fc 1f 5e c5 94 99 2c ae  59 95 be c5 ca a2 08 2b  |..^...,.Y......+|[0m
+[0;32mI (17668) Cipher Text: 0x3ffd35e0   fa 27 a8 e3 70 5a 15 09  13 de 1d 8c c5 4e 5a c1  |.'..pZ.......NZ.|[0m
+[0;32mI (17678) Cipher Text: 0x3ffd35f0   9e b1 3c f4 71 ff ba ee  47 a0 bf 7f c9 28 1a 3c  |..<.q...G....(.<|[0m
+[0;32mI (17688) Cipher Text: 0x3ffd3600   1e aa 10 18 c0 c8 d6 64  67 fa 43 5f 23 67 ff 65  |.......dg.C_#g.e|[0m
+[0;32mI (17698) Cipher Text: 0x3ffd3610   99 72 5a fe cb 5d c6 6c  63 3b 9a f8 7b 0f 1f c7  |.rZ..].lc;..{...|[0m
+[0;32mI (17698) Cipher Text: 0x3ffd3620   9b 17 a3 f1 68 e0 a2 c4  03 7b 8d 8c 6d a7 b0 96  |....h....{..m...|[0m
+[0;32mI (17708) Cipher Text: 0x3ffd3630   50 80 0e e7 92 21 b5 04  18 7b 3a eb 87 be b2 e7  |P....!...{:.....|[0m
+[0;32mI (17718) Cipher Text: 0x3ffd3640   44 1b 58 00 2f 49 4e a6  73 5b e4 84 0c ae 9f d6  |D.X./IN.s[......|[0m
+[0;32mI (17728) Cipher Text: 0x3ffd3650   18 34 8c 0a a9 12 f4 c9  ef 90 fb 47 7a 0c 20 a4  |.4.........Gz. .|[0m
+[0;32mI (17738) Cipher Text: 0x3ffd3660   31 fc 97 e0 bb 76 b3 4d  9a 8d c6 46 9a f1 e9 02  |1....v.M...F....|[0m
+[0;32mI (17748) Cipher Text: 0x3ffd3670   27 40 8d 1f d1 f3 b3 05  c1 ee 91 57 3e 35 df c0  |'@.........W>5..|[0m
+[0;32mI (17758) Cipher Text: 0x3ffd3680   91 33 63 8c 2c b6 29 d8  a1 cd fb e3 ae 40 cb 85  |.3c.,.)......@..|[0m
+[0;32mI (17768) Cipher Text: 0x3ffd3690   fa b8 cd df 31 e3 52 00  eb c4 e4 0e 4d 24 8e f7  |....1.R.....M$..|[0m
+[0;32mI (17778) Cipher Text: 0x3ffd36a0   70 54 6e 60 27 1d b1 a8  7c 0d af d5 a0 30 5a d3  |pTn`'...|....0Z.|[0m
+[0;32mI (17788) Cipher Text: 0x3ffd36b0   9b 14 ce aa c7 c3 3c 80  0d 9c ff 56 51 e4 20 93  |......<....VQ. .|[0m
+[0;32mI (17798) Cipher Text: 0x3ffd36c0   b3 bc 61 5b f2 e5 a3 c9  59 46 c1 9c 48 e4 1d 9e  |..a[....YF..H...|[0m
+[0;32mI (17808) Cipher Text: 0x3ffd36d0   53 26 50 27 eb 6d 93 8d  63 3b fe 95 3e bd b3 2c  |S&P'.m..c;..>..,|[0m
+[0;32mI (17818) Cipher Text: 0x3ffd36e0   23 af 78 e1 a6 10 8f 61  cf 48 01 50 1e 1c b7 51  |#.x....a.H.P...Q|[0m
+[0;32mI (17818) Cipher Text: 0x3ffd36f0   28 dd 40 a6 b8 49 d2 d0  20 9b 5d bb 6e d2 a6 78  |(.@..I.. .].n..x|[0m
+[0;32mI (17828) Cipher Text: 0x3ffd3700   bd 2c 0d d8 c9 6f 69 d8  3f 24 d3 03 f0 92 6a 41  |.,...oi.?$....jA|[0m
+[0;32mI (17838) Cipher Text: 0x3ffd3710   43 a7 35 ed 94 9c 5d ac  37 c8 f3 8e ad e5 ed b2  |C.5...].7.......|[0m
+[0;32mI (17848) Cipher Text: 0x3ffd3720   fb 92 d2 31 45 41 55 6d  48 81 aa 5b a8 6c 36 ec  |...1EAUmH..[.l6.|[0m
+[0;32mI (17858) Cipher Text: 0x3ffd3730   81 30 4d e0 bc dc 76 a6  be 0a 8f 46 4f 6b 27 e3  |.0M...v....FOk'.|[0m
+[0;32mI (17868) Cipher Text: 0x3ffd3740   49 43 44 fa 1a 48 1f b5  62 cc 41 5d 0d 2c 2d bb  |ICD..H..b.A].,-.|[0m
+[0;32mI (17878) Cipher Text: 0x3ffd3750   e9 df 5f 22 15 75 7f f9  f9 2f 2f 2b 07 9e 59 d2  |.._".u...//+..Y.|[0m
+[0;32mI (17888) Cipher Text: 0x3ffd3760   88 08 e6 62 fe dd 23 5c  ef 46 8e 4f 97 ef 1c 55  |...b..#\.F.O...U|[0m
+[0;32mI (17898) Cipher Text: 0x3ffd3770   7b b7 93 e2 d4 8c 01 f0  55 db 3b b5 ce a9 22 32  |{.......U.;..."2|[0m
+[0;32mI (17908) Cipher Text: 0x3ffd3780   39 6f 07 0e 88 af 9f 75  82 39 5f 2e 36 e1 18 18  |9o.....u.9_.6...|[0m
+[0;32mI (17918) Cipher Text: 0x3ffd3790   b7 29 d0 e6 4f 68 dc 3f  fb 33 79 38 94 d6 bc 75  |.)..Oh.?.3y8...u|[0m
+[0;32mI (17928) Cipher Text: 0x3ffd37a0   8d 38 d4 91 32 c6 c7 8d  a3 be 4a 49 69 2d c1 6a  |.8..2.....JIi-.j|[0m
+[0;32mI (17928) Cipher Text: 0x3ffd37b0   0c d8 e4 89 1d 99 b5 f1  b4 ac 42 58 2e 15 c1 44  |..........BX...D|[0m
+[0;32mI (17938) Cipher Text: 0x3ffd37c0   c2 e7 c6 46 82 04 a2 41  52 93 af 07 da e0 84 d2  |...F...AR.......|[0m
+[0;32mI (17948) Cipher Text: 0x3ffd37d0   7e b4 34 64 a6 05 0c c3  29 f4 5b e5 e5 7d 48 d0  |~.4d....).[..}H.|[0m
+[0;32mI (17958) Cipher Text: 0x3ffd37e0   5b 9e 63 e7 cb 95 f0 41  08 8f d4 a5 4f 78 3c b4  |[.c....A....Ox<.|[0m
+[0;32mI (17968) Cipher Text: 0x3ffd37f0   7d 36 5a 22 a2 99 1c 97  c7 bd d2 d9 1b ff 31 7e  |}6Z"..........1~|[0m
+[0;32mI (17978) Cipher Text: 0x3ffd3800   e1 c4 40 3c 1b 43 5c 59  ea b2 67 f0 0c 0f 1f 57  |..@<.C\Y..g....W|[0m
+[0;32mI (17988) Cipher Text: 0x3ffd3810   af 98 48 1a 27 23 4b 50  25 cf 86 0b 53 12 25 7a  |..H.'#KP%...S.%z|[0m
+[0;32mI (17998) Cipher Text: 0x3ffd3820   7e 34 74 66 89 2e ee b8  73 90 63 d1 76 59 8b 05  |~4tf....s.c.vY..|[0m
+[0;32mI (18008) Cipher Text: 0x3ffd3830   fb 1d 01 56 a5 83 03 90  02 ce 01 9b 9e 48 4f ec  |...V.........HO.|[0m
+[0;32mI (18018) Cipher Text: 0x3ffd3840   44 4e 24 74 4e 51 d8 7d  8e 40 33 b0 89 27 40 e3  |DN$tNQ.}.@3..'@.|[0m
+[0;32mI (18028) Cipher Text: 0x3ffd3850   aa f9 cc 97 69 77 82 52  bd 29 32 39 e5 c7 9b 33  |....iw.R.)29...3|[0m
+[0;32mI (18038) Cipher Text: 0x3ffd3860   07 c5 54 be 0a 6f 43 08  9e 55 64 65 5c ca cb 47  |..T..oC..Ude\..G|[0m
+[0;32mI (18048) Cipher Text: 0x3ffd3870   15 d1 ff 68 1a f9 59 84  41 0f 91 99 6d e9 4f a1  |...h..Y.A...m.O.|[0m
+[0;32mI (18048) Cipher Text: 0x3ffd3880   98 c3 7b fe b4 aa e9 c8  5f da 94 58 1b fc 54 ab  |..{....._..X..T.|[0m
+[0;32mI (18058) Cipher Text: 0x3ffd3890   97 8d 8d 95 31 bd 44 32  dd 3a d5 c2 f0 51 76 cb  |....1.D2.:...Qv.|[0m
+[0;32mI (18068) Cipher Text: 0x3ffd38a0   96 26 c4 a2 c4 59 47 f4  3b e8 03 bb f8 41 6c 17  |.&...YG.;....Al.|[0m
+[0;32mI (18078) Cipher Text: 0x3ffd38b0   d8 06 8b 19 95 3e d1 d1  9e ae 66 6f 8e a3 77 54  |.....>....fo..wT|[0m
+[0;32mI (18088) Cipher Text: 0x3ffd38c0   0c 99 a5 d1 f6 b2 36 25  5f 58 c5 36 be 39 99 c2  |......6%_X.6.9..|[0m
+[0;32mI (18098) Shared Secret: 0x3ffd317c   5a b0 1e ee 1f f0 56 30  0c a6 fe d6 e2 fe 64 79  |Z.....V0......dy|[0m
+[0;32mI (18108) Shared Secret: 0x3ffd318c   1c f8 28 23 ed 75 4f bb  3f e7 2e b9 65 d8 dd 93  |..(#.uO.?...e...|[0m
+[0;33mW (18118) [AKE PROTOCOL]: DERIVATION OF THE KEYS[0m
+[0;33mW (18118) [AKE PROTOCOL]: GET CONTEXT[0m
+[0;32mI (18128) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+[0;33mW (18128) [AKE PROTOCOL]: DERIVE MASTER KEY[0m
+[0;32mI (18138) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+[0;32mI (18138) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+[0;32mI (18138) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+[0;32mI (18148) [AKE PROTOCOL]: 0x3ffd31f8   e7 7e e9 68 d8 82 48 45  64 cd 3a 71 0f 3a d9 53  |.~.h..HEd.:q.:.S|[0m
+[0;32mI (18158) [AKE PROTOCOL]: 0x3ffd3208   0e c7 3c 32 d9 c4 65 14  d8 a5 7a 4a a6 68 6b e0  |..<2..e...zJ.hk.|[0m
+[0;32mI (18168) [AKE PROTOCOL]: 0x3ffd3218   0c 5d 96 28 48 80 76 e9  71 a5 2c 1d b0 71 9f 60  |.].(H.v.q.,..q.`|[0m
+[0;32mI (18178) [AKE PROTOCOL]: 0x3ffd3228   6c 71 7d 4b 48 04 e2 09  5c 57 0f e1 96 08 95 40  |lq}KH...\W.....@|[0m
+[0;32mI (18188) [AKE PROTOCOL]: Request step 2 built successfully[0m
+[0;33mW (18188) Context: 0x3ffd3294   a1 93 42 a7 11 2d 3f c2  da c0 bf fb 37 ff 03 05  |..B..-?.....7...|[0m
+[0;33mW (18198) Context: 0x3ffd32a4   65 60 69 73 1f 98 ab ae  fc bf 6b c7 bc 47 9a b7  |e`is......k..G..|[0m
+[0;33mW (18208) Context: 0x3ffd32b4   a8 91 e7 2a b6 53 4e e0  97 7d 09 42 b8 46 3e 6f  |...*.SN..}.B.F>o|[0m
+[0;33mW (18218) Context: 0x3ffd32c4   70 78 c7 a1 63 bd 35 97  b8 75 1b b4 ea af f2 a5  |px..c.5..u......|[0m
+[0;33mW (18228) Context: 0x3ffd32d4   5c 8c 16 ff 4b 7e bb ea  2c ea a1 e4 cf 44 cf ab  |\...K~..,....D..|[0m
+[0;33mW (18238) Master Key: 0x3ffd334c   3a 99 01 a6 d3 db 6e 74  74 1c 4e e5 fd be f3 aa  |:.....ntt.N.....|[0m
+[0;33mW (18238) Master Key: 0x3ffd335c   a8 2e 2f 9b 98 88 37 3f  2f c5 f1 61 31 ba d9 06  |../...7?/..a1...|[0m
+[0;33mW (18248) Key Authentication: 0x3ffd3370   0e 02 42 09 cb 1a b2 85  91 4c 11 e6 59 c6 54 c3  |..B......L..Y.T.|[0m
+[0;33mW (18258) Key Authentication: 0x3ffd3380   50 f7 09 00 8e 14 67 4a  93 fb 58 e6 26 ce ba 55  |P.....gJ..X.&..U|[0m
+[0;33mW (18268) Key Session: 0x3ffd32e8   e9 2b 64 87 5e 2b af 1e  12 ff c6 72 00 89 25 1d  |.+d.^+.....r..%.|[0m
+[0;33mW (18278) Key Session: 0x3ffd32f8   38 8d 56 e2 40 aa 3a be  6a fd 55 c1 04 aa 7e 38  |8.V.@.:.j.U...~8|[0m
+[0;33mW (18288) Tag_D: 0x3ffd31f8   e7 7e e9 68 d8 82 48 45  64 cd 3a 71 0f 3a d9 53  |.~.h..HEd.:q.:.S|[0m
+[0;33mW (18298) Tag_D: 0x3ffd3208   0e c7 3c 32 d9 c4 65 14  d8 a5 7a 4a a6 68 6b e0  |..<2..e...zJ.hk.|[0m
+[0;33mW (18308) Tag_D: 0x3ffd3218   0c 5d 96 28 48 80 76 e9  71 a5 2c 1d b0 71 9f 60  |.].(H.v.q.,..q.`|[0m
+[0;33mW (18318) Tag_D: 0x3ffd3228   6c 71 7d 4b 48 04 e2 09  5c 57 0f e1 96 08 95 40  |lq}KH...\W.....@|[0m
+[0;32mI (18328) [AKE PROTOCOL]: STEP 2 JSON: {[0m
+	"Step":	2,
+	"SID":	"oZNCpxEtP8LawL/7N/8DBQ==",
+	"SID_Len":	16,
+	"Nonce_D":	"cHjHoWO9NZe4dRu06q/ypVyMFv9LfrvqLOqh5M9Ez6s=",
+	"Nonce_D_Len":	32,
+	"CT_Kyber":	"hdqn7FR3gWsh5pzXheXXO8xqnzxZzJYNXLW+ELlW0DQeIs5q8+CjFUWsM9RB+n801CRanhGHFMdj0NTmE6/cWlGC4KXp/mYsPBtbZ44X8m4gecW3cJlJMFg4Tbx9R8idGPsfg/9Fap0oMgaY0tw6fvM7ctq41UZt0HevQz8YfG+s6xPhozHo+WJ3Lr82lm/YBCnoZoMBRf5og30dMSqmNZ4TlmiuUDy0kOZSwGaZHN/2HiA8ay/wL1coCtfJmkm3pzqK1Lhx5tDrX07/LMZoD4HNJeyy9wKTJI9UQzZcIeRmi9m/+09jl/tBGUbX9f+wcZjnifqRsYdkUC8KxRalciBU7VIc8ZUX7hWypaQdJzv0EroULNqBABl3DeCvIFj1nDNJZ/Im+fx4VSbPszpQn7s5GnD6xhCl3RrJSdds46L8H17FlJksrlmVvsXKoggr+ieo43BaFQkT3h2MxU5awZ6xPPRx/7ruR6C/f8koGjweqhAYwMjWZGf6Q18jZ/9lmXJa/stdxmxjO5r4ew8fx5sXo/Fo4KLEA3uNjG2nsJZQgA7nkiG1BBh7OuuHvrLnRBtYAC9JTqZzW+SEDK6f1hg0jAqpEvTJ75D7R3oMIKQx/Jfgu3azTZqNxkaa8ekCJ0CNH9HzswXB7pFXPjXfwJEzY4wstinYoc37465Ay4X6uM3fMeNSAOvE5A5NJI73cFRuYCcdsah8Da/VoDBa05sUzqrHwzyADZz/VlHkIJOzvGFb8uWjyVlGwZxI5B2eUyZQJ+ttk41jO/6VPr2zLCOveOGmEI9hz0gBUB4ct1Eo3UCmuEnS0CCbXbtu0qZ4vSwN2Mlvadg/JNMD8JJqQUOnNe2UnF2sN8jzjq3l7bL7ktIxRUFVbUiBqluobDbsgTBN4Lzcdqa+Co9GT2sn40lDRPoaSB+1YsxBXQ0sLbvp318iFXV/+fkvLysHnlnSiAjmYv7dI1zvRo5Pl+8cVXu3k+LUjAHwVds7tc6pIjI5bwcOiK+fdYI5Xy424RgYtynQ5k9o3D/7M3k4lNa8dY041JEyxseNo75KSWktwWoM2OSJHZm18bSsQlguFcFEwufGRoIEokFSk68H2uCE0n60NGSmBQzDKfRb5eV9SNBbnmPny5XwQQiP1KVPeDy0fTZaIqKZHJfHvdLZG/8xfuHEQDwbQ1xZ6rJn8AwPH1evmEgaJyNLUCXPhgtTEiV6fjR0Zoku7rhzkGPRdlmLBfsdAValgwOQAs4Bm55IT+xETiR0TlHYfY5AM7CJJ0DjqvnMl2l3glK9KTI55cebMwfFVL4Kb0MInlVkZVzKy0cV0f9oGvlZhEEPkZlt6U+hmMN7/rSq6chf2pRYG/xUq5eNjZUxvUQy3TrVwvBRdsuWJsSixFlH9DvoA7v4QWwX2AaLGZU+0dGermZvjqN3VAyZpdH2sjYlX1jFNr45mcI=",
+	"CT_Kyber_Len":	1088,
+	"Tag_D":	"537paNiCSEVkzTpxDzrZUw7HPDLZxGUU2KV6SqZoa+AMXZYoSIB26XGlLB2wcZ9gbHF9S0gE4glcVw/hlgiVQA==",
+	"Tag_D_Len":	64
+}
+[0;32mI (19378) [AKE PROTOCOL]: Data response from step 2: {[0m
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Step": 2,
+  "Tag_S": "8MRSuDhgp2oQFV+0Gj8hSCeack2zKo7O6ZWJZaIkLa0eIzRCEhPMzOW/mlcMVWnefcO9G8dm+AMJOnl9DwFmAQ==",
+  "Tag_S_Len": 64
+}
+
+[0;32mI (19388) [AKE PROTOCOL]: TagS verification successful[0m
+[0;32mI (19398) [AKE PROTOCOL]: TagS: [0m
+[0;32mI (19398) [AKE PROTOCOL]: 0x3ffc1e20   f0 c4 52 b8 38 60 a7 6a  10 15 5f b4 1a 3f 21 48  |..R.8`.j.._..?!H|[0m
+[0;32mI (19408) [AKE PROTOCOL]: 0x3ffc1e30   27 9a 72 4d b3 2a 8e ce  e9 95 89 65 a2 24 2d ad  |'.rM.*.....e.$-.|[0m
+[0;32mI (19418) [AKE PROTOCOL]: 0x3ffc1e40   1e 23 34 42 12 13 cc cc  e5 bf 9a 57 0c 55 69 de  |.#4B.......W.Ui.|[0m
+[0;32mI (19428) [AKE PROTOCOL]: 0x3ffc1e50   7d c3 bd 1b c7 66 f8 03  09 3a 79 7d 0f 01 66 01  |}....f...:y}..f.|[0m
+[0;32mI (19438) [AKE PROTOCOL]: Tag S verification: SUCCESS[0m
+[0;32mI (19438) [SECURE CHANNEL]: START SECURE CHANNEL SESSION[0m
+[0;32mI (19448) [AKE PROTOCOL]: ------------- SECURE CHANNEL -------------[0m
+[0;33mW (19448) [Protocol Transactions]: Free BEGIN heap: 160548[0m
+[0;32mI (19458) [AKE PROTOCOL]: The data is: 25.600000[0m
+[0;32mI (19458) [Cipher Data]: 0x3ffd30bc   13 0b 8f ee 1e 8f 67 fb  d3 28 c5 e3 c6 a7 f5 a1  |......g..(......|[0m
+[0;32mI (19468) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":0,"IV_Len":16,"IV":"bxVEGYKVDA0SDZNyFzMGHQ==","CipherText_Len":16,"CipherText":"EwuP7h6PZ/vTKMXjxqf1oQ==","Tag_SC_Len":64,"Tag_SC":"LhssXjJ39O6Mf8aMtEYeJI5881MO0QoJPSqQ1Zy6DL7ZVqch5I/IfRZyis67Rp3fCZtAJj7Xm9arZVh2NyWpIg=="}[0m
+[0;32mI (19748) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "3Bbiby1gX8F9YYXbnV9aWt3FSpvlOjC9wTyuAAVypvlakMbw7T3qaS/cE5SbqKQbWB4ERg6kR8uSCqwQPIFJJILlzVpV5dxGasDD3eRl4VU=",
+  "CipherText_Len": 80,
+  "IV": "+C/XbCDwDYvNAGS5lqKIXA==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 0,
+  "Step": 3,
+  "Tag_SC": "vvhJLkSuvv3oqHFMencqDC2Z38l/mMH8S6upE9ylcD4tt8s7KjYAMFiqZrJbEryTBPckD2gDo+6Nyhs7N77GFg==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (19778) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2d64   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (19788) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2d74   22 53 65 71 22 3a 20 30  2c 20 22 53 74 61 74 75  |"Seq": 0, "Statu|[0m
+[0;33mW (19798) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2d84   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (19808) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2d94   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (19818) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (19828) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (19828) [Protocol Transactions]: Free BEGIN heap: 159988[0m
+[0;32mI (19838) [AKE PROTOCOL]: The data is: 26.600000[0m
+[0;32mI (19838) [Cipher Data]: 0x3ffd33e8   de e2 f8 8c 7b c7 3d 3f  c4 7c 19 9b 8f a3 f5 ad  |....{.=?.|......|[0m
+[0;32mI (19848) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":1,"IV_Len":16,"IV":"W/qOBjBYNxCibcC8v9hAbQ==","CipherText_Len":16,"CipherText":"3uL4jHvHPT/EfBmbj6P1rQ==","Tag_SC_Len":64,"Tag_SC":"XXWqmZMskWnhh4ah/Zw7wSBTmEqi9JeIUi5fjd5vv5epFU32ruPixFQRzY4ryE9CnZrdvCnbn8Alm00H6Jq7yA=="}[0m
+[0;32mI (20688) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "jpcce6cP3OaL3NQtdehaefOYLXkW1BOiZ/HSi+YJYX6O/oD8FHbcQwnFz7BOT5/O7RnQ+ccifMM1XGy6Xxu5u+w8PyOmTbwisAvEfTgWwmc=",
+  "CipherText_Len": 80,
+  "IV": "8V2TdvqjCbzyLyBfqFZPNg==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 1,
+  "Step": 3,
+  "Tag_SC": "zTYUtpud52lqPdfo9aTB53qXE0TQUbEnq66IISF69tyAbxnMuQAXm29mKqFRclToiIkBGzK2icGBvjOr3Q2LQg==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (20718) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2e40   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (20728) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2e50   22 53 65 71 22 3a 20 31  2c 20 22 53 74 61 74 75  |"Seq": 1, "Statu|[0m
+[0;33mW (20738) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2e60   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (20748) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd2e70   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (20758) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (20768) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (20768) [Protocol Transactions]: Free BEGIN heap: 160000[0m
+[0;32mI (20778) [AKE PROTOCOL]: The data is: 27.600000[0m
+[0;32mI (20778) [Cipher Data]: 0x3ffd3314   b8 ce 48 a2 82 62 6c fc  c8 5d b2 25 08 35 08 7c  |..H..bl..].%.5.||[0m
+[0;32mI (20788) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":2,"IV_Len":16,"IV":"qhXb3Z7xHDfvZo0xGyXfZw==","CipherText_Len":16,"CipherText":"uM5IooJibPzIXbIlCDUIfA==","Tag_SC_Len":64,"Tag_SC":"IHIyL6hnFvyq5ilyIypc8j8Mj0d+6hY9s3J/1wZCOjAVTDHzBNX3DkCf0Hce2IpyE8IxUqbBnm6TsH8S5GBZsg=="}[0m
+[0;32mI (21078) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "Jpv1Ed6dh5u2bB5W7dv31O0K2KM/Uu0jXOsBfl5gdjSA+YONT4r1oNDcHqX6ee/RUtYu7z54OIQVXMhyXIwtydppRuABAuy2KYy8kpTMEFQ=",
+  "CipherText_Len": 80,
+  "IV": "HhuLwwsdZvnXtw9d8TyhOQ==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 2,
+  "Step": 3,
+  "Tag_SC": "5zS74er4D8xEGIja/Q7GlS80bMTV5X5nRSdgeR9vR+vwN6o4p0FG1WY9exKl+Qe7RVlyj4nw50dJLqhhQRqZ3w==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (21108) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33c0   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (21118) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33d0   22 53 65 71 22 3a 20 32  2c 20 22 53 74 61 74 75  |"Seq": 2, "Statu|[0m
+[0;33mW (21128) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33e0   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (21138) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33f0   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (21148) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (21158) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (21158) [Protocol Transactions]: Free BEGIN heap: 159988[0m
+[0;32mI (21168) [AKE PROTOCOL]: The data is: 28.600000[0m
+[0;32mI (21168) [Cipher Data]: 0x3ffd32f0   e7 90 70 8e a6 ef a5 75  c3 83 34 09 4f f4 bb f5  |..p....u..4.O...|[0m
+[0;32mI (21178) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":3,"IV_Len":16,"IV":"FTwuNERicsBIqNDSckM0DQ==","CipherText_Len":16,"CipherText":"55BwjqbvpXXDgzQJT/S79Q==","Tag_SC_Len":64,"Tag_SC":"25uUQnEqAbZii41JXs8JioMjp3cb6wySiyiFZma1n3HAQplgYjsZzJC4ddzdDSHjNieEHoHsv4DaRLDzGimeaw=="}[0m
+[0;32mI (21488) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "b6G3XsfEHXSrnaGRK++BsD3DkM/+k0fP5fnhbCbypR4r4DYzPYGW3l7zGXk4z8l4CXPLrKcygFBElru24IuCUQDIoUMc2o1CLFxORqjlBhk=",
+  "CipherText_Len": 80,
+  "IV": "pzbePvIh6uqSJwYAjo2cug==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 3,
+  "Step": 3,
+  "Tag_SC": "Kr506OCzhXbPomz2TdBD5xdK7msCWEPlQu7XPmzZZjDwAH+LKRwFLW7bLT4fmswX5UdBmI+4fH1c86Fx3JYtbA==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (21518) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd275c   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (21528) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd276c   22 53 65 71 22 3a 20 33  2c 20 22 53 74 61 74 75  |"Seq": 3, "Statu|[0m
+[0;33mW (21538) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd277c   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (21558) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd278c   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (21558) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (21568) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (21568) [Protocol Transactions]: Free BEGIN heap: 160000[0m
+[0;32mI (21578) [AKE PROTOCOL]: The data is: 29.600000[0m
+[0;32mI (21578) [Cipher Data]: 0x3ffd32f0   87 b2 98 3e c4 f8 f3 ae  29 82 5e 66 f7 f6 04 58  |...>....).^f...X|[0m
+[0;32mI (21588) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":4,"IV_Len":16,"IV":"7MI/+YOb7KXjZWo8ArkRMw==","CipherText_Len":16,"CipherText":"h7KYPsT4864pgl5m9/YEWA==","Tag_SC_Len":64,"Tag_SC":"Q/NgBzEh5B0amfCmBnI3n6oRBUI9h6aWFtwrtX3aMXlYMHir+woo4wxStSW9IiGbUBmJmfArGES2+IiZnuL0Yg=="}[0m
+[0;32mI (21758) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "kJJQxR8Fya8GpcTOLbqTPNiftnHsuxDsTML1LVW9DTaVQHl4Zo6qyZXHpxahwPEm/+Xjm6GDZhGKm0ZUyV7VDaURzQfnKKFdHnvm7noVzwQ=",
+  "CipherText_Len": 80,
+  "IV": "oZe9QaVDKTAEF4ftPDeJtA==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 4,
+  "Step": 3,
+  "Tag_SC": "E8JVU8heXcwr6NDKGpU9vmJLfZRA9chmdgQghcyjv+fxkiXaW1hTWIX0VUd37FATE1MpoiqIGHUl3lk56FhYkA==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (21798) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33c0   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (21808) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33d0   22 53 65 71 22 3a 20 34  2c 20 22 53 74 61 74 75  |"Seq": 4, "Statu|[0m
+[0;33mW (21818) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33e0   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (21828) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33f0   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (21838) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (21838) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (21848) [Protocol Transactions]: Free BEGIN heap: 159876[0m
+[0;32mI (21848) [AKE PROTOCOL]: The data is: 30.600000[0m
+[0;32mI (21858) [Cipher Data]: 0x3ffd3318   a3 38 73 c3 e5 17 5c 64  49 a8 20 3e a3 cd 4c b3  |.8s...\dI. >..L.|[0m
+[0;32mI (21868) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":5,"IV_Len":16,"IV":"iNCYrFCi2W6eTLCXDbd+ZA==","CipherText_Len":16,"CipherText":"ozhzw+UXXGRJqCA+o81Msw==","Tag_SC_Len":64,"Tag_SC":"u0unps6j70Qt2om7MFJLT7Q5dagdWQJg4c8uWBiKiJf7Y72+RX17+nm3ImE2TAQycQBoGAkbi6kYqU3+nV1dvA=="}[0m
+[0;32mI (22868) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "YBe+TuWCjeYeNExPip7Vz4NfcQQcWV9BibEprk6d5+2MLYfqbdi5wQhMckuMBoIhA7vFTl+EGVJvoTtYyI8CS43hp18kMhfCqR3mFIJLMjA=",
+  "CipherText_Len": 80,
+  "IV": "mQV4825Hr/13v0oh5Yyl9A==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 5,
+  "Step": 3,
+  "Tag_SC": "lrUn0MyXgGZOMAHhRt9hKieMqIG7Ol9vpAOYJJldb+NEX6bel6Co1j2686v1w+VBOagMP20tsEC7xFWon8yDVw==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (22908) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33c0   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (22918) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33d0   22 53 65 71 22 3a 20 35  2c 20 22 53 74 61 74 75  |"Seq": 5, "Statu|[0m
+[0;33mW (22928) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33e0   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (22938) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33f0   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (22948) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (22948) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (22958) [Protocol Transactions]: Free BEGIN heap: 159864[0m
+[0;32mI (22958) [AKE PROTOCOL]: The data is: 31.600000[0m
+[0;32mI (22968) [Cipher Data]: 0x3ffd3304   fd 39 3c 37 bc c6 ee 9c  29 1e 02 c0 31 ba 4b d5  |.9<7....)...1.K.|[0m
+[0;32mI (22978) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":6,"IV_Len":16,"IV":"4x3q6cTH2mBS4vu64CCtaQ==","CipherText_Len":16,"CipherText":"/Tk8N7zG7pwpHgLAMbpL1Q==","Tag_SC_Len":64,"Tag_SC":"iWLihtcZ8YnBSGoCWOCVHQUjam/MXwOqnvSf7oUY/41NjRCtjbMLHj+6aP2dapcAMWsGPmqijZ40rnHoXhLcVg=="}[0m
+[0;32mI (23918) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "ti1w4k02LNM9O3WrvQrHspF/udekIVAeET9k1myJfDPmcboocQGwxfH+YmZMemL6/P59VnOZjsiw/9tmWlsK7xeIqoAwYqo+FTr11MlLDJY=",
+  "CipherText_Len": 80,
+  "IV": "oojp1qBSxwvJFdgRd11zeg==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 6,
+  "Step": 3,
+  "Tag_SC": "ui83Hcuf8rW1bRNFVnq0GllDvAleksp4MO1aDe4UHGhqJDHUXFOxa5rL5qt5oRi2/PH5I65yPCKlqGIYTN7Afw==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (23948) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd39f8   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (23958) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd3a08   22 53 65 71 22 3a 20 36  2c 20 22 53 74 61 74 75  |"Seq": 6, "Statu|[0m
+[0;33mW (23968) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd3a18   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (23978) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd3a28   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (23988) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (23988) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (23998) [Protocol Transactions]: Free BEGIN heap: 160000[0m
+[0;32mI (23998) [AKE PROTOCOL]: The data is: 32.599998[0m
+[0;32mI (24008) [Cipher Data]: 0x3ffd33e8   6d ca de 2d 7f 66 13 cc  59 ec 29 ae 2f f6 fa 81  |m..-.f..Y.)./...|[0m
+[0;32mI (24018) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":7,"IV_Len":16,"IV":"DtnnbledZH8mJYlhyzHRPA==","CipherText_Len":16,"CipherText":"bcreLX9mE8xZ7CmuL/b6gQ==","Tag_SC_Len":64,"Tag_SC":"FPxxSB0tYCSUpFbXlIile8MeF8m1OC1Oc5yplizDEHFE8GOWLXDgDj8OM3w/JW5FR5S9TOKxXLWqltn21yriEg=="}[0m
+[0;32mI (24318) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "4lq9Kk7aAFmY4vP3C8RQ0zAIBwCdS7iLMQzlnJyTvVhDyKxvJF4B9G9qrRWC2FnUwxnsrlexAEh28CzTAuPEBrKdH186GuOJS2eylkxA1v4=",
+  "CipherText_Len": 80,
+  "IV": "4e4WhEVeCkwN+ifzOsQitg==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 7,
+  "Step": 3,
+  "Tag_SC": "4ghhPQzptplPDX0ou4wHq7HE0isRBsXOO8VjbFye6C+C08amQFRBU0wieV1RUrG2G954Qyv5HNh95qwL32XH1A==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (24358) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24b0   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (24368) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24c0   22 53 65 71 22 3a 20 37  2c 20 22 53 74 61 74 75  |"Seq": 7, "Statu|[0m
+[0;33mW (24378) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24d0   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (24388) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24e0   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (24398) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (24398) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (24408) [Protocol Transactions]: Free BEGIN heap: 159996[0m
+[0;32mI (24408) [AKE PROTOCOL]: The data is: 33.599998[0m
+[0;32mI (24418) [Cipher Data]: 0x3ffd33c0   c3 13 e5 90 df 7a ba 85  d2 7c 3d 06 74 e9 ac 2e  |.....z...|=.t...|[0m
+[0;32mI (24428) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":8,"IV_Len":16,"IV":"u1xfVNpCqUpNWo+0HLQvUg==","CipherText_Len":16,"CipherText":"wxPlkN96uoXSfD0GdOmsLg==","Tag_SC_Len":64,"Tag_SC":"oBospbYb2bewuLhf4+LsYQS0p/IOR83gw1ImUQbYqd1GZZb1YFu5UUXC3xL3mhUBmZpZ5rHWUjxtkm71KTCBQA=="}[0m
+[0;32mI (24748) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "7l7cA/5VsT+QsNKMtNoF5f4uBtfWzSXHr9rUNkDFzh64oDG56sHWy1q/8bvCN+uRwM584n7Uo433jKvhv83EZPhrVMuqimaL8HAYgsR7AqU=",
+  "CipherText_Len": 80,
+  "IV": "n+ag1Iw0nwaF/5MefwT+kw==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 8,
+  "Step": 3,
+  "Tag_SC": "zXRstpD2LwZt/4O9o5tEw3Mo6bkoGQ1lM8eKjGj0dtD08VzrJwaEFmEIwaTnm/ynVWS7VIob7/NtRxcZ+5a2Zw==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (24778) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33d4   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (24788) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33e4   22 53 65 71 22 3a 20 38  2c 20 22 53 74 61 74 75  |"Seq": 8, "Statu|[0m
+[0;33mW (24798) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd33f4   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (24808) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd3404   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (24818) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (24818) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;33mW (24828) [Protocol Transactions]: Free BEGIN heap: 160328[0m
+[0;32mI (24828) [AKE PROTOCOL]: The data is: 34.599998[0m
+[0;32mI (24838) [Cipher Data]: 0x3ffd33e8   38 73 52 5b 7a 80 53 2d  90 14 5b 97 3a 63 3e 6b  |8sR[z.S-..[.:c>k|[0m
+[0;32mI (24848) [SECURE CHANNEL]: SECURE CHANNEL MESSAGE JSON: {"Step":3,"SID_Len":16,"SID":"oZNCpxEtP8LawL/7N/8DBQ==","Seq":9,"IV_Len":16,"IV":"BKz2kXrwrikjOwUTRu5i3w==","CipherText_Len":16,"CipherText":"OHNSW3qAUy2QFFuXOmM+aw==","Tag_SC_Len":64,"Tag_SC":"gzrrZ4j5/91+0GZLmIgyPuQk0iebsQoXmWw1HGOkwqfluLIKSh0kRgkVpZIKnfoEOQClm7Hm2BDOjkbUuConlQ=="}[0m
+[0;32mI (25148) [SECURE CHANNEL]: Secure channel response: {[0m
+  "CipherText": "6HAm+TSDY7TCmLccmGO8XgVq5U8qTBCXT80Acae8MhWSuw5/DjeqkXDOsIyLq+MSYV2SbI504JdCgxzta7qkBKtfIe1hOLwqKD2xHVpgOuk=",
+  "CipherText_Len": 80,
+  "IV": "YI+U0cAcrhs6KNkizZNiaA==",
+  "IV_Len": 16,
+  "SID": "oZNCpxEtP8LawL/7N/8DBQ==",
+  "SID_Len": 16,
+  "Seq": 9,
+  "Step": 3,
+  "Tag_SC": "qNtRKfiU90nGi3mbefeKGLlLWloy6YsRkD6dnfpy/0sY4XCoTVGmJidoeozc8/wzdrnvSjWmVQe5mYk1WWRS1w==",
+  "Tag_SC_Len": 64
+}
+
+[0;33mW (25178) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24b0   7b 22 52 65 73 70 6f 6e  73 65 22 3a 20 31 2c 20  |{"Response": 1, |[0m
+[0;33mW (25188) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24c0   22 53 65 71 22 3a 20 39  2c 20 22 53 74 61 74 75  |"Seq": 9, "Statu|[0m
+[0;33mW (25198) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24d0   73 22 3a 20 22 53 75 63  63 65 73 73 22 2c 20 22  |s": "Success", "|[0m
+[0;33mW (25208) RESPONSE DATA FROM SECURE CHANNEL: 0x3ffd24e0   53 54 45 50 22 3a 20 32  7d                       |STEP": 2}|[0m
+[0;32mI (25218) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (25228) [SECURE CHANNEL]: SECURE MESSAGE IS FREE[0m
+[0;32mI (25228) [SECURE CHANNEL]: SECURE CHANNEL SESSION IS FREE[0m
+[0;33mW (25238) [Protocol Transactions]: Free END heap: 160720[0m
+[0;32mI (25238) main_task: Returned from app_main()[0m

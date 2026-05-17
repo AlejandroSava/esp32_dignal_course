@@ -12,6 +12,7 @@ idf_component_register(
         "./components/src/wifi.c"
         "./components/src/hkdf.c"
         "./components/src/secure_channel.c"
+        "./components/src/api_ake_protocol.c"
         #"secure_storage.c"
         #"write_secure_storage.c" 
         #"read_secure_storage.c"
