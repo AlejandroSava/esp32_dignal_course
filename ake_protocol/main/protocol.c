@@ -37,26 +37,9 @@ void app_main(void)
     device_info = calloc(1, sizeof(struct device_info));
     session = calloc(1, sizeof(struct secure_session));
 
-    if (puf_obj == NULL || aes_key_ss == NULL ||
-        device_info == NULL || session == NULL) {
-        ESP_LOGE(TAG_PROT, "Memory allocation failed");
-        goto cleanup;
-    }
-
-    if (get_puf_obj_from_puf(puf_obj, true) == false) {
-        ESP_LOGE(TAG_PROT, "Error getting PUF object");
-        goto cleanup;
-    }
-
-    if (derive_aes_puf_key_from_puf(puf_obj, aes_key_ss) == false) {
-        ESP_LOGE(TAG_PROT, "Error deriving AES PUF key");
-        goto cleanup;
-    }
-
-    if (get_device_info(device_info, device_name, puf_obj) == false) {
-        ESP_LOGE(TAG_PROT, "Error getting device info");
-        goto cleanup;
-    }
+    get_puf_obj_from_puf(puf_obj, true) // change to true is the puf is provisioned 
+    derive_aes_puf_key_from_puf(puf_obj, aes_key_ss)
+    get_device_info(device_info, device_name, puf_obj)
 
     if (root_of_trust_process(http_post, device_info, aes_key_ss) == false) {
         ESP_LOGE(TAG_PROT, "ERROR IN ROOT OF TRUST PROCESS");
@@ -82,8 +65,7 @@ void app_main(void)
 
         if (send_float_secure_channel(http_post, session, rsp_plain_data, temperature) == false) {
             ESP_LOGE(TAG_PROT, "Error sending float secure channel");
-            //free_secure_plain_data(rsp_plain_data);
-            //goto cleanup;
+           
         }
 
         temperature += 1.0f;
@@ -93,13 +75,11 @@ void app_main(void)
     }
     ESP_LOGW(TAG_PROT, "Free END heap: %u", (unsigned)esp_get_free_heap_size());
 
-cleanup:
     free(puf_obj);              // if you have this function
     free(aes_key_ss);          // if you have this function
     free_device_info(device_info);
     free_secure_channel_session(session);
     ESP_LOGW(TAG_PROT, "Free END heap: %u", (unsigned)esp_get_free_heap_size());
-
 }
 
 
