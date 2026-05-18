@@ -67,7 +67,8 @@ esp_err_t http_get_and_parse(const char *http_address,
     esp_http_client_config_t config = {
         .url = http_address,
         .method = HTTP_METHOD_GET,
-        .timeout_ms = 8000,
+        //.timeout_ms = 8000,
+        .timeout_ms = 15000,
     };
 
     esp_http_client_handle_t client = esp_http_client_init(&config);

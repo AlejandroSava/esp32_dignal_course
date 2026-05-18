@@ -11,6 +11,11 @@
 #include "esp_system.h"
 #include "esp_log.h"
 #include "cJSON.h"
+#define HEAP_LOG(label) \
+    ESP_LOGW(TAG_API_AKE, "%s | Free heap: %u | Min heap: %u", \
+             label, \
+             (unsigned)esp_get_free_heap_size(), \
+             (unsigned)esp_get_minimum_free_heap_size())
 
 bool root_of_trust_process(const char *http_post, struct device_info *device_info,
                            struct aes_256_obj *aes_key_ss )
@@ -237,12 +242,13 @@ cleanup:
     return status;
 }
 
-
 bool send_float_secure_channel(const char *http_post,
                                struct secure_session *session,
                                struct secure_plain_data *rsp_plain_data,
                                float data)
 {
+    HEAP_LOG("[SC] 00 begin");
+
     if (http_post == NULL || session == NULL || rsp_plain_data == NULL) {
         ESP_LOGE(TAG_API_AKE, "Invalid input parameters");
         return false;
@@ -255,6 +261,7 @@ bool send_float_secure_channel(const char *http_post,
 
     struct secure_plain_data *plain_data =
         calloc(1, sizeof(struct secure_plain_data));
+
 
     struct secure_message *secure_chan_message =
         calloc(1, sizeof(struct secure_message));
@@ -271,12 +278,14 @@ bool send_float_secure_channel(const char *http_post,
 
     ESP_LOGI(TAG_AKE, "The data is: %f", data);
 
+
     if (build_secure_plain_data_float(plain_data,
                                       (const uint8_t *)&data,
                                       sizeof(float)) == false) {
         ESP_LOGE(TAG_API_AKE, "Error building secure plain data float");
         goto cleanup;
     }
+
 
     if (build_secure_message(secure_chan_message,
                              session,
@@ -285,10 +294,12 @@ bool send_float_secure_channel(const char *http_post,
         goto cleanup;
     }
 
+
     ESP_LOG_BUFFER_HEXDUMP("[Cipher Data]",
                            secure_chan_message->ciphertext,
                            secure_chan_message->ciphertext_len,
                            ESP_LOG_INFO);
+
 
     if (send_secure_channel_message(secure_chan_message,
                                     &json_resp_sec_cha_out,
@@ -297,6 +308,7 @@ bool send_float_secure_channel(const char *http_post,
         ESP_LOGE(TAG_API_AKE, "Error sending secure message");
         goto cleanup;
     }
+
 
     if (get_secure_channel_response(rsp_sec_channel_mesg,
                                     json_resp_sec_cha_out) == false) {
@@ -311,6 +323,7 @@ bool send_float_secure_channel(const char *http_post,
         goto cleanup;
     }
 
+
     ESP_LOG_BUFFER_HEXDUMP("RESPONSE DATA FROM SECURE CHANNEL",
                            rsp_plain_data->payload,
                            rsp_plain_data->payload_len,
@@ -319,11 +332,111 @@ bool send_float_secure_channel(const char *http_post,
     return_value = true;
 
 cleanup:
-    if (json_resp_sec_cha_out != NULL)
+    if (json_resp_sec_cha_out != NULL){
         free(json_resp_sec_cha_out);
+        json_resp_sec_cha_out = NULL;
+    }
+
+
     free_secure_plain_data(plain_data);
+    plain_data = NULL;
+
     free_secure_message(secure_chan_message);
+    secure_chan_message = NULL;
+
     free_secure_message(rsp_sec_channel_mesg);
+    rsp_sec_channel_mesg = NULL;
+
 
     return return_value;
 }
+
+// bool send_float_secure_channel(const char *http_post,
+//                                struct secure_session *session,
+//                                struct secure_plain_data *rsp_plain_data,
+//                                float data)
+// {
+//     if (http_post == NULL || session == NULL || rsp_plain_data == NULL) {
+//         ESP_LOGE(TAG_API_AKE, "Invalid input parameters");
+//         return false;
+//     }
+
+//     bool return_value = false;
+
+//     char *json_resp_sec_cha_out = NULL;
+//     size_t json_resp_sec_cha_len = 0;
+
+//     struct secure_plain_data *plain_data =
+//         calloc(1, sizeof(struct secure_plain_data));
+
+//     struct secure_message *secure_chan_message =
+//         calloc(1, sizeof(struct secure_message));
+
+//     struct secure_message *rsp_sec_channel_mesg =
+//         calloc(1, sizeof(struct secure_message));
+
+//     if (plain_data == NULL ||
+//         secure_chan_message == NULL ||
+//         rsp_sec_channel_mesg == NULL) {
+//         ESP_LOGE(TAG_API_AKE, "Memory allocation failed");
+//         goto cleanup;
+//     }
+
+//     ESP_LOGI(TAG_AKE, "The data is: %f", data);
+
+//     if (build_secure_plain_data_float(plain_data,
+//                                       (const uint8_t *)&data,
+//                                       sizeof(float)) == false) {
+//         ESP_LOGE(TAG_API_AKE, "Error building secure plain data float");
+//         goto cleanup;
+//     }
+
+//     if (build_secure_message(secure_chan_message,
+//                              session,
+//                              plain_data) == false) {
+//         ESP_LOGE(TAG_API_AKE, "Error building secure message");
+//         goto cleanup;
+//     }
+
+//     ESP_LOG_BUFFER_HEXDUMP("[Cipher Data]",
+//                            secure_chan_message->ciphertext,
+//                            secure_chan_message->ciphertext_len,
+//                            ESP_LOG_INFO);
+
+//     if (send_secure_channel_message(secure_chan_message,
+//                                     &json_resp_sec_cha_out,
+//                                     &json_resp_sec_cha_len,
+//                                     http_post) == false) {
+//         ESP_LOGE(TAG_API_AKE, "Error sending secure message");
+//         goto cleanup;
+//     }
+
+//     if (get_secure_channel_response(rsp_sec_channel_mesg,
+//                                     json_resp_sec_cha_out) == false) {
+//         ESP_LOGE(TAG_API_AKE, "Error getting secure channel response");
+//         goto cleanup;
+//     }
+
+//     if (get_response_plain_data_json(rsp_sec_channel_mesg,
+//                                      session,
+//                                      rsp_plain_data) == false) {
+//         ESP_LOGE(TAG_API_AKE, "Error getting plain data response");
+//         goto cleanup;
+//     }
+
+//     ESP_LOG_BUFFER_HEXDUMP("RESPONSE DATA FROM SECURE CHANNEL",
+//                            rsp_plain_data->payload,
+//                            rsp_plain_data->payload_len,
+//                            ESP_LOG_WARN);
+
+//     return_value = true;
+
+// cleanup:
+//     if (json_resp_sec_cha_out != NULL)
+//         free(json_resp_sec_cha_out);
+//     free_secure_plain_data(plain_data);
+//     free_secure_message(secure_chan_message);
+//     free_secure_message(rsp_sec_channel_mesg);
+
+//     return return_value;
+// }

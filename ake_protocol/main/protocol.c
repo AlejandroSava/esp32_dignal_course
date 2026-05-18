@@ -71,7 +71,7 @@ void app_main(void)
     ESP_LOGI(TAG_AKE, "------------- SECURE CHANNEL -------------");
     float temperature = 25.6;
     ESP_LOGW(TAG_PROT, "Free BEGIN heap: %u", (unsigned)esp_get_free_heap_size());
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 100; i++) {
         struct secure_plain_data *rsp_plain_data =
             calloc(1, sizeof(struct secure_plain_data));
 
@@ -82,8 +82,8 @@ void app_main(void)
 
         if (send_float_secure_channel(http_post, session, rsp_plain_data, temperature) == false) {
             ESP_LOGE(TAG_PROT, "Error sending float secure channel");
-            free_secure_plain_data(rsp_plain_data);
-            goto cleanup;
+            //free_secure_plain_data(rsp_plain_data);
+            //goto cleanup;
         }
 
         temperature += 1.0f;
@@ -98,6 +98,7 @@ cleanup:
     free(aes_key_ss);          // if you have this function
     free_device_info(device_info);
     free_secure_channel_session(session);
+    ESP_LOGW(TAG_PROT, "Free END heap: %u", (unsigned)esp_get_free_heap_size());
 
 }
 

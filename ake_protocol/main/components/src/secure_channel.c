@@ -636,59 +636,6 @@ fail:
     return false;
 }
 
-// bool get_response_plain_data_json(struct secure_message *rsp_sec_msg,
-//     struct secure_session *session, struct secure_plain_data *rsp_plain_data)
-                          
-// {
-//     // 0. start the objects
-//     struct aes_256_obj *aes = malloc(sizeof(struct aes_256_obj));
-//     self->iv_len = AES_CBC_IV_SIZE;
-//     esp_fill_random(self->iv, AES_CBC_IV_SIZE);
-//     create_aes_256_obj(aes, session->kenc);
-//     read_and_update_iv_aes(aes, self->iv);
-
-//     uint8_t *temp_buf;
-//     size_t temp_buf_size;
-
-
-//     //1 . decode b64 the encrypted info
-//     uint8_t *cipher_data_decoded;
-//     size_t cipher_data_decoded_len;
-
-//     base64_decode_alloc(rsp_sec_msg->ciphertext, &cipher_data_decoded, &cipher_data_decoded_len);
-
-//     //2. decrypt the data
-//     aes_cbc_decrypt_pkcs7(aes->key, aes->keybits,
-//                           aes->iv,
-//                           cipher_data_decoded, cipher_data_decoded_len,
-//                           &temp_buf, &temp_buf_size);
-
-
-//     //3. format the data 
-//     int offset = 0;
-//     memcpy(rsp_plain_data->version, temp_buf + offset, sizeof(rsp_plain_data->version));
-//     offset += sizeof(rsp_plain_data->version);
-    
-//     memcpy(rsp_plain_data->payload_type, temp_buf + offset, sizeof(rsp_plain_data->payload_type));
-//     offset += sizeof(rsp_plain_data->payload_type);
-    
-//     memcpy(rsp_plain_data->payload_type, temp_buf + offset, sizeof(rsp_plain_data->payload_type));
-//     offset += sizeof(rsp_plain_data->payload_type);
-
-//     memcpy(rsp_plain_data->reserved, temp_buf + offset, sizeof(rsp_plain_data->reserved));
-//     offset += sizeof(rsp_plain_data->reserved);
-
-//     memcpy(rsp_plain_data->payload_len, temp_buf + offset, sizeof(rsp_plain_data->payload_len));
-//     offset += sizeof(rsp_plain_data->payload_len);
-
-//     memcpy(rsp_plain_data->payload_len, temp_buf + offset, rsp_plain_data->payload_len);
-
-
-//     free(aes);
-//     free(temp_buf);
-// }
-
-
 bool get_response_plain_data_json(const struct secure_message *rsp_sec_msg,
                                   const struct secure_session *session,
                                   struct secure_plain_data *rsp_plain_data)
