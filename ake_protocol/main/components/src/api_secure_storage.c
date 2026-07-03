@@ -18,15 +18,17 @@
 #include "api_secure_storage.h"
 #include "hkdf.h"
 
-#define AES_COUNTER 1 // PENDING TO DEFINE THE USAGE OF IT
+
 #define TAG_SSR "[SECURE STORAGE REGION]"
 
 void sha512_stream(const uint8_t *data, size_t len, uint8_t out[64])
 {
     mbedtls_sha512_context ctx;
-
     mbedtls_sha512_init(&ctx);
     mbedtls_sha512_starts(&ctx, 0);   // 0 = SHA-512
+    //adding control version to hash calculation h(API_SS_COUNTER || PUF)
+    const uint8_t ss_version = API_SS_COUNTER;
+    mbedtls_sha512_update(&ctx, &ss_version, sizeof(uint8_t));
     mbedtls_sha512_update(&ctx, data, len);
     mbedtls_sha512_finish(&ctx, out);
     mbedtls_sha512_free(&ctx);
@@ -69,7 +71,8 @@ void sha512_stream(const uint8_t *data, size_t len, uint8_t out[64])
  */
 esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext_len,
                                       const char *key_name_nvs,
-                                      struct aes_256_obj *self_aes)
+                                      struct aes_256_obj *self_aes,
+                                      struct aes_256_obj *self_hmac)
 {
     /* Status returned by this function */
     esp_err_t status = ESP_OK;
@@ -90,7 +93,7 @@ esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext
     alex_secstore_record_t *secure_store = NULL;
 
     /* 0. Validate input arguments */
-    if (plaintext == NULL || key_name_nvs == NULL || self_aes == NULL) {
+    if (plaintext == NULL || key_name_nvs == NULL || self_aes == NULL || self_hmac == NULL) {
         return ESP_ERR_INVALID_ARG;
     }
     // Update the AES IV for each write
@@ -131,7 +134,7 @@ esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext
     memset(hmac, 0xff, sizeof(hmac));
 
     /* 2.3 Define the counter value associated with this secure record */
-    uint32_t counter = AES_COUNTER;
+    uint32_t counter = API_SS_COUNTER;
 
     /* 2.4 Fill the secure storage structure with header, metadata,
      *     IV, temporary HMAC, ciphertext length, and ciphertext data
@@ -144,7 +147,7 @@ esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext
                                     ciphertext);
 
     /* 2.5 Compute the real HMAC over the secure storage structure */
-    ret = get_hmac_secure_storage(self_aes->key,
+    ret = get_hmac_secure_storage(self_hmac->key,
                                   AES_256,
                                   secure_store,
                                   hmac);
@@ -175,7 +178,7 @@ esp_err_t write_secure_storage_region(const uint8_t *plaintext, size_t plaintext
 
     /* 5. Log success and optionally print the stored structure */
     ESP_LOGI(TAG_SSR, "Write to secure storage region success");
-    print_secure_storage_structure(secure_store);
+    // print_secure_storage_structure(secure_store);
     
 cleanup:
     /* Release dynamically allocated resources before returning */
@@ -228,6 +231,7 @@ cleanup:
  */
 esp_err_t read_secure_storage_region_alloc(const char *key_name_nvs,
                                            struct aes_256_obj *self_aes,
+                                           struct aes_256_obj *self_hmac,
                                            uint8_t **out_plain,
                                            size_t *out_plain_len)
 {
@@ -248,7 +252,7 @@ esp_err_t read_secure_storage_region_alloc(const char *key_name_nvs,
      * All pointers required by the function must be valid.
      * This prevents null pointer dereferences later.
      */
-    if (!key_name_nvs || !self_aes || !out_plain || !out_plain_len) {
+    if (!key_name_nvs || !self_aes || !self_hmac ||!out_plain || !out_plain_len) {
         ESP_LOGE(TAG_SSR, "Invalid Arguments");
         return ESP_ERR_INVALID_ARG;
     }
@@ -332,7 +336,7 @@ esp_err_t read_secure_storage_region_alloc(const char *key_name_nvs,
      */
     uint8_t hmac_recovered[ALEX_SS_HMAC_LEN];
 
-    if (get_hmac_secure_storage(self_aes->key, AES_256, got, hmac_recovered) != 0) {
+    if (get_hmac_secure_storage(self_hmac->key, AES_256, got, hmac_recovered) != 0) {
         ESP_LOGE(TAG_SSR, "Failed to compute HMAC");
         err = ESP_FAIL;
         goto cleanup;
@@ -371,7 +375,7 @@ esp_err_t read_secure_storage_region_alloc(const char *key_name_nvs,
         err = ESP_FAIL;
         goto cleanup;
     }
-    print_secure_storage_structure(got);
+    //print_secure_storage_structure(got);
 
     /* ---------------------------------------------------------
      * 9. Transfer ownership of plaintext to caller
@@ -483,7 +487,7 @@ bool derive_aes_puf_key_from_puf(struct puf_object *puf_obj,
         0xdd, 0xee, 0xff, 0x00
     };
 
-    const char *info_aes_puf = "Secure Storage Key";
+    const char *info_aes_puf = "AES Secure Storage Key";
     const size_t aes_key_len = AES_256;   // must be 32 bytes
 
     uint8_t *aes_key = malloc(aes_key_len);
@@ -508,8 +512,51 @@ bool derive_aes_puf_key_from_puf(struct puf_object *puf_obj,
     }
 
     create_aes_256_obj(aes_puf, aes_key);
+    free(aes_key);
+    return true;
+}
 
+bool derive_hmac_puf_key_from_puf(struct puf_object *puf_obj,
+                                 struct aes_256_obj *hmac_aes_puf)
+{
+    if (puf_obj == NULL || hmac_aes_puf == NULL || puf_obj->puf_hash_len == 0) {
+        ESP_LOGE(TAG_SSR, "Invalid input parameters");
+        return false;
+    }
 
+    const uint8_t salt_hmac_puf[16] = {
+        0xff, 0xee, 0xdd, 0xcc,
+        0xbb, 0xaa, 0x99, 0x88,
+        0x77, 0x66, 0x55, 0x44,
+        0x33, 0x22, 0x11, 0x00
+    };
+
+    const char *info_hmac_aes_puf = "HMAC Secure Storage Key";
+    const size_t hmac_key_len = AES_256;   // must be 32 bytes
+
+    uint8_t *hmac_key = malloc(hmac_key_len);
+    if (hmac_key == NULL) {
+        ESP_LOGE(TAG_SSR, "Failed to allocate AES PUF key");
+        return false;
+    }
+
+    bool ok = derive_hkdf_sha512(puf_obj->puf_hash,
+                                 puf_obj->puf_hash_len,
+                                 salt_hmac_puf,
+                                 sizeof(salt_hmac_puf),
+                                 (const uint8_t *)info_hmac_aes_puf,
+                                 strlen(info_hmac_aes_puf),
+                                 hmac_key,
+                                 hmac_key_len);
+
+    if (!ok) {
+        ESP_LOGE(TAG_SSR, "PUF key derivation failed");
+        free(hmac_key);
+        return false;
+    }
+
+    create_aes_256_obj(hmac_aes_puf, hmac_key);
+    free(hmac_key);
     return true;
 }
 
@@ -538,6 +585,7 @@ bool get_puf_obj_from_puf(struct puf_object *self, bool source_puf){
         
 
         sha512_stream(PUF_RESPONSE, PUF_RESPONSE_LEN, h512);
+        printf("The PUF size is: %d\n", PUF_RESPONSE_LEN);
         //print_hex("SHA512", h512, sizeof(h512));
         clean_puf_response();
         printf("PRINTINF AFTER CLEANING\n");

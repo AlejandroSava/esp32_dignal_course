@@ -632,7 +632,8 @@ void free_kyber_object_node(struct kyber_object_node *self)
 }
 
 bool get_kyber_object_node(struct kyber_object_node *self,
-                           struct aes_256_obj *aes_key_ss)
+                           struct aes_256_obj *aes_key_ss,
+                           struct aes_256_obj *hmac_key_ss)
 {
     esp_err_t err;
 
@@ -654,6 +655,7 @@ bool get_kyber_object_node(struct kyber_object_node *self,
 
     err = read_secure_storage_region_alloc("PK_KYBER",
                                            aes_key_ss,
+                                           hmac_key_ss,
                                            &self->pk,
                                            &self->pk_len);
     if (err != ESP_OK) {

@@ -1,0 +1,857 @@
+Command: /home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/alejandro/esp/esp-idf/tools/idf_monitor.py -p /dev/ttyUSB0 -b 115200 --toolchain-prefix xtensa-esp32-elf- --target esp32 --revision 0 /home/alejandro/esp32_dignal_course/ake_protocol/build/ake_protocol.elf /home/alejandro/esp32_dignal_course/ake_protocol/build/bootloader/bootloader.elf -m '/home/alejandro/.espressif/python_env/idf6.0_py3.12_env/bin/python' '/home/alejandro/esp/esp-idf/tools/idf.py'
+ip: generic
+[0;32mI (300) spi_flash: flash io: dio[0m
+[0;32mI (304) main_task: Started on CPU0[0m
+[0;32mI (314) mai�ets Jun  8 2016 00:22:57[0m
+
+rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:6372
+load:0x40078000,len:15920
+ho 0 tail 12 room 4
+load:0x40080400,len:3880
+entry 0x40080638
+[0;32mI (29) boot: ESP-IDF v6.0-dev-1489-g4e036983a7 2nd stage bootloader[0m
+[0;32mI (29) boot: compile time May 17 2026 12:32:08[0m
+[0;32mI (29) boot: Multicore bootloader[0m
+[0;32mI (32) boot: chip revision: v1.0[0m
+[0;32mI (34) boot.esp32: SPI Speed      : 40MHz[0m
+[0;32mI (38) boot.esp32: SPI Mode       : DIO[0m
+[0;32mI (42) boot.esp32: SPI Flash Size : 4MB[0m
+[0;32mI (45) boot: Enabling RNG early entropy source...[0m
+[0;32mI (50) boot: Partition Table:[0m
+[0;32mI (52) boot: ## Label            Usage          Type ST Offset   Length[0m
+[0;32mI (59) boot:  0 nvs              WiFi data        01 02 00009000 00078000[0m
+[0;32mI (65) boot:  1 phy_init         RF data          01 01 00081000 00001000[0m
+[0;32mI (72) boot:  2 factory          factory app      00 00 00090000 00100000[0m
+[0;32mI (78) boot:  3 Sec_Store        WiFi data        01 02 00190000 00100000[0m
+[0;32mI (85) boot: End of partition table[0m
+[0;32mI (88) esp_image: segment 0: paddr=00090020 vaddr=3f400020 size=0bac8h ( 47816) map[0m
+[0;32mI (112) esp_image: segment 1: paddr=0009baf0 vaddr=3ffb0000 size=0291ch ( 10524) load[0m
+[0;32mI (117) esp_image: segment 2: paddr=0009e414 vaddr=40080000 size=01c04h (  7172) load[0m
+[0;32mI (120) esp_image: segment 3: paddr=000a0020 vaddr=400d0020 size=1db98h (121752) map[0m
+[0;32mI (167) esp_image: segment 4: paddr=000bdbc0 vaddr=40081c04 size=0d1a8h ( 53672) load[0m
+[0;32mI (189) esp_image: segment 5: paddr=000cad70 vaddr=400c0000 size=00038h (    56) load[0m
+[0;32mI (189) esp_image: segment 6: paddr=000cadb0 vaddr=50000000 size=000a8h (   168) load[0m
+[0;32mI (200) boot: Loaded app from partition at offset 0x90000[0m
+[0;32mI (200) boot: Disabling RNG early entropy source...[0m
+[0;32mI (214) cpu_start: Multicore app[0m
+[0;32mI (223) cpu_start: GPIO 3 and 1 are used as console UART I/O pins[0m
+[0;32mI (223) cpu_start: Pro cpu start user code[0m
+[0;32mI (223) cpu_start: cpu freq: 160000000 Hz[0m
+[0;32mI (225) app_init: Application information:[0m
+[0;32mI (229) app_init: Project name:     ake_protocol[0m
+[0;32mI (233) app_init: App version:      bd5e00b1-dirty[0m
+[0;32mI (237) app_init: Compile time:     May 31 2026 18:50:45[0m
+[0;32mI (242) app_init: ELF file SHA256:  1e2f62a23...[0m
+[0;32mI (247) app_init: ESP-IDF:          v6.0-dev-1489-g4e036983a7[0m
+[0;32mI (252) efuse_init: Min chip rev:     v0.0[0m
+[0;32mI (256) efuse_init: Max chip rev:     v3.99 [0m
+[0;32mI (260) efuse_init: Chip rev:         v1.0[0m
+[0;32mI (264) heap_init: Initializing. RAM available for dynamic allocation:[0m
+[0;32mI (270) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM[0m
+[0;32mI (275) heap_init: At 3FFB4258 len 0002BDA8 (175 KiB): DRAM[0m
+[0;32mI (281) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM[0m
+[0;32mI (286) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM[0m
+[0;32mI (291) heap_init: At 4008EDAC len 00011254 (68 KiB): IRAM[0m
+[0;32mI (298) spi_flash: detected chip: generic[0m
+[0;32mI (300) spi_flash: flash io: dio[0m
+[0;32mI (304) main_task: Started on CPU0[0m
+[0;32mI (314) main_task: Calling app_main()[0m
+PUF INIT
+2D AA DE 78 CB 78 FB 17 88 6C E6 9C 08 78 A2 DE 11 51 10 68 F4 FC BE 8B 74 05 EE 72 FC 31 87 EC 08 F2 1C 55 88 85 C6 59 51 3C 3A AA 6B 5B F4 AD 41 5D 24 97 EF 1B 99 11 82 0D B9 BE DA 9B 1A D8 61 75 D4 93 8F 90 9D 2D E8 89 A3 77 6E 0C EF E9 D1 80 19 B8 D8 4F F8 53 A8 69 86 6C ED 76 59 1F 42 9B F5 84 10 32 D8 C7 2D 43 47 AC 2B 50 AD 40 D8 E1 12 3B E5 24 8B DA 55 10 2B 7A 85 95 A8 61 CB F3 15 4F 23 12 BA 12 27 3B 46 6A A4 C2 23 22 0F 23 D2 59 6E BB DE 3E FF 75 12 C9 45 F8 C9 4D B2 6F 2F F5 D0 65 38 85 CF 01 C1 DB 08 A9 2C 8A F6 9A 52 64 09 71 25 78 8C D6 54 CF 2E FA B5 ED F2 8F 5E 50 C6 CB 7D 53 29 90 BC 54 3D ED 5C CF 23 37 A8 17 66 4C 13 1D D3 D2 30 7E 78 0D 08 FD B4 E1 83 37 92 B5 39 2E 12 39 95 B3 21 70 A7 58 57 E7 D0 92 D1 DA 5B 2D 13 58 B5 69 02 4D 57 2F D0 F6 B2 42 ED 5C DB 66 B8 9C F8 E0 BE 7B 3F 55 4C 8A 52 40 9C 70 AE 0B F2 8D 56 AB B6 0D 54 49 58 C7 A3 4B 4F FF 8D 73 2F BF E7 18 26 B6 B5 58 06 0F 14 C5 B5 7E 16 60 2A 30 F0 7A 0F 09 A6 7A A2 3B 25 47 B5 CE 99 FC E5 23 42 9B 3B 23 6A 47 A6 5D 1E 6A 55 A1 1A 60 C8 20 A6 5E 05 9E DD B4 D6 B3 C0 C6 D6 67 E2 F9 
+The PUF size is: 360
+PRINTINF AFTER CLEANING
+[0;32mI (524) [SECURE STORAGE REGION]: PUF Object Updated[0m
+Time execution for get PUF: 216761 us
+[0;32mI (534) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+Time execution for Derive AES Key PUF: 4131 us
+[0;32mI (544) [HKDF-SHA512]: SUCESS HKDF Derivation[0m
+Time execution for Derive HMAC  Key PUF: 4110 us
+[0;32mI (544) [HMAC]: HMAC success[0m
+[0;32mI (674) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (674) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;33mW (674) [Secure Storage Test]: THIS IS A TEST FOR SECURE STORAGE REGION[0m
+[0;33mW (684) [Secure Storage Test]: Test for 1 bytes[0m
+[0;32mI (684) [HMAC]: HMAC success[0m
+[0;32mI (704) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (704) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (714) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (714) [SECURE_STORE]: Verification success[0m
+[0;32mI (714) [HMAC]: HMAC success[0m
+[0;32mI (714) [HMAC]: HMAC Verification Success[0m
+[0;32mI (724) [HMAC]: HMAC success[0m
+[0;32mI (734) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (734) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (744) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (744) [SECURE_STORE]: Verification success[0m
+[0;32mI (744) [HMAC]: HMAC success[0m
+[0;32mI (744) [HMAC]: HMAC Verification Success[0m
+[0;32mI (754) [HMAC]: HMAC success[0m
+[0;32mI (764) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (764) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (774) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (774) [SECURE_STORE]: Verification success[0m
+[0;32mI (774) [HMAC]: HMAC success[0m
+[0;32mI (774) [HMAC]: HMAC Verification Success[0m
+[0;32mI (784) [HMAC]: HMAC success[0m
+[0;32mI (794) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (794) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (804) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (804) [SECURE_STORE]: Verification success[0m
+[0;32mI (804) [HMAC]: HMAC success[0m
+[0;32mI (804) [HMAC]: HMAC Verification Success[0m
+[0;32mI (814) [HMAC]: HMAC success[0m
+[0;32mI (824) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (824) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (834) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (834) [SECURE_STORE]: Verification success[0m
+[0;32mI (834) [HMAC]: HMAC success[0m
+[0;32mI (834) [HMAC]: HMAC Verification Success[0m
+[0;32mI (844) [HMAC]: HMAC success[0m
+[0;32mI (854) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (854) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (864) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (864) [SECURE_STORE]: Verification success[0m
+[0;32mI (864) [HMAC]: HMAC success[0m
+[0;32mI (864) [HMAC]: HMAC Verification Success[0m
+[0;32mI (874) [HMAC]: HMAC success[0m
+[0;32mI (884) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (884) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (894) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (894) [SECURE_STORE]: Verification success[0m
+[0;32mI (894) [HMAC]: HMAC success[0m
+[0;32mI (894) [HMAC]: HMAC Verification Success[0m
+[0;32mI (904) [HMAC]: HMAC success[0m
+[0;32mI (914) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (914) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (924) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (924) [SECURE_STORE]: Verification success[0m
+[0;32mI (924) [HMAC]: HMAC success[0m
+[0;32mI (924) [HMAC]: HMAC Verification Success[0m
+[0;32mI (934) [HMAC]: HMAC success[0m
+[0;32mI (944) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (944) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (954) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (954) [SECURE_STORE]: Verification success[0m
+[0;32mI (954) [HMAC]: HMAC success[0m
+[0;32mI (954) [HMAC]: HMAC Verification Success[0m
+[0;32mI (964) [HMAC]: HMAC success[0m
+[0;32mI (974) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (974) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (984) [SECURE_STORE]: Read OK (len=132)[0m
+[0;32mI (984) [SECURE_STORE]: Verification success[0m
+[0;32mI (984) [HMAC]: HMAC success[0m
+[0;32mI (984) [HMAC]: HMAC Verification Success[0m
+[0;33mW (994) [Secure Storage Test]: Array measurement for 1 bytes writing[0m
+18890, 16420, 16448, 16449, 14226, 16449, 16449, 14226, 16449, 16449, 
+[0;33mW (1004) [Secure Storage Test]: Array measurement for 1 bytes reading[0m
+14201, 14174, 14173, 14173, 14173, 14173, 14173, 14174, 14174, 14173, 
+[0;33mW (1014) [Secure Storage Test]: Test for 32 bytes[0m
+[0;32mI (1024) [HMAC]: HMAC success[0m
+[0;32mI (1034) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1034) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1044) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1044) [SECURE_STORE]: Verification success[0m
+[0;32mI (1044) [HMAC]: HMAC success[0m
+[0;32mI (1044) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1054) [HMAC]: HMAC success[0m
+[0;32mI (1134) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1134) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1144) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1144) [SECURE_STORE]: Verification success[0m
+[0;32mI (1144) [HMAC]: HMAC success[0m
+[0;32mI (1144) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1154) [HMAC]: HMAC success[0m
+[0;32mI (1164) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1164) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1174) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1174) [SECURE_STORE]: Verification success[0m
+[0;32mI (1174) [HMAC]: HMAC success[0m
+[0;32mI (1174) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1184) [HMAC]: HMAC success[0m
+[0;32mI (1194) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1194) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1204) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1204) [SECURE_STORE]: Verification success[0m
+[0;32mI (1204) [HMAC]: HMAC success[0m
+[0;32mI (1204) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1214) [HMAC]: HMAC success[0m
+[0;32mI (1224) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1224) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1234) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1234) [SECURE_STORE]: Verification success[0m
+[0;32mI (1234) [HMAC]: HMAC success[0m
+[0;32mI (1234) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1244) [HMAC]: HMAC success[0m
+[0;32mI (1254) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1254) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1264) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1264) [SECURE_STORE]: Verification success[0m
+[0;32mI (1264) [HMAC]: HMAC success[0m
+[0;32mI (1264) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1274) [HMAC]: HMAC success[0m
+[0;32mI (1284) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1284) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1294) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1294) [SECURE_STORE]: Verification success[0m
+[0;32mI (1294) [HMAC]: HMAC success[0m
+[0;32mI (1294) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1304) [HMAC]: HMAC success[0m
+[0;32mI (1314) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1314) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1324) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1324) [SECURE_STORE]: Verification success[0m
+[0;32mI (1324) [HMAC]: HMAC success[0m
+[0;32mI (1324) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1334) [HMAC]: HMAC success[0m
+[0;32mI (1344) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1344) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1354) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1354) [SECURE_STORE]: Verification success[0m
+[0;32mI (1354) [HMAC]: HMAC success[0m
+[0;32mI (1354) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1364) [HMAC]: HMAC success[0m
+[0;32mI (1374) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1374) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1384) [SECURE_STORE]: Read OK (len=164)[0m
+[0;32mI (1384) [SECURE_STORE]: Verification success[0m
+[0;32mI (1384) [HMAC]: HMAC success[0m
+[0;32mI (1384) [HMAC]: HMAC Verification Success[0m
+[0;33mW (1394) [Secure Storage Test]: Array measurement for 32 bytes writing[0m
+14636, 85902, 16665, 14465, 14469, 16691, 14469, 16691, 14469, 14468, 
+[0;33mW (1404) [Secure Storage Test]: Array measurement for 32 bytes reading[0m
+14524, 14554, 14533, 14528, 14528, 14528, 14528, 14528, 14528, 14531, 
+[0;33mW (1414) [Secure Storage Test]: Test for 64 bytes[0m
+[0;32mI (1424) [HMAC]: HMAC success[0m
+[0;32mI (1434) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1434) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1444) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1444) [SECURE_STORE]: Verification success[0m
+[0;32mI (1444) [HMAC]: HMAC success[0m
+[0;32mI (1444) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1454) [HMAC]: HMAC success[0m
+[0;32mI (1464) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1464) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1474) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1474) [SECURE_STORE]: Verification success[0m
+[0;32mI (1474) [HMAC]: HMAC success[0m
+[0;32mI (1474) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1484) [HMAC]: HMAC success[0m
+[0;32mI (1494) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1494) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1504) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1504) [SECURE_STORE]: Verification success[0m
+[0;32mI (1504) [HMAC]: HMAC success[0m
+[0;32mI (1504) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1514) [HMAC]: HMAC success[0m
+[0;32mI (1524) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1524) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1534) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1534) [SECURE_STORE]: Verification success[0m
+[0;32mI (1534) [HMAC]: HMAC success[0m
+[0;32mI (1534) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1544) [HMAC]: HMAC success[0m
+[0;32mI (1554) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1554) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1564) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1564) [SECURE_STORE]: Verification success[0m
+[0;32mI (1564) [HMAC]: HMAC success[0m
+[0;32mI (1564) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1574) [HMAC]: HMAC success[0m
+[0;32mI (1584) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1584) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1594) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1594) [SECURE_STORE]: Verification success[0m
+[0;32mI (1594) [HMAC]: HMAC success[0m
+[0;32mI (1594) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1604) [HMAC]: HMAC success[0m
+[0;32mI (1684) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1684) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1694) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1694) [SECURE_STORE]: Verification success[0m
+[0;32mI (1694) [HMAC]: HMAC success[0m
+[0;32mI (1694) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1704) [HMAC]: HMAC success[0m
+[0;32mI (1714) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1714) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1724) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1724) [SECURE_STORE]: Verification success[0m
+[0;32mI (1724) [HMAC]: HMAC success[0m
+[0;32mI (1724) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1734) [HMAC]: HMAC success[0m
+[0;32mI (1744) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1744) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1754) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1754) [SECURE_STORE]: Verification success[0m
+[0;32mI (1754) [HMAC]: HMAC success[0m
+[0;32mI (1754) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1764) [HMAC]: HMAC success[0m
+[0;32mI (1774) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1774) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1784) [SECURE_STORE]: Read OK (len=196)[0m
+[0;32mI (1784) [SECURE_STORE]: Verification success[0m
+[0;32mI (1784) [HMAC]: HMAC success[0m
+[0;32mI (1784) [HMAC]: HMAC Verification Success[0m
+[0;33mW (1794) [Secure Storage Test]: Array measurement for 64 bytes writing[0m
+16849, 14460, 16680, 14460, 16682, 14460, 84353, 16658, 14452, 16678, 
+[0;33mW (1804) [Secure Storage Test]: Array measurement for 64 bytes reading[0m
+14531, 14533, 14531, 14531, 14531, 14538, 14554, 14539, 14535, 14535, 
+[0;33mW (1814) [Secure Storage Test]: Test for 256 bytes[0m
+[0;32mI (1824) [HMAC]: HMAC success[0m
+[0;32mI (1834) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1834) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1844) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (1844) [SECURE_STORE]: Verification success[0m
+[0;32mI (1844) [HMAC]: HMAC success[0m
+[0;32mI (1844) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1854) [HMAC]: HMAC success[0m
+[0;32mI (1864) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1864) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1874) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (1874) [SECURE_STORE]: Verification success[0m
+[0;32mI (1874) [HMAC]: HMAC success[0m
+[0;32mI (1874) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1884) [HMAC]: HMAC success[0m
+[0;32mI (1894) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1894) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1904) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (1904) [SECURE_STORE]: Verification success[0m
+[0;32mI (1904) [HMAC]: HMAC success[0m
+[0;32mI (1904) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1914) [HMAC]: HMAC success[0m
+[0;32mI (1924) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1924) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1934) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (1934) [SECURE_STORE]: Verification success[0m
+[0;32mI (1934) [HMAC]: HMAC success[0m
+[0;32mI (1934) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1944) [HMAC]: HMAC success[0m
+[0;32mI (1954) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1954) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1964) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (1964) [SECURE_STORE]: Verification success[0m
+[0;32mI (1964) [HMAC]: HMAC success[0m
+[0;32mI (1964) [HMAC]: HMAC Verification Success[0m
+[0;32mI (1974) [HMAC]: HMAC success[0m
+[0;32mI (1984) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (1984) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (1994) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (1994) [SECURE_STORE]: Verification success[0m
+[0;32mI (1994) [HMAC]: HMAC success[0m
+[0;32mI (1994) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2004) [HMAC]: HMAC success[0m
+[0;32mI (2074) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2074) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2084) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (2084) [SECURE_STORE]: Verification success[0m
+[0;32mI (2084) [HMAC]: HMAC success[0m
+[0;32mI (2084) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2094) [HMAC]: HMAC success[0m
+[0;32mI (2104) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2104) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2114) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (2114) [SECURE_STORE]: Verification success[0m
+[0;32mI (2114) [HMAC]: HMAC success[0m
+[0;32mI (2114) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2124) [HMAC]: HMAC success[0m
+[0;32mI (2134) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2134) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2144) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (2144) [SECURE_STORE]: Verification success[0m
+[0;32mI (2144) [HMAC]: HMAC success[0m
+[0;32mI (2144) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2154) [HMAC]: HMAC success[0m
+[0;32mI (2164) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2164) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2174) [SECURE_STORE]: Read OK (len=388)[0m
+[0;32mI (2174) [SECURE_STORE]: Verification success[0m
+[0;32mI (2174) [HMAC]: HMAC success[0m
+[0;32mI (2174) [HMAC]: HMAC Verification Success[0m
+[0;33mW (2184) [Secure Storage Test]: Array measurement for 256 bytes writing[0m
+14575, 16591, 14369, 14369, 16591, 14369, 75017, 16567, 14361, 16587, 
+[0;33mW (2194) [Secure Storage Test]: Array measurement for 256 bytes reading[0m
+14566, 14566, 14566, 14565, 14566, 14565, 14590, 14574, 14570, 14570, 
+[0;33mW (2204) [Secure Storage Test]: Test for 512 bytes[0m
+[0;32mI (2214) [HMAC]: HMAC success[0m
+[0;32mI (2224) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2224) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2234) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2234) [SECURE_STORE]: Verification success[0m
+[0;32mI (2234) [HMAC]: HMAC success[0m
+[0;32mI (2234) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2244) [HMAC]: HMAC success[0m
+[0;32mI (2254) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2254) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2264) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2264) [SECURE_STORE]: Verification success[0m
+[0;32mI (2264) [HMAC]: HMAC success[0m
+[0;32mI (2274) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2274) [HMAC]: HMAC success[0m
+[0;32mI (2364) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2364) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2374) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2374) [SECURE_STORE]: Verification success[0m
+[0;32mI (2374) [HMAC]: HMAC success[0m
+[0;32mI (2374) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2384) [HMAC]: HMAC success[0m
+[0;32mI (2394) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2394) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2404) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2404) [SECURE_STORE]: Verification success[0m
+[0;32mI (2404) [HMAC]: HMAC success[0m
+[0;32mI (2404) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2414) [HMAC]: HMAC success[0m
+[0;32mI (2434) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2434) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2444) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2444) [SECURE_STORE]: Verification success[0m
+[0;32mI (2444) [HMAC]: HMAC success[0m
+[0;32mI (2444) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2454) [HMAC]: HMAC success[0m
+[0;32mI (2464) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2464) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2474) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2474) [SECURE_STORE]: Verification success[0m
+[0;32mI (2474) [HMAC]: HMAC success[0m
+[0;32mI (2474) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2484) [HMAC]: HMAC success[0m
+[0;32mI (2504) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2504) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2514) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2514) [SECURE_STORE]: Verification success[0m
+[0;32mI (2514) [HMAC]: HMAC success[0m
+[0;32mI (2514) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2524) [HMAC]: HMAC success[0m
+[0;32mI (2534) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2534) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2544) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2544) [SECURE_STORE]: Verification success[0m
+[0;32mI (2544) [HMAC]: HMAC success[0m
+[0;32mI (2544) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2554) [HMAC]: HMAC success[0m
+[0;32mI (2644) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2644) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2654) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2654) [SECURE_STORE]: Verification success[0m
+[0;32mI (2654) [HMAC]: HMAC success[0m
+[0;32mI (2654) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2664) [HMAC]: HMAC success[0m
+[0;32mI (2674) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2674) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2684) [SECURE_STORE]: Read OK (len=644)[0m
+[0;32mI (2684) [SECURE_STORE]: Verification success[0m
+[0;32mI (2684) [HMAC]: HMAC success[0m
+[0;32mI (2694) [HMAC]: HMAC Verification Success[0m
+[0;33mW (2694) [Secure Storage Test]: Array measurement for 512 bytes writing[0m
+14505, 16474, 91812, 18226, 23565, 16470, 23696, 16470, 94052, 16450, 
+[0;33mW (2704) [Secure Storage Test]: Array measurement for 512 bytes reading[0m
+14614, 14614, 14638, 14622, 14618, 14618, 14617, 14618, 14638, 14622, 
+[0;33mW (2714) [Secure Storage Test]: Test for 1024 bytes[0m
+[0;32mI (2724) [HMAC]: HMAC success[0m
+[0;32mI (2734) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2734) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2744) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (2744) [SECURE_STORE]: Verification success[0m
+[0;32mI (2744) [HMAC]: HMAC success[0m
+[0;32mI (2754) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2754) [HMAC]: HMAC success[0m
+[0;32mI (2774) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2774) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2784) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (2784) [SECURE_STORE]: Verification success[0m
+[0;32mI (2784) [HMAC]: HMAC success[0m
+[0;32mI (2794) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2794) [HMAC]: HMAC success[0m
+[0;32mI (2884) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2884) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2894) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (2894) [SECURE_STORE]: Verification success[0m
+[0;32mI (2894) [HMAC]: HMAC success[0m
+[0;32mI (2904) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2904) [HMAC]: HMAC success[0m
+[0;32mI (2924) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2924) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2934) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (2934) [SECURE_STORE]: Verification success[0m
+[0;32mI (2934) [HMAC]: HMAC success[0m
+[0;32mI (2944) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2944) [HMAC]: HMAC success[0m
+[0;32mI (2964) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (2964) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (2974) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (2974) [SECURE_STORE]: Verification success[0m
+[0;32mI (2974) [HMAC]: HMAC success[0m
+[0;32mI (2984) [HMAC]: HMAC Verification Success[0m
+[0;32mI (2984) [HMAC]: HMAC success[0m
+[0;32mI (3074) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3074) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3084) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (3084) [SECURE_STORE]: Verification success[0m
+[0;32mI (3084) [HMAC]: HMAC success[0m
+[0;32mI (3094) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3094) [HMAC]: HMAC success[0m
+[0;32mI (3114) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3114) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3124) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (3124) [SECURE_STORE]: Verification success[0m
+[0;32mI (3124) [HMAC]: HMAC success[0m
+[0;32mI (3134) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3134) [HMAC]: HMAC success[0m
+[0;32mI (3154) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3154) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3164) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (3164) [SECURE_STORE]: Verification success[0m
+[0;32mI (3164) [HMAC]: HMAC success[0m
+[0;32mI (3174) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3174) [HMAC]: HMAC success[0m
+[0;32mI (3264) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3264) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3274) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (3274) [SECURE_STORE]: Verification success[0m
+[0;32mI (3274) [HMAC]: HMAC success[0m
+[0;32mI (3284) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3284) [HMAC]: HMAC success[0m
+[0;32mI (3304) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3304) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3314) [SECURE_STORE]: Read OK (len=1156)[0m
+[0;32mI (3314) [SECURE_STORE]: Verification success[0m
+[0;32mI (3314) [HMAC]: HMAC success[0m
+[0;32mI (3324) [HMAC]: HMAC Verification Success[0m
+[0;33mW (3324) [Secure Storage Test]: Array measurement for 1024 bytes writing[0m
+16587, 23872, 94977, 24305, 25013, 95099, 24146, 24968, 95146, 24158, 
+[0;33mW (3334) [Secure Storage Test]: Array measurement for 1024 bytes reading[0m
+14797, 14797, 14821, 14806, 14801, 14821, 14805, 14802, 14821, 14806, 
+[0;33mW (3344) [Secure Storage Test]: Test for 2048 bytes[0m
+[0;32mI (3354) [HMAC]: HMAC success[0m
+[0;32mI (3434) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3434) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3454) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3454) [SECURE_STORE]: Verification success[0m
+[0;32mI (3454) [HMAC]: HMAC success[0m
+[0;32mI (3454) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3454) [HMAC]: HMAC success[0m
+[0;32mI (3484) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3484) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3494) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3494) [SECURE_STORE]: Verification success[0m
+[0;32mI (3494) [HMAC]: HMAC success[0m
+[0;32mI (3494) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3504) [HMAC]: HMAC success[0m
+[0;32mI (3584) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3584) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3604) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3604) [SECURE_STORE]: Verification success[0m
+[0;32mI (3604) [HMAC]: HMAC success[0m
+[0;32mI (3604) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3604) [HMAC]: HMAC success[0m
+[0;32mI (3634) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3634) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3644) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3644) [SECURE_STORE]: Verification success[0m
+[0;32mI (3644) [HMAC]: HMAC success[0m
+[0;32mI (3644) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3654) [HMAC]: HMAC success[0m
+[0;32mI (3744) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3744) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3754) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3754) [SECURE_STORE]: Verification success[0m
+[0;32mI (3754) [HMAC]: HMAC success[0m
+[0;32mI (3754) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3764) [HMAC]: HMAC success[0m
+[0;32mI (3844) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3844) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3864) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3864) [SECURE_STORE]: Verification success[0m
+[0;32mI (3864) [HMAC]: HMAC success[0m
+[0;32mI (3864) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3864) [HMAC]: HMAC success[0m
+[0;32mI (3894) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3894) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (3904) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (3904) [SECURE_STORE]: Verification success[0m
+[0;32mI (3904) [HMAC]: HMAC success[0m
+[0;32mI (3904) [HMAC]: HMAC Verification Success[0m
+[0;32mI (3914) [HMAC]: HMAC success[0m
+[0;32mI (3994) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (3994) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4014) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (4014) [SECURE_STORE]: Verification success[0m
+[0;32mI (4014) [HMAC]: HMAC success[0m
+[0;32mI (4014) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4014) [HMAC]: HMAC success[0m
+[0;32mI (4044) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4044) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4054) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (4054) [SECURE_STORE]: Verification success[0m
+[0;32mI (4054) [HMAC]: HMAC success[0m
+[0;32mI (4054) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4064) [HMAC]: HMAC success[0m
+[0;32mI (4144) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4144) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4164) [SECURE_STORE]: Read OK (len=2180)[0m
+[0;32mI (4164) [SECURE_STORE]: Verification success[0m
+[0;32mI (4164) [HMAC]: HMAC success[0m
+[0;32mI (4164) [HMAC]: HMAC Verification Success[0m
+[0;33mW (4164) [Secure Storage Test]: Array measurement for 2048 bytes writing[0m
+83284, 28806, 87856, 26257, 89610, 87716, 28825, 85761, 28347, 87541, 
+[0;33mW (4174) [Secure Storage Test]: Array measurement for 2048 bytes reading[0m
+17236, 17220, 17237, 17220, 17236, 17240, 17216, 17236, 17221, 17237, 
+[0;33mW (4194) [Secure Storage Test]: Test for 4096 bytes[0m
+[0;32mI (4194) [HMAC]: HMAC success[0m
+[0;32mI (4294) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4294) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4314) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (4314) [SECURE_STORE]: Verification success[0m
+[0;32mI (4314) [HMAC]: HMAC success[0m
+[0;32mI (4314) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4314) [HMAC]: HMAC success[0m
+[0;32mI (4414) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4414) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4434) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (4434) [SECURE_STORE]: Verification success[0m
+[0;32mI (4434) [HMAC]: HMAC success[0m
+[0;32mI (4434) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4444) [HMAC]: HMAC success[0m
+[0;32mI (4534) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4534) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4554) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (4554) [SECURE_STORE]: Verification success[0m
+[0;32mI (4554) [HMAC]: HMAC success[0m
+[0;32mI (4554) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4564) [HMAC]: HMAC success[0m
+[0;32mI (4664) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4664) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4684) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (4684) [SECURE_STORE]: Verification success[0m
+[0;32mI (4684) [HMAC]: HMAC success[0m
+[0;32mI (4684) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4694) [HMAC]: HMAC success[0m
+[0;32mI (4784) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4784) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4804) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (4804) [SECURE_STORE]: Verification success[0m
+[0;32mI (4804) [HMAC]: HMAC success[0m
+[0;32mI (4804) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4814) [HMAC]: HMAC success[0m
+[0;32mI (4904) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (4904) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (4924) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (4924) [SECURE_STORE]: Verification success[0m
+[0;32mI (4924) [HMAC]: HMAC success[0m
+[0;32mI (4924) [HMAC]: HMAC Verification Success[0m
+[0;32mI (4934) [HMAC]: HMAC success[0m
+[0;32mI (5024) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (5024) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (5044) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (5044) [SECURE_STORE]: Verification success[0m
+[0;32mI (5044) [HMAC]: HMAC success[0m
+[0;32mI (5044) [HMAC]: HMAC Verification Success[0m
+[0;32mI (5054) [HMAC]: HMAC success[0m
+[0;32mI (5154) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (5164) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (5174) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (5174) [SECURE_STORE]: Verification success[0m
+[0;32mI (5184) [HMAC]: HMAC success[0m
+[0;32mI (5184) [HMAC]: HMAC Verification Success[0m
+[0;32mI (5184) [HMAC]: HMAC success[0m
+[0;32mI (5354) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (5354) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (5374) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (5374) [SECURE_STORE]: Verification success[0m
+[0;32mI (5374) [HMAC]: HMAC success[0m
+[0;32mI (5374) [HMAC]: HMAC Verification Success[0m
+[0;32mI (5384) [HMAC]: HMAC success[0m
+[0;32mI (5464) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (5464) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (5484) [SECURE_STORE]: Read OK (len=4228)[0m
+[0;32mI (5484) [SECURE_STORE]: Verification success[0m
+[0;32mI (5494) [HMAC]: HMAC success[0m
+[0;32mI (5494) [HMAC]: HMAC Verification Success[0m
+[0;33mW (5494) [Secure Storage Test]: Array measurement for 4096 bytes writing[0m
+94278, 97974, 97072, 107059, 96992, 97009, 97081, 106908, 174643, 86987, 
+[0;33mW (5504) [Secure Storage Test]: Array measurement for 4096 bytes reading[0m
+22763, 22768, 22761, 22754, 22777, 22756, 22763, 22752, 22762, 22748, 
+[0;33mW (5514) [Secure Storage Test]: Test for 8192 bytes[0m
+[0;32mI (5524) [HMAC]: HMAC success[0m
+[0;32mI (5684) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (5684) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (5714) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (5714) [SECURE_STORE]: Verification success[0m
+[0;32mI (5714) [HMAC]: HMAC success[0m
+[0;32mI (5714) [HMAC]: HMAC Verification Success[0m
+[0;32mI (5724) [HMAC]: HMAC success[0m
+[0;32mI (5894) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (5894) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (5924) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (5924) [SECURE_STORE]: Verification success[0m
+[0;32mI (5924) [HMAC]: HMAC success[0m
+[0;32mI (5924) [HMAC]: HMAC Verification Success[0m
+[0;32mI (5934) [HMAC]: HMAC success[0m
+[0;32mI (6124) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (6124) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (6154) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (6154) [SECURE_STORE]: Verification success[0m
+[0;32mI (6164) [HMAC]: HMAC success[0m
+[0;32mI (6164) [HMAC]: HMAC Verification Success[0m
+[0;32mI (6164) [HMAC]: HMAC success[0m
+[0;32mI (6344) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (6344) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (6384) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (6384) [SECURE_STORE]: Verification success[0m
+[0;32mI (6384) [HMAC]: HMAC success[0m
+[0;32mI (6384) [HMAC]: HMAC Verification Success[0m
+[0;32mI (6394) [HMAC]: HMAC success[0m
+[0;32mI (6564) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (6564) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (6604) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (6604) [SECURE_STORE]: Verification success[0m
+[0;32mI (6604) [HMAC]: HMAC success[0m
+[0;32mI (6604) [HMAC]: HMAC Verification Success[0m
+[0;32mI (6614) [HMAC]: HMAC success[0m
+[0;32mI (6804) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (6804) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (6834) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (6834) [SECURE_STORE]: Verification success[0m
+[0;32mI (6834) [HMAC]: HMAC success[0m
+[0;32mI (6834) [HMAC]: HMAC Verification Success[0m
+[0;32mI (6844) [HMAC]: HMAC success[0m
+[0;32mI (7034) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (7034) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (7064) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (7064) [SECURE_STORE]: Verification success[0m
+[0;32mI (7064) [HMAC]: HMAC success[0m
+[0;32mI (7064) [HMAC]: HMAC Verification Success[0m
+[0;32mI (7074) [HMAC]: HMAC success[0m
+[0;32mI (7264) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (7264) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (7294) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (7294) [SECURE_STORE]: Verification success[0m
+[0;32mI (7294) [HMAC]: HMAC success[0m
+[0;32mI (7294) [HMAC]: HMAC Verification Success[0m
+[0;32mI (7304) [HMAC]: HMAC success[0m
+[0;32mI (7514) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (7514) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (7544) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (7544) [SECURE_STORE]: Verification success[0m
+[0;32mI (7544) [HMAC]: HMAC success[0m
+[0;32mI (7544) [HMAC]: HMAC Verification Success[0m
+[0;32mI (7554) [HMAC]: HMAC success[0m
+[0;32mI (7724) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (7724) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (7754) [SECURE_STORE]: Read OK (len=8324)[0m
+[0;32mI (7754) [SECURE_STORE]: Verification success[0m
+[0;32mI (7754) [HMAC]: HMAC success[0m
+[0;32mI (7754) [HMAC]: HMAC Verification Success[0m
+[0;33mW (7764) [Secure Storage Test]: Array measurement for 8192 bytes writing[0m
+158465, 173864, 192678, 182772, 182636, 192392, 192194, 192967, 209778, 172507, 
+[0;33mW (7774) [Secure Storage Test]: Array measurement for 8192 bytes reading[0m
+36370, 36353, 36365, 36371, 36354, 36367, 36356, 36373, 36363, 36377, 
+[0;33mW (7784) [Secure Storage Test]: Test for 16384 bytes[0m
+[0;32mI (7794) [HMAC]: HMAC success[0m
+[0;32mI (8144) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (8144) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (8204) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (8204) [SECURE_STORE]: Verification success[0m
+[0;32mI (8204) [HMAC]: HMAC success[0m
+[0;32mI (8204) [HMAC]: HMAC Verification Success[0m
+[0;32mI (8224) [HMAC]: HMAC success[0m
+[0;32mI (8574) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (8574) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (8634) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (8634) [SECURE_STORE]: Verification success[0m
+[0;32mI (8634) [HMAC]: HMAC success[0m
+[0;32mI (8634) [HMAC]: HMAC Verification Success[0m
+[0;32mI (8644) [HMAC]: HMAC success[0m
+[0;32mI (9004) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (9004) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (9064) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (9064) [SECURE_STORE]: Verification success[0m
+[0;32mI (9064) [HMAC]: HMAC success[0m
+[0;32mI (9064) [HMAC]: HMAC Verification Success[0m
+[0;32mI (9074) [HMAC]: HMAC success[0m
+[0;32mI (9364) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (9364) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (9424) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (9424) [SECURE_STORE]: Verification success[0m
+[0;32mI (9424) [HMAC]: HMAC success[0m
+[0;32mI (9424) [HMAC]: HMAC Verification Success[0m
+[0;32mI (9444) [HMAC]: HMAC success[0m
+[0;32mI (9764) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (9764) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (9824) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (9824) [SECURE_STORE]: Verification success[0m
+[0;32mI (9824) [HMAC]: HMAC success[0m
+[0;32mI (9824) [HMAC]: HMAC Verification Success[0m
+[0;32mI (9844) [HMAC]: HMAC success[0m
+[0;32mI (10214) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (10214) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (10274) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (10274) [SECURE_STORE]: Verification success[0m
+[0;32mI (10274) [HMAC]: HMAC success[0m
+[0;32mI (10274) [HMAC]: HMAC Verification Success[0m
+[0;32mI (10294) [HMAC]: HMAC success[0m
+[0;32mI (10644) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (10644) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (10694) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (10694) [SECURE_STORE]: Verification success[0m
+[0;32mI (10704) [HMAC]: HMAC success[0m
+[0;32mI (10704) [HMAC]: HMAC Verification Success[0m
+[0;32mI (10714) [HMAC]: HMAC success[0m
+[0;32mI (11024) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (11024) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (11074) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (11074) [SECURE_STORE]: Verification success[0m
+[0;32mI (11084) [HMAC]: HMAC success[0m
+[0;32mI (11084) [HMAC]: HMAC Verification Success[0m
+[0;32mI (11094) [HMAC]: HMAC success[0m
+[0;32mI (11454) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (11454) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (11514) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (11514) [SECURE_STORE]: Verification success[0m
+[0;32mI (11514) [HMAC]: HMAC success[0m
+[0;32mI (11514) [HMAC]: HMAC Verification Success[0m
+[0;32mI (11524) [HMAC]: HMAC success[0m
+[0;32mI (11884) [SECURE_STORE]: THE DATA WAS WRITED TO NVS SecureStore[0m
+[0;32mI (11884) [SECURE STORAGE REGION]: Write to secure storage region success[0m
+[0;32mI (11944) [SECURE_STORE]: Read OK (len=16516)[0m
+[0;32mI (11944) [SECURE_STORE]: Verification success[0m
+[0;32mI (11944) [HMAC]: HMAC success[0m
+[0;32mI (11944) [HMAC]: HMAC Verification Success[0m
+[0;33mW (11954) [Secure Storage Test]: Array measurement for 16384 bytes writing[0m
+356317, 355028, 362709, 294755, 333626, 381371, 353428, 311844, 364478, 363648, 
+[0;33mW (11964) [Secure Storage Test]: Array measurement for 16384 bytes reading[0m
+63646, 63649, 63650, 63659, 63656, 63998, 64007, 63983, 64006, 64039, 
+[0;33mW (11974) [Secure Storage Test]: Test Average of 10 for 1 bytes[0m
+Time execution for writting 1 bytes: 16245 us
+Time execution for reading 1 bytes: 14176 us
+[0;33mW (11984) [Secure Storage Test]: Test Average of 10 for 32 bytes[0m
+Time execution for writting 32 bytes: 22292 us
+Time execution for reading 32 bytes: 14531 us
+[0;33mW (12004) [Secure Storage Test]: Test Average of 10 for 64 bytes[0m
+Time execution for writting 64 bytes: 22573 us
+Time execution for reading 64 bytes: 14535 us
+[0;33mW (12014) [Secure Storage Test]: Test Average of 10 for 256 bytes[0m
+Time execution for writting 256 bytes: 21339 us
+Time execution for reading 256 bytes: 14569 us
+[0;33mW (12034) [Secure Storage Test]: Test Average of 10 for 512 bytes[0m
+Time execution for writting 512 bytes: 33172 us
+Time execution for reading 512 bytes: 14621 us
+[0;33mW (12044) [Secure Storage Test]: Test Average of 10 for 1024 bytes[0m
+Time execution for writting 1024 bytes: 44827 us
+Time execution for reading 1024 bytes: 14807 us
+[0;33mW (12054) [Secure Storage Test]: Test Average of 10 for 2048 bytes[0m
+Time execution for writting 2048 bytes: 63400 us
+Time execution for reading 2048 bytes: 17229 us
+[0;33mW (12074) [Secure Storage Test]: Test Average of 10 for 4096 bytes[0m
+Time execution for writting 4096 bytes: 105600 us
+Time execution for reading 4096 bytes: 22760 us
+[0;33mW (12084) [Secure Storage Test]: Test Average of 10 for 8192 bytes[0m
+Time execution for writting 8192 bytes: 185025 us
+Time execution for reading 8192 bytes: 36364 us
+[0;33mW (12104) [Secure Storage Test]: Test Average of 10 for 16384 bytes[0m
+Time execution for writting 16384 bytes: 347720 us
+Time execution for reading 16384 bytes: 63829 us
+[0;32mI (12114) main_task: Returned from app_main()[0m

@@ -135,7 +135,8 @@ void free_response_step_1(struct response_step_1 *self);
 
 void free_kyber_object_node(struct kyber_object_node *self);
 bool get_kyber_object_node(struct kyber_object_node *self,
-                           struct aes_256_obj *aes_key_ss);
+                           struct aes_256_obj *aes_key_ss,
+                           struct aes_256_obj *hmac_key_ss);
 
 bool build_request_2(struct request_step_2 *self,
                      const struct response_step_1 *res_step_1,
